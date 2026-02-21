@@ -1,0 +1,2024 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "fishtrap-recreation-area",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.6929,
+          47.4438
+        ]
+      },
+      "properties": {
+        "id": "fishtrap-recreation-area",
+        "name": "Fishtrap Recreation Area",
+        "agency": "Bureau of Land Management",
+        "agency_short": "blm",
+        "sites": 20,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": false,
+        "year_round": true,
+        "open_month": null,
+        "reservation_url": "https://www.blm.gov/",
+        "notes": "On Fishtrap Lake near Sprague; wildlife-rich shrub-steppe environment"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "juniper-dunes-wilderness",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.9054,
+          46.5471
+        ]
+      },
+      "properties": {
+        "id": "juniper-dunes-wilderness",
+        "name": "Juniper Dunes Wilderness",
+        "agency": "Bureau of Land Management",
+        "agency_short": "blm",
+        "sites": 10,
+        "types": [
+          "tent"
+        ],
+        "reservable": false,
+        "year_round": true,
+        "open_month": null,
+        "reservation_url": "https://www.blm.gov/",
+        "notes": "Primitive camping near the largest natural juniper forest in WA; no facilities"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "liberty-recreation-site",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.9518,
+          47.2638
+        ]
+      },
+      "properties": {
+        "id": "liberty-recreation-site",
+        "name": "Liberty Recreation Site",
+        "agency": "Bureau of Land Management",
+        "agency_short": "blm",
+        "sites": 18,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": false,
+        "year_round": true,
+        "open_month": null,
+        "reservation_url": "https://www.blm.gov/",
+        "notes": "Near the historic gold mining town of Liberty; dispersed camping area"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "taunton-dispersed-area",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.2238,
+          47.1704
+        ]
+      },
+      "properties": {
+        "id": "taunton-dispersed-area",
+        "name": "Taunton Dispersed Area",
+        "agency": "Bureau of Land Management",
+        "agency_short": "blm",
+        "sites": 15,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": false,
+        "year_round": true,
+        "open_month": null,
+        "reservation_url": "https://www.blm.gov/",
+        "notes": "Dispersed camping in Columbia Plateau; excellent stargazing"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "yakima-river-canyon",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.4927,
+          46.8268
+        ]
+      },
+      "properties": {
+        "id": "yakima-river-canyon",
+        "name": "Yakima River Canyon",
+        "agency": "Bureau of Land Management",
+        "agency_short": "blm",
+        "sites": 25,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": false,
+        "year_round": true,
+        "open_month": null,
+        "reservation_url": "https://www.blm.gov/",
+        "notes": "Along the Yakima River between Ellensburg and Yakima; popular for fly fishing"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "colonial-creek-north",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.0718,
+          48.6996
+        ]
+      },
+      "properties": {
+        "id": "colonial-creek-north",
+        "name": "Colonial Creek North",
+        "agency": "National Park Service",
+        "agency_short": "nps",
+        "sites": 60,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "On the north shore of Diablo Lake; stunning turquoise waters"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "colonial-creek-south",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.076,
+          48.6957
+        ]
+      },
+      "properties": {
+        "id": "colonial-creek-south",
+        "name": "Colonial Creek South",
+        "agency": "National Park Service",
+        "agency_short": "nps",
+        "sites": 32,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": false,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Walk-in sites on south shore of Diablo Lake"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cougar-rock",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.8059,
+          46.7613
+        ]
+      },
+      "properties": {
+        "id": "cougar-rock",
+        "name": "Cougar Rock",
+        "agency": "National Park Service",
+        "agency_short": "nps",
+        "sites": 173,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Near the Paradise area; excellent views of the Tatoosh Range"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "deer-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.2583,
+          47.9511
+        ]
+      },
+      "properties": {
+        "id": "deer-park",
+        "name": "Deer Park",
+        "agency": "National Park Service",
+        "agency_short": "nps",
+        "sites": 14,
+        "types": [
+          "tent"
+        ],
+        "reservable": false,
+        "year_round": false,
+        "open_month": 7,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "High alpine meadow campground; no RVs; stunning views of the Strait of Juan de Fuca"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "fairholme",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.9021,
+          48.059
+        ]
+      },
+      "properties": {
+        "id": "fairholme",
+        "name": "Fairholme",
+        "agency": "National Park Service",
+        "agency_short": "nps",
+        "sites": 88,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "On the west end of Lake Crescent; boat launch access"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "goodell-creek",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.2563,
+          48.6793
+        ]
+      },
+      "properties": {
+        "id": "goodell-creek",
+        "name": "Goodell Creek",
+        "agency": "National Park Service",
+        "agency_short": "nps",
+        "sites": 21,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": false,
+        "year_round": true,
+        "open_month": null,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Year-round campground; popular for whitewater kayaking put-in"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "gorge-lake",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.1948,
+          48.678
+        ]
+      },
+      "properties": {
+        "id": "gorge-lake",
+        "name": "Gorge Lake",
+        "agency": "National Park Service",
+        "agency_short": "nps",
+        "sites": 6,
+        "types": [
+          "tent"
+        ],
+        "reservable": false,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Small primitive campground on Gorge Lake; walk-in sites"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "graves-creek",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.7058,
+          47.5682
+        ]
+      },
+      "properties": {
+        "id": "graves-creek",
+        "name": "Graves Creek",
+        "agency": "National Park Service",
+        "agency_short": "nps",
+        "sites": 30,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": false,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "In the Quinault Rain Forest; trailhead for Enchanted Valley hike"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "heart-o-the-hills",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.4318,
+          47.9813
+        ]
+      },
+      "properties": {
+        "id": "heart-o-the-hills",
+        "name": "Heart O' the Hills",
+        "agency": "National Park Service",
+        "agency_short": "nps",
+        "sites": 105,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Main campground for Hurricane Ridge area access"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "hoh-rain-forest",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.9348,
+          47.8601
+        ]
+      },
+      "properties": {
+        "id": "hoh-rain-forest",
+        "name": "Hoh Rain Forest",
+        "agency": "National Park Service",
+        "agency_short": "nps",
+        "sites": 88,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": true,
+        "open_month": null,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "In the heart of the temperate rain forest; Hall of Mosses trailhead"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "kalaloch",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -124.3757,
+          47.6107
+        ]
+      },
+      "properties": {
+        "id": "kalaloch",
+        "name": "Kalaloch",
+        "agency": "National Park Service",
+        "agency_short": "nps",
+        "sites": 170,
+        "types": [
+          "tent",
+          "rv",
+          "cabin"
+        ],
+        "reservable": true,
+        "year_round": true,
+        "open_month": null,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "On coastal bluffs above the Pacific; beach access and tide pools"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "kettle-falls",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.0634,
+          48.6099
+        ]
+      },
+      "properties": {
+        "id": "kettle-falls",
+        "name": "Kettle Falls",
+        "agency": "National Park Service",
+        "agency_short": "nps",
+        "sites": 76,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "On the upper Columbia/Lake Roosevelt; near historic Kettle Falls"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "mora",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -124.5972,
+          47.9218
+        ]
+      },
+      "properties": {
+        "id": "mora",
+        "name": "Mora",
+        "agency": "National Park Service",
+        "agency_short": "nps",
+        "sites": 94,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": true,
+        "open_month": null,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Near Rialto Beach; old-growth forest along Quillayute River"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "mowich-lake",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.8636,
+          46.9329
+        ]
+      },
+      "properties": {
+        "id": "mowich-lake",
+        "name": "Mowich Lake",
+        "agency": "National Park Service",
+        "agency_short": "nps",
+        "sites": 30,
+        "types": [
+          "tent"
+        ],
+        "reservable": false,
+        "year_round": false,
+        "open_month": 7,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Walk-in only; on the remote NW side of Rainier; no RVs or trailers"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "newhalem-creek",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.2441,
+          48.6718
+        ]
+      },
+      "properties": {
+        "id": "newhalem-creek",
+        "name": "Newhalem Creek",
+        "agency": "National Park Service",
+        "agency_short": "nps",
+        "sites": 111,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Main campground at the Ross Lake NRA gateway town of Newhalem"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "north-fork",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.5913,
+          47.5271
+        ]
+      },
+      "properties": {
+        "id": "north-fork",
+        "name": "North Fork",
+        "agency": "National Park Service",
+        "agency_short": "nps",
+        "sites": 9,
+        "types": [
+          "tent"
+        ],
+        "reservable": false,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Small primitive campground in Quinault Valley"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ohanapecosh",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.5682,
+          46.7296
+        ]
+      },
+      "properties": {
+        "id": "ohanapecosh",
+        "name": "Ohanapecosh",
+        "agency": "National Park Service",
+        "agency_short": "nps",
+        "sites": 188,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "In old-growth forest on the SE side of Rainier; Grove of the Patriarchs nearby"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "queets",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -124.0992,
+          47.5228
+        ]
+      },
+      "properties": {
+        "id": "queets",
+        "name": "Queets",
+        "agency": "National Park Service",
+        "agency_short": "nps",
+        "sites": 20,
+        "types": [
+          "tent"
+        ],
+        "reservable": false,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Remote campground in the Queets River valley; old-growth rainforest"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "snag-cove",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.3119,
+          48.5174
+        ]
+      },
+      "properties": {
+        "id": "snag-cove",
+        "name": "Snag Cove",
+        "agency": "National Park Service",
+        "agency_short": "nps",
+        "sites": 9,
+        "types": [
+          "tent"
+        ],
+        "reservable": false,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Small boat-in or hike-in campground on Lake Roosevelt"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "sol-duc",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -124.1565,
+          47.9704
+        ]
+      },
+      "properties": {
+        "id": "sol-duc",
+        "name": "Sol Duc",
+        "agency": "National Park Service",
+        "agency_short": "nps",
+        "sites": 82,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Along the Sol Duc River; hot springs resort nearby"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "south-beach",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -124.3656,
+          47.5715
+        ]
+      },
+      "properties": {
+        "id": "south-beach",
+        "name": "South Beach",
+        "agency": "National Park Service",
+        "agency_short": "nps",
+        "sites": 55,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": false,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Primitive coastal campground just south of Kalaloch"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "spring-canyon",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.9808,
+          47.9318
+        ]
+      },
+      "properties": {
+        "id": "spring-canyon",
+        "name": "Spring Canyon",
+        "agency": "National Park Service",
+        "agency_short": "nps",
+        "sites": 87,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Near the town of Grand Coulee; swimming beach on Lake Roosevelt"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "staircase",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.3283,
+          47.5163
+        ]
+      },
+      "properties": {
+        "id": "staircase",
+        "name": "Staircase",
+        "agency": "National Park Service",
+        "agency_short": "nps",
+        "sites": 47,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "At the foot of the North Fork Skokomish River; gateway to the Olympics"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "white-river",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.6403,
+          46.901
+        ]
+      },
+      "properties": {
+        "id": "white-river",
+        "name": "White River",
+        "agency": "National Park Service",
+        "agency_short": "nps",
+        "sites": 112,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 7,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Trailhead for Sunrise area and Emmons Glacier route"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "beaver-lake",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.8527,
+          48.5146
+        ]
+      },
+      "properties": {
+        "id": "beaver-lake",
+        "name": "Beaver Lake",
+        "agency": "US Forest Service",
+        "agency_short": "usfs",
+        "sites": 24,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": false,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Remote lake in the Colville NF; wildlife viewing and fishing"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "beckler-river",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.3944,
+          47.7671
+        ]
+      },
+      "properties": {
+        "id": "beckler-river",
+        "name": "Beckler River",
+        "agency": "US Forest Service",
+        "agency_short": "usfs",
+        "sites": 27,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Along the Beckler River near Skykomish; popular for families"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "blue-lake-creek",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.6557,
+          45.9882
+        ]
+      },
+      "properties": {
+        "id": "blue-lake-creek",
+        "name": "Blue Lake Creek",
+        "agency": "US Forest Service",
+        "agency_short": "usfs",
+        "sites": 11,
+        "types": [
+          "tent"
+        ],
+        "reservable": false,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Small creek-side campground near Trout Lake"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "bonaparte-lake",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.0615,
+          48.7982
+        ]
+      },
+      "properties": {
+        "id": "bonaparte-lake",
+        "name": "Bonaparte Lake",
+        "agency": "US Forest Service",
+        "agency_short": "usfs",
+        "sites": 28,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Scenic lake in northeast WA near Tonasket; good fishing"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "buck-creek",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.3118,
+          48.1629
+        ]
+      },
+      "properties": {
+        "id": "buck-creek",
+        "name": "Buck Creek",
+        "agency": "US Forest Service",
+        "agency_short": "usfs",
+        "sites": 29,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 6,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "On the Suiattle River; access to Glacier Peak Wilderness"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "bumping-lake",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.299,
+          46.9213
+        ]
+      },
+      "properties": {
+        "id": "bumping-lake",
+        "name": "Bumping Lake",
+        "agency": "US Forest Service",
+        "agency_short": "usfs",
+        "sites": 45,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 6,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "On Bumping Lake reservoir; excellent hiking into the Norse Peak Wilderness"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "chiwawa-horse-camp",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.6629,
+          47.9696
+        ]
+      },
+      "properties": {
+        "id": "chiwawa-horse-camp",
+        "name": "Chiwawa Horse Camp",
+        "agency": "US Forest Service",
+        "agency_short": "usfs",
+        "sites": 21,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 6,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Horse camp in the Chiwawa River corridor; Glacier Peak Wilderness access"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "clear-creek",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.8154,
+          48.2354
+        ]
+      },
+      "properties": {
+        "id": "clear-creek",
+        "name": "Clear Creek",
+        "agency": "US Forest Service",
+        "agency_short": "usfs",
+        "sites": 12,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": false,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Small campground on the Sauk River near Darrington"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "coho",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.6254,
+          47.4579
+        ]
+      },
+      "properties": {
+        "id": "coho",
+        "name": "Coho",
+        "agency": "US Forest Service",
+        "agency_short": "usfs",
+        "sites": 56,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": false,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "On Lake Cushman in Hood Canal area"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cottonwood",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -120.5218,
+          47.8543
+        ]
+      },
+      "properties": {
+        "id": "cottonwood",
+        "name": "Cottonwood",
+        "agency": "US Forest Service",
+        "agency_short": "usfs",
+        "sites": 25,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": false,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "On the Entiat River near Lake Chelan NRA; remote and uncrowded"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "denny-creek",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.4338,
+          47.4221
+        ]
+      },
+      "properties": {
+        "id": "denny-creek",
+        "name": "Denny Creek",
+        "agency": "US Forest Service",
+        "agency_short": "usfs",
+        "sites": 33,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Near Snoqualmie Pass; access to Franklin Falls and Alpine Lakes Wilderness"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "douglas-fir",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.7654,
+          48.5518
+        ]
+      },
+      "properties": {
+        "id": "douglas-fir",
+        "name": "Douglas Fir",
+        "agency": "US Forest Service",
+        "agency_short": "usfs",
+        "sites": 30,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "On the North Fork Nooksack River; gateway to Mt. Baker"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "falls-creek",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -124.0718,
+          47.5482
+        ]
+      },
+      "properties": {
+        "id": "falls-creek",
+        "name": "Falls Creek",
+        "agency": "US Forest Service",
+        "agency_short": "usfs",
+        "sites": 31,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": false,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "In the Quinault Valley; access to Lake Quinault and rainforest trails"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "lake-leo",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.6907,
+          48.6418
+        ]
+      },
+      "properties": {
+        "id": "lake-leo",
+        "name": "Lake Leo",
+        "agency": "US Forest Service",
+        "agency_short": "usfs",
+        "sites": 8,
+        "types": [
+          "tent"
+        ],
+        "reservable": false,
+        "year_round": false,
+        "open_month": 6,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Small alpine lake campground; hike-in only"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "rimrock-lake-indian-creek",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.2246,
+          46.6571
+        ]
+      },
+      "properties": {
+        "id": "rimrock-lake-indian-creek",
+        "name": "Rimrock Lake (Indian Creek)",
+        "agency": "US Forest Service",
+        "agency_short": "usfs",
+        "sites": 39,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "On Rimrock Lake reservoir; fishing and swimming"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "soda-springs",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.3574,
+          46.9441
+        ]
+      },
+      "properties": {
+        "id": "soda-springs",
+        "name": "Soda Springs",
+        "agency": "US Forest Service",
+        "agency_short": "usfs",
+        "sites": 26,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": false,
+        "year_round": false,
+        "open_month": 6,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Along Bumping River; natural carbonated spring nearby"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "steamboat-creek-iron-creek",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.9866,
+          46.5296
+        ]
+      },
+      "properties": {
+        "id": "steamboat-creek-iron-creek",
+        "name": "Steamboat Creek (Iron Creek)",
+        "agency": "US Forest Service",
+        "agency_short": "usfs",
+        "sites": 98,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Near Mt. St. Helens; along Cispus River corridor"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "takhlakh-lake",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.6018,
+          46.2668
+        ]
+      },
+      "properties": {
+        "id": "takhlakh-lake",
+        "name": "Takhlakh Lake",
+        "agency": "US Forest Service",
+        "agency_short": "usfs",
+        "sites": 54,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 7,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Stunning views of Mt. Adams from the lake; high-elevation campground"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "trout-lake-creek",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.5436,
+          45.9954
+        ]
+      },
+      "properties": {
+        "id": "trout-lake-creek",
+        "name": "Trout Lake Creek",
+        "agency": "US Forest Service",
+        "agency_short": "usfs",
+        "sites": 21,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": false,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Near Trout Lake; gateway to Mt. Adams Wilderness trails"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "walupt-lake",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.4729,
+          46.4154
+        ]
+      },
+      "properties": {
+        "id": "walupt-lake",
+        "name": "Walupt Lake",
+        "agency": "US Forest Service",
+        "agency_short": "usfs",
+        "sites": 44,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 7,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "Remote lake near the Goat Rocks Wilderness; excellent fishing"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "wynoochee-lake",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.5846,
+          47.3871
+        ]
+      },
+      "properties": {
+        "id": "wynoochee-lake",
+        "name": "Wynoochee Lake",
+        "agency": "US Forest Service",
+        "agency_short": "usfs",
+        "sites": 40,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://www.recreation.gov/",
+        "notes": "On Wynoochee Lake reservoir; swimming, fishing, and boating"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "battle-ground-lake-state-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.4875,
+          45.7957
+        ]
+      },
+      "properties": {
+        "id": "battle-ground-lake-state-park",
+        "name": "Battle Ground Lake State Park",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 50,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 4,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "Volcanic lake in Clark County; swimming and fishing"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "beacon-rock-state-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -121.9997,
+          45.6254
+        ]
+      },
+      "properties": {
+        "id": "beacon-rock-state-park",
+        "name": "Beacon Rock State Park",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 35,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 4,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "Below the famous basalt monolith in the Columbia River Gorge"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "bogachiel-state-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -124.2786,
+          47.8982
+        ]
+      },
+      "properties": {
+        "id": "bogachiel-state-park",
+        "name": "Bogachiel State Park",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 42,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 4,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "Along the Bogachiel River near Forks; gateway to Olympic backcountry"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "bruceport-county-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.8234,
+          46.6157
+        ]
+      },
+      "properties": {
+        "id": "bruceport-county-park",
+        "name": "Bruceport County Park",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 30,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 5,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "On Willapa Bay near South Bend"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "cape-disappointment-state-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -124.0557,
+          46.2874
+        ]
+      },
+      "properties": {
+        "id": "cape-disappointment-state-park",
+        "name": "Cape Disappointment State Park",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 250,
+        "types": [
+          "tent",
+          "rv",
+          "cabin"
+        ],
+        "reservable": true,
+        "year_round": true,
+        "open_month": null,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "Where the Columbia River meets the Pacific; two historic lighthouses"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "curlew-lake-state-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.6668,
+          48.7096
+        ]
+      },
+      "properties": {
+        "id": "curlew-lake-state-park",
+        "name": "Curlew Lake State Park",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 82,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 4,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "Scenic lake in Ferry County near Republic"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "deception-pass-state-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.643,
+          48.4073
+        ]
+      },
+      "properties": {
+        "id": "deception-pass-state-park",
+        "name": "Deception Pass State Park",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 310,
+        "types": [
+          "tent",
+          "rv",
+          "walk-in"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 3,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "Largest state park campground; Cranberry Lake and North Beach loops"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "dosewallips-state-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.9017,
+          47.6868
+        ]
+      },
+      "properties": {
+        "id": "dosewallips-state-park",
+        "name": "Dosewallips State Park",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 140,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 4,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "At the confluence of the Dosewallips River and Hood Canal"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "fort-flagler-state-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.7005,
+          48.0929
+        ]
+      },
+      "properties": {
+        "id": "fort-flagler-state-park",
+        "name": "Fort Flagler State Park",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 116,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 4,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "Former military fort on Marrowstone Island; panoramic views of Puget Sound"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "fort-worden-state-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.7602,
+          48.1329
+        ]
+      },
+      "properties": {
+        "id": "fort-worden-state-park",
+        "name": "Fort Worden State Park",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 80,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": true,
+        "open_month": null,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "Historic fort on Port Townsend Bay; year-round camping available"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "grayland-beach-state-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -124.0871,
+          46.7716
+        ]
+      },
+      "properties": {
+        "id": "grayland-beach-state-park",
+        "name": "Grayland Beach State Park",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 100,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 4,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "Ocean beach camping near cranberry bogs"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "kitsap-memorial-state-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.6391,
+          47.8374
+        ]
+      },
+      "properties": {
+        "id": "kitsap-memorial-state-park",
+        "name": "Kitsap Memorial State Park",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 43,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 4,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "Wooded park on Hood Canal near Poulsbo"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "larrabee-state-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.4875,
+          48.6618
+        ]
+      },
+      "properties": {
+        "id": "larrabee-state-park",
+        "name": "Larrabee State Park",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 87,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 4,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "First state park in WA; saltwater access on Samish Bay"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "moran-state-park-orcas-island",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8327,
+          48.6571
+        ]
+      },
+      "properties": {
+        "id": "moran-state-park-orcas-island",
+        "name": "Moran State Park (Orcas Island)",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 151,
+        "types": [
+          "tent",
+          "rv",
+          "walk-in"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 4,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "Four campgrounds near Summit Lake and Cascade Lake on Orcas Island"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ocean-city-state-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -124.1655,
+          47.0388
+        ]
+      },
+      "properties": {
+        "id": "ocean-city-state-park",
+        "name": "Ocean City State Park",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 178,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 4,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "On the Long Beach Peninsula; vast sandy beach access"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osoyoos-lake-state-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.4436,
+          48.9493
+        ]
+      },
+      "properties": {
+        "id": "osoyoos-lake-state-park",
+        "name": "Osoyoos Lake State Park",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 86,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 4,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "Warmest lake in WA on the Canadian border; excellent swimming"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "pacific-beach-state-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -124.2001,
+          47.2107
+        ]
+      },
+      "properties": {
+        "id": "pacific-beach-state-park",
+        "name": "Pacific Beach State Park",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 138,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 4,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "Right on the Pacific Ocean; popular for razor clam season"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "palouse-falls-state-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.2274,
+          46.6638
+        ]
+      },
+      "properties": {
+        "id": "palouse-falls-state-park",
+        "name": "Palouse Falls State Park",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 10,
+        "types": [
+          "tent"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 4,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "Washington State waterfall; 198-ft drop into the Palouse River canyon"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "paradise-point-state-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.7108,
+          45.8613
+        ]
+      },
+      "properties": {
+        "id": "paradise-point-state-park",
+        "name": "Paradise Point State Park",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 70,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 4,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "Along the East Fork Lewis River near Ridgefield"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "potlatch-state-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1581,
+          47.5571
+        ]
+      },
+      "properties": {
+        "id": "potlatch-state-park",
+        "name": "Potlatch State Park",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 35,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 4,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "On Hood Canal; excellent oyster and shellfish harvesting"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "riverside-state-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.4793,
+          47.7046
+        ]
+      },
+      "properties": {
+        "id": "riverside-state-park",
+        "name": "Riverside State Park",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 16,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": true,
+        "open_month": null,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "Along the Spokane River near Spokane; Bowl and Pitcher area"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "seaquest-state-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8268,
+          46.2916
+        ]
+      },
+      "properties": {
+        "id": "seaquest-state-park",
+        "name": "Seaquest State Park",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 92,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 4,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "Adjacent to Mount St. Helens National Volcanic Monument; views of the volcano"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "sequim-bay-state-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.0419,
+          48.0457
+        ]
+      },
+      "properties": {
+        "id": "sequim-bay-state-park",
+        "name": "Sequim Bay State Park",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 86,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 4,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "Protected bay in the Olympic rain shadow; calm waters for boating"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "steamboat-rock-state-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.0871,
+          47.8596
+        ]
+      },
+      "properties": {
+        "id": "steamboat-rock-state-park",
+        "name": "Steamboat Rock State Park",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 213,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 4,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "On Banks Lake in the Grand Coulee area; massive basalt butte"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "sun-lakes-dry-falls-state-park",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -119.4644,
+          47.5968
+        ]
+      },
+      "properties": {
+        "id": "sun-lakes-dry-falls-state-park",
+        "name": "Sun Lakes-Dry Falls State Park",
+        "agency": "Washington State Parks",
+        "agency_short": "wa-state-parks",
+        "sites": 193,
+        "types": [
+          "tent",
+          "rv"
+        ],
+        "reservable": true,
+        "year_round": false,
+        "open_month": 4,
+        "reservation_url": "https://washington.goingtocamp.com/",
+        "notes": "Near the world's largest prehistoric waterfall; coulees and lakes"
+      }
+    }
+  ]
+}
