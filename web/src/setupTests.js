@@ -12,7 +12,7 @@ vi.mock('mapbox-gl', () => {
     setFilter: vi.fn(),
     setFeatureState: vi.fn(),
     queryRenderedFeatures: vi.fn(() => []),
-    getCanvas: vi.fn(() => ({ style: {} })),
+    getCanvas: vi.fn(() => Object.assign(document.createElement('canvas'), { style: {} })),
     isStyleLoaded: vi.fn(() => true),
     project: vi.fn(([lng, lat]) => ({ x: lng * 10, y: lat * 10 })),
   };

@@ -25,6 +25,8 @@ const SOURCE_ID = 'campsites';
 const CIRCLES_LAYER = 'campsite-circles';
 const MAP_STYLE = 'mapbox://styles/mapbox/outdoors-v12';
 const WA_BOUNDS = [[-124.83, 45.54], [-116.92, 49.00]];
+const ZOOM_FACTOR = 4;   // how much the zoomcluster magnifies the map
+const ZOOM_R = 100;      // radius of the zoomcluster circle in px
 
 export default function App() {
   const mapContainerRef = useRef(null);
@@ -32,7 +34,7 @@ export default function App() {
   const hoveredIdRef = useRef(null);
 
   const [selectedCampsite, setSelectedCampsite] = useState(null);
-  const [clusterCandidates, setClusterCandidates] = useState(null);
+  const [zoomcluster, setZoomcluster] = useState(null);
   const [campsiteDetails, setCampsiteDetails] = useState(null);
   const [loadingDetails, setLoadingDetails] = useState(false);
   const [activeAgencies, setActiveAgencies] = useState(
@@ -71,6 +73,7 @@ export default function App() {
         bounds: WA_BOUNDS,
         fitBoundsOptions: { padding: 40 },
         failIfMajorPerformanceCaveat: false,
+        preserveDrawingBuffer: true,
       });
     } catch (e) {
       setMapError(`Map failed to load: ${e.message}`);
@@ -195,17 +198,52 @@ export default function App() {
       );
       if (features.length === 0) {
         setSelectedCampsite(null);
-        setClusterCandidates(null);
+        setZoomcluster(null);
         return;
       }
       if (features.length === 1) {
         setSelectedCampsite(parseFeature(features[0]));
-        setClusterCandidates(null);
+        setZoomcluster(null);
         return;
       }
-      // Multiple nearby campsites — let the user choose
+      // Multiple nearby campsites — show the zoomcluster.
+      // Centre it on the geographic centroid so it is equidistant from all points.
+      const items = features.map(parseFeature);
+      const coords = items.filter((i) => i._coordinates).map((i) => i._coordinates);
+      const avgLng = coords.reduce((s, c) => s + c[0], 0) / coords.length;
+      const avgLat = coords.reduce((s, c) => s + c[1], 0) / coords.length;
+      const centroid = map.project([avgLng, avgLat]);
+
+      // Capture a ZOOM_FACTOR× zoomed crop of the map centred on the cluster.
+      const DIAM = ZOOM_R * 2;
+      const srcW = DIAM / ZOOM_FACTOR;
+      const srcH = DIAM / ZOOM_FACTOR;
+      const offscreen = document.createElement('canvas');
+      offscreen.width = DIAM;
+      offscreen.height = DIAM;
+      const ctx = offscreen.getContext('2d');
+      try {
+        ctx.drawImage(
+          map.getCanvas(),
+          centroid.x - srcW / 2, centroid.y - srcH / 2, srcW, srcH,
+          0, 0, DIAM, DIAM,
+        );
+      } catch (_) { /* canvas unreadable in some environments */ }
+      const mapSnapshot = offscreen.toDataURL();
+
+      // Compute each dot's position within the zoomcluster SVG.
+      const svgItems = items.map((item) => {
+        if (!item._coordinates) return { ...item, svgX: ZOOM_R, svgY: ZOOM_R };
+        const px = map.project(item._coordinates);
+        return {
+          ...item,
+          svgX: ZOOM_R + (px.x - centroid.x) * ZOOM_FACTOR,
+          svgY: ZOOM_R + (px.y - centroid.y) * ZOOM_FACTOR,
+        };
+      });
+
       setSelectedCampsite(null);
-      setClusterCandidates({ x, y, items: features.map(parseFeature) });
+      setZoomcluster({ screenX: centroid.x, screenY: centroid.y, mapSnapshot, items: svgItems });
     });
 
     return () => {
@@ -333,81 +371,38 @@ export default function App() {
           </div>
         )}
 
-      {clusterCandidates && (() => {
-        const R = 100;
-        const PADDING = 18;
-        const DOT_R = 7;
-        const { x, y, items } = clusterCandidates;
+      {zoomcluster && (
+        <div
+          className="zoomcluster"
+          style={{ left: zoomcluster.screenX, top: zoomcluster.screenY }}
+          aria-label="Nearby campsites"
+          onClick={() => setZoomcluster(null)}
+        >
+          {/* Zoomed map snapshot — forms the glass background */}
+          <img src={zoomcluster.mapSnapshot} className="zoomcluster-map" alt="" draggable={false} />
 
-        // Project each campsite's geographic coordinates to pixel offsets
-        // from the click point, preserving their relative spatial arrangement.
-        const withOffsets = items.map((item) => ({
-          ...item,
-          ox: item._coordinates
-            ? mapRef.current.project(item._coordinates).x - x
-            : 0,
-          oy: item._coordinates
-            ? mapRef.current.project(item._coordinates).y - y
-            : 0,
-        }));
-
-        const maxDist = Math.max(...withOffsets.map((p) => Math.hypot(p.ox, p.oy)), 1);
-        const scale = (R - PADDING) / maxDist;
-
-        return (
-          <svg
-            className="cluster-zoom"
-            style={{ left: x, top: y, pointerEvents: 'none' }}
-            width={R * 2}
-            height={R * 2}
-            aria-label="Nearby campsites"
-          >
-            {/* Dark background — clicking it dismisses the zoom view */}
-            <circle
-              cx={R} cy={R} r={R - 1}
-              fill="rgba(30, 30, 30, 0.88)"
-              style={{ pointerEvents: 'all', cursor: 'default' }}
-              onClick={() => setClusterCandidates(null)}
-            />
-
-            {/* Campsite dots at their scaled relative positions */}
-            {withOffsets.map((item) => {
-              const cx = R + item.ox * scale;
-              const cy = R + item.oy * scale;
-              return (
-                <g
-                  key={item.name}
-                  role="button"
-                  aria-label={item.name}
-                  style={{ pointerEvents: 'all', cursor: 'pointer' }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedCampsite(item);
-                    setClusterCandidates(null);
-                  }}
-                >
-                  <circle cx={cx} cy={cy} r={DOT_R + 8} fill="transparent" />
-                  <circle
-                    cx={cx} cy={cy} r={DOT_R}
-                    fill={AGENCY_COLORS[item.agency_short] || '#CCCCCC'}
-                    stroke="#FFFFFF"
-                    strokeWidth={1.5}
-                  />
-                </g>
-              );
-            })}
-
-            {/* Border ring */}
-            <circle
-              cx={R} cy={R} r={R - 1}
-              fill="none"
-              stroke="#3e3e3e"
-              strokeWidth={1.5}
-              style={{ pointerEvents: 'none' }}
-            />
+          {/* Invisible hit targets + hover rings over each campsite dot */}
+          <svg className="zoomcluster-overlay" width={ZOOM_R * 2} height={ZOOM_R * 2} style={{ pointerEvents: 'none' }}>
+            {zoomcluster.items.map((item) => (
+              <g
+                key={item.name}
+                role="button"
+                aria-label={item.name}
+                className="zoomcluster-point"
+                style={{ pointerEvents: 'all', cursor: 'pointer' }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedCampsite(item);
+                  setZoomcluster(null);
+                }}
+              >
+                <circle cx={item.svgX} cy={item.svgY} r={24} fill="transparent" />
+                <circle cx={item.svgX} cy={item.svgY} r={20} fill="transparent" stroke="white" strokeWidth={2} className="zoomcluster-ring" />
+              </g>
+            ))}
           </svg>
-        );
-      })()}
+        </div>
+      )}
 
       {selectedCampsite && (
         <div className="detail-panel" role="dialog" aria-label="Campsite details">

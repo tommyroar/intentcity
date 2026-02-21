@@ -100,7 +100,7 @@ describe('Standalone mode (VITE_STANDALONE=true)', () => {
     expect(fetchSpy).not.toHaveBeenCalled();
   });
 
-  it('shows cluster zoom when multiple campsites are in the click buffer', async () => {
+  it('shows zoomcluster when multiple campsites are in the click buffer', async () => {
     const second = { ...fakeCampsite, name: 'Alpine Meadow Camp', agency_short: 'usfs' };
     render(<App />);
     const mapInstance = mapboxgl.Map.mock.results.at(-1).value;
@@ -119,7 +119,7 @@ describe('Standalone mode (VITE_STANDALONE=true)', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
-  it('selecting from cluster zoom opens the detail panel', async () => {
+  it('selecting from zoomcluster opens the detail panel', async () => {
     const second = { ...fakeCampsite, name: 'Alpine Meadow Camp', agency_short: 'usfs' };
     render(<App />);
     const mapInstance = mapboxgl.Map.mock.results.at(-1).value;
