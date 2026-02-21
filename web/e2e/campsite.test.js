@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 const BASE_URL = 'http://127.0.0.1:5173';
 const BACKEND_URL = 'http://127.0.0.1:8787';
 
-test.describe('Robot Geographical Society - Integration', () => {
+test.describe('intentcity - Integration', () => {
   test('backend should be reachable and return campsite data', async ({ request }) => {
     // Retry logic for backend readiness
     let response;
@@ -26,7 +26,7 @@ test.describe('Robot Geographical Society - Integration', () => {
   test('frontend should be reachable', async ({ page }) => {
     await page.goto(BASE_URL, { waitUntil: 'domcontentloaded' });
     const title = await page.title();
-    expect(title).toBe('Robot Geographical Society');
+    expect(title).toBe('intentcity');
   });
 
   test('all four agency toggle buttons are visible and active by default', async ({ page }) => {

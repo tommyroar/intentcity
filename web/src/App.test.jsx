@@ -85,10 +85,11 @@ describe('Standalone mode (VITE_STANDALONE=true)', () => {
   function selectCampsite(campsite) {
     const mapInstance = mapboxgl.Map.mock.results.at(-1).value;
     const clickHandler = mapInstance.on.mock.calls.find(
-      ([event, layer]) => event === 'click' && layer === 'campsite-circles'
-    )?.[2];
+      ([event, second]) => event === 'click' && typeof second === 'function'
+    )?.[1];
+    mapInstance.queryRenderedFeatures.mockReturnValueOnce([{ properties: campsite }]);
     act(() => {
-      clickHandler({ features: [{ properties: campsite }] });
+      clickHandler({ point: { x: 0, y: 0 } });
     });
   }
 
@@ -97,6 +98,45 @@ describe('Standalone mode (VITE_STANDALONE=true)', () => {
     selectCampsite(fakeCampsite);
     await waitFor(() => expect(screen.getByRole('dialog')).toBeInTheDocument());
     expect(fetchSpy).not.toHaveBeenCalled();
+  });
+
+  it('shows zoomcluster when multiple campsites are in the click buffer', async () => {
+    const second = { ...fakeCampsite, name: 'Alpine Meadow Camp', agency_short: 'usfs' };
+    render(<App />);
+    const mapInstance = mapboxgl.Map.mock.results.at(-1).value;
+    const clickHandler = mapInstance.on.mock.calls.find(
+      ([event, fn]) => event === 'click' && typeof fn === 'function'
+    )?.[1];
+    mapInstance.queryRenderedFeatures.mockReturnValueOnce([
+      { properties: fakeCampsite, geometry: { coordinates: [-122.50, 47.50] } },
+      { properties: second,       geometry: { coordinates: [-122.51, 47.51] } },
+    ]);
+    act(() => { clickHandler({ point: { x: 100, y: 100 } }); });
+    await waitFor(() =>
+      expect(screen.getByRole('button', { name: 'Rainier Base Camp' })).toBeInTheDocument()
+    );
+    expect(screen.getByRole('button', { name: 'Alpine Meadow Camp' })).toBeInTheDocument();
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  });
+
+  it('selecting from zoomcluster opens the detail panel', async () => {
+    const second = { ...fakeCampsite, name: 'Alpine Meadow Camp', agency_short: 'usfs' };
+    render(<App />);
+    const mapInstance = mapboxgl.Map.mock.results.at(-1).value;
+    const clickHandler = mapInstance.on.mock.calls.find(
+      ([event, fn]) => event === 'click' && typeof fn === 'function'
+    )?.[1];
+    mapInstance.queryRenderedFeatures.mockReturnValueOnce([
+      { properties: fakeCampsite, geometry: { coordinates: [-122.50, 47.50] } },
+      { properties: second,       geometry: { coordinates: [-122.51, 47.51] } },
+    ]);
+    act(() => { clickHandler({ point: { x: 100, y: 100 } }); });
+    await waitFor(() =>
+      expect(screen.getByRole('button', { name: 'Alpine Meadow Camp' })).toBeInTheDocument()
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'Alpine Meadow Camp' }));
+    await waitFor(() => expect(screen.getByRole('dialog')).toBeInTheDocument());
+    expect(screen.queryByRole('button', { name: 'Alpine Meadow Camp' })).not.toBeInTheDocument();
   });
 
   it('detail panel renders campsite info from GeoJSON properties', async () => {

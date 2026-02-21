@@ -10,10 +10,15 @@ vi.mock('mapbox-gl', () => {
     addSource: vi.fn(),
     addLayer: vi.fn(),
     setFilter: vi.fn(),
+    setLayoutProperty: vi.fn(),
     setFeatureState: vi.fn(),
     queryRenderedFeatures: vi.fn(() => []),
-    getCanvas: vi.fn(() => ({ style: {} })),
+    getCanvas: vi.fn(() => Object.assign(document.createElement('canvas'), { style: {} })),
     isStyleLoaded: vi.fn(() => true),
+    project: vi.fn(([lng, lat]) => ({ x: lng * 10, y: lat * 10 })),
+    // Call render callback synchronously so zoomcluster tests don't need to await a frame
+    once: vi.fn((event, cb) => { if (event === 'render') cb(); }),
+    triggerRepaint: vi.fn(),
   };
 
   return {
