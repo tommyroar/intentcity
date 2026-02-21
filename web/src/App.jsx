@@ -181,7 +181,11 @@ export default function App() {
     const CLICK_BUFFER = 10;
     const parseFeature = (f) => {
       const p = f.properties;
-      return { ...p, types: typeof p.types === 'string' ? JSON.parse(p.types) : p.types };
+      return {
+        ...p,
+        types: typeof p.types === 'string' ? JSON.parse(p.types) : p.types,
+        _coordinates: f.geometry?.coordinates,
+      };
     };
     map.on('click', (e) => {
       const { x, y } = e.point;
@@ -329,32 +333,81 @@ export default function App() {
           </div>
         )}
 
-      {clusterCandidates && (
-        <div
-          className="cluster-picker"
-          style={{ left: clusterCandidates.x, top: clusterCandidates.y }}
-          role="menu"
-          aria-label="Multiple campsites nearby"
-        >
-          {clusterCandidates.items.map((c) => (
-            <button
-              key={c.name}
-              className="cluster-item"
-              role="menuitem"
-              onClick={() => {
-                setSelectedCampsite(c);
-                setClusterCandidates(null);
-              }}
-            >
-              <span
-                className="cluster-dot"
-                style={{ backgroundColor: AGENCY_COLORS[c.agency_short] }}
-              />
-              {c.name}
-            </button>
-          ))}
-        </div>
-      )}
+      {clusterCandidates && (() => {
+        const R = 100;
+        const PADDING = 18;
+        const DOT_R = 7;
+        const { x, y, items } = clusterCandidates;
+
+        // Project each campsite's geographic coordinates to pixel offsets
+        // from the click point, preserving their relative spatial arrangement.
+        const withOffsets = items.map((item) => ({
+          ...item,
+          ox: item._coordinates
+            ? mapRef.current.project(item._coordinates).x - x
+            : 0,
+          oy: item._coordinates
+            ? mapRef.current.project(item._coordinates).y - y
+            : 0,
+        }));
+
+        const maxDist = Math.max(...withOffsets.map((p) => Math.hypot(p.ox, p.oy)), 1);
+        const scale = (R - PADDING) / maxDist;
+
+        return (
+          <svg
+            className="cluster-zoom"
+            style={{ left: x, top: y, pointerEvents: 'none' }}
+            width={R * 2}
+            height={R * 2}
+            aria-label="Nearby campsites"
+          >
+            {/* Dark background — clicking it dismisses the zoom view */}
+            <circle
+              cx={R} cy={R} r={R - 1}
+              fill="rgba(30, 30, 30, 0.88)"
+              style={{ pointerEvents: 'all', cursor: 'default' }}
+              onClick={() => setClusterCandidates(null)}
+            />
+
+            {/* Campsite dots at their scaled relative positions */}
+            {withOffsets.map((item) => {
+              const cx = R + item.ox * scale;
+              const cy = R + item.oy * scale;
+              return (
+                <g
+                  key={item.name}
+                  role="button"
+                  aria-label={item.name}
+                  style={{ pointerEvents: 'all', cursor: 'pointer' }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedCampsite(item);
+                    setClusterCandidates(null);
+                  }}
+                >
+                  <circle cx={cx} cy={cy} r={DOT_R + 8} fill="transparent" />
+                  <circle
+                    cx={cx} cy={cy} r={DOT_R}
+                    fill={AGENCY_COLORS[item.agency_short] || '#CCCCCC'}
+                    stroke="#FFFFFF"
+                    strokeWidth={1.5}
+                  />
+                </g>
+              );
+            })}
+
+            {/* Border ring */}
+            <circle
+              cx={R} cy={R} r={R - 1}
+              fill="none"
+              stroke="#3e3e3e"
+              strokeWidth={1.5}
+              style={{ pointerEvents: 'none' }}
+            />
+          </svg>
+        );
+      })()}
 
       {selectedCampsite && (
         <div className="detail-panel" role="dialog" aria-label="Campsite details">

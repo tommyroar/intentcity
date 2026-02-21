@@ -100,7 +100,7 @@ describe('Standalone mode (VITE_STANDALONE=true)', () => {
     expect(fetchSpy).not.toHaveBeenCalled();
   });
 
-  it('shows cluster picker when multiple campsites are in the click buffer', async () => {
+  it('shows cluster zoom when multiple campsites are in the click buffer', async () => {
     const second = { ...fakeCampsite, name: 'Alpine Meadow Camp', agency_short: 'usfs' };
     render(<App />);
     const mapInstance = mapboxgl.Map.mock.results.at(-1).value;
@@ -108,17 +108,18 @@ describe('Standalone mode (VITE_STANDALONE=true)', () => {
       ([event, fn]) => event === 'click' && typeof fn === 'function'
     )?.[1];
     mapInstance.queryRenderedFeatures.mockReturnValueOnce([
-      { properties: fakeCampsite },
-      { properties: second },
+      { properties: fakeCampsite, geometry: { coordinates: [-122.50, 47.50] } },
+      { properties: second,       geometry: { coordinates: [-122.51, 47.51] } },
     ]);
     act(() => { clickHandler({ point: { x: 100, y: 100 } }); });
-    await waitFor(() => expect(screen.getByRole('menu')).toBeInTheDocument());
-    expect(screen.getByText('Rainier Base Camp')).toBeInTheDocument();
-    expect(screen.getByText('Alpine Meadow Camp')).toBeInTheDocument();
+    await waitFor(() =>
+      expect(screen.getByRole('button', { name: 'Rainier Base Camp' })).toBeInTheDocument()
+    );
+    expect(screen.getByRole('button', { name: 'Alpine Meadow Camp' })).toBeInTheDocument();
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
-  it('selecting from cluster picker opens the detail panel', async () => {
+  it('selecting from cluster zoom opens the detail panel', async () => {
     const second = { ...fakeCampsite, name: 'Alpine Meadow Camp', agency_short: 'usfs' };
     render(<App />);
     const mapInstance = mapboxgl.Map.mock.results.at(-1).value;
@@ -126,14 +127,16 @@ describe('Standalone mode (VITE_STANDALONE=true)', () => {
       ([event, fn]) => event === 'click' && typeof fn === 'function'
     )?.[1];
     mapInstance.queryRenderedFeatures.mockReturnValueOnce([
-      { properties: fakeCampsite },
-      { properties: second },
+      { properties: fakeCampsite, geometry: { coordinates: [-122.50, 47.50] } },
+      { properties: second,       geometry: { coordinates: [-122.51, 47.51] } },
     ]);
     act(() => { clickHandler({ point: { x: 100, y: 100 } }); });
-    await waitFor(() => expect(screen.getByRole('menu')).toBeInTheDocument());
-    await userEvent.click(screen.getByText('Alpine Meadow Camp'));
+    await waitFor(() =>
+      expect(screen.getByRole('button', { name: 'Alpine Meadow Camp' })).toBeInTheDocument()
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'Alpine Meadow Camp' }));
     await waitFor(() => expect(screen.getByRole('dialog')).toBeInTheDocument());
-    expect(screen.queryByRole('menu')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Alpine Meadow Camp' })).not.toBeInTheDocument();
   });
 
   it('detail panel renders campsite info from GeoJSON properties', async () => {
