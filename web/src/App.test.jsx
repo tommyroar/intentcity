@@ -85,10 +85,11 @@ describe('Standalone mode (VITE_STANDALONE=true)', () => {
   function selectCampsite(campsite) {
     const mapInstance = mapboxgl.Map.mock.results.at(-1).value;
     const clickHandler = mapInstance.on.mock.calls.find(
-      ([event, layer]) => event === 'click' && layer === 'campsite-circles'
-    )?.[2];
+      ([event, second]) => event === 'click' && typeof second === 'function'
+    )?.[1];
+    mapInstance.queryRenderedFeatures.mockReturnValueOnce([{ properties: campsite }]);
     act(() => {
-      clickHandler({ features: [{ properties: campsite }] });
+      clickHandler({ point: { x: 0, y: 0 } });
     });
   }
 

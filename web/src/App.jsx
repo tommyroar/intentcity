@@ -174,22 +174,23 @@ export default function App() {
       }
     });
 
-    // Click to select campsite
-    map.on('click', CIRCLES_LAYER, (e) => {
-      const props = e.features[0]?.properties;
-      if (!props) return;
+    // Click to select campsite, with a pixel buffer for easier tapping
+    const CLICK_BUFFER = 10;
+    map.on('click', (e) => {
+      const { x, y } = e.point;
+      const features = map.queryRenderedFeatures(
+        [[x - CLICK_BUFFER, y - CLICK_BUFFER], [x + CLICK_BUFFER, y + CLICK_BUFFER]],
+        { layers: [CIRCLES_LAYER] }
+      );
+      if (features.length === 0) {
+        setSelectedCampsite(null);
+        return;
+      }
+      const props = features[0].properties;
       // Parse types array (stored as JSON string in GeoJSON properties)
       const types =
         typeof props.types === 'string' ? JSON.parse(props.types) : props.types;
       setSelectedCampsite({ ...props, types });
-    });
-
-    // Click on blank map area to deselect
-    map.on('click', (e) => {
-      const features = map.queryRenderedFeatures(e.point, {
-        layers: [CIRCLES_LAYER],
-      });
-      if (features.length === 0) setSelectedCampsite(null);
     });
 
     return () => {
