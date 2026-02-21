@@ -32,6 +32,7 @@ export default function App() {
   const hoveredIdRef = useRef(null);
 
   const [selectedCampsite, setSelectedCampsite] = useState(null);
+  const [clusterCandidates, setClusterCandidates] = useState(null);
   const [campsiteDetails, setCampsiteDetails] = useState(null);
   const [loadingDetails, setLoadingDetails] = useState(false);
   const [activeAgencies, setActiveAgencies] = useState(
@@ -174,8 +175,14 @@ export default function App() {
       }
     });
 
-    // Click to select campsite, with a pixel buffer for easier tapping
+    // Click to select campsite, with a pixel buffer for easier tapping.
+    // When multiple campsites fall within the buffer, show a picker instead
+    // of silently selecting an arbitrary one.
     const CLICK_BUFFER = 10;
+    const parseFeature = (f) => {
+      const p = f.properties;
+      return { ...p, types: typeof p.types === 'string' ? JSON.parse(p.types) : p.types };
+    };
     map.on('click', (e) => {
       const { x, y } = e.point;
       const features = map.queryRenderedFeatures(
@@ -184,13 +191,17 @@ export default function App() {
       );
       if (features.length === 0) {
         setSelectedCampsite(null);
+        setClusterCandidates(null);
         return;
       }
-      const props = features[0].properties;
-      // Parse types array (stored as JSON string in GeoJSON properties)
-      const types =
-        typeof props.types === 'string' ? JSON.parse(props.types) : props.types;
-      setSelectedCampsite({ ...props, types });
+      if (features.length === 1) {
+        setSelectedCampsite(parseFeature(features[0]));
+        setClusterCandidates(null);
+        return;
+      }
+      // Multiple nearby campsites — let the user choose
+      setSelectedCampsite(null);
+      setClusterCandidates({ x, y, items: features.map(parseFeature) });
     });
 
     return () => {
@@ -317,6 +328,33 @@ export default function App() {
               : `zoom: ${debugInfo.zoom} | lng: ${debugInfo.lng} | lat: ${debugInfo.lat}`}
           </div>
         )}
+
+      {clusterCandidates && (
+        <div
+          className="cluster-picker"
+          style={{ left: clusterCandidates.x, top: clusterCandidates.y }}
+          role="menu"
+          aria-label="Multiple campsites nearby"
+        >
+          {clusterCandidates.items.map((c) => (
+            <button
+              key={c.name}
+              className="cluster-item"
+              role="menuitem"
+              onClick={() => {
+                setSelectedCampsite(c);
+                setClusterCandidates(null);
+              }}
+            >
+              <span
+                className="cluster-dot"
+                style={{ backgroundColor: AGENCY_COLORS[c.agency_short] }}
+              />
+              {c.name}
+            </button>
+          ))}
+        </div>
+      )}
 
       {selectedCampsite && (
         <div className="detail-panel" role="dialog" aria-label="Campsite details">

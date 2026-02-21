@@ -100,6 +100,42 @@ describe('Standalone mode (VITE_STANDALONE=true)', () => {
     expect(fetchSpy).not.toHaveBeenCalled();
   });
 
+  it('shows cluster picker when multiple campsites are in the click buffer', async () => {
+    const second = { ...fakeCampsite, name: 'Alpine Meadow Camp', agency_short: 'usfs' };
+    render(<App />);
+    const mapInstance = mapboxgl.Map.mock.results.at(-1).value;
+    const clickHandler = mapInstance.on.mock.calls.find(
+      ([event, fn]) => event === 'click' && typeof fn === 'function'
+    )?.[1];
+    mapInstance.queryRenderedFeatures.mockReturnValueOnce([
+      { properties: fakeCampsite },
+      { properties: second },
+    ]);
+    act(() => { clickHandler({ point: { x: 100, y: 100 } }); });
+    await waitFor(() => expect(screen.getByRole('menu')).toBeInTheDocument());
+    expect(screen.getByText('Rainier Base Camp')).toBeInTheDocument();
+    expect(screen.getByText('Alpine Meadow Camp')).toBeInTheDocument();
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  });
+
+  it('selecting from cluster picker opens the detail panel', async () => {
+    const second = { ...fakeCampsite, name: 'Alpine Meadow Camp', agency_short: 'usfs' };
+    render(<App />);
+    const mapInstance = mapboxgl.Map.mock.results.at(-1).value;
+    const clickHandler = mapInstance.on.mock.calls.find(
+      ([event, fn]) => event === 'click' && typeof fn === 'function'
+    )?.[1];
+    mapInstance.queryRenderedFeatures.mockReturnValueOnce([
+      { properties: fakeCampsite },
+      { properties: second },
+    ]);
+    act(() => { clickHandler({ point: { x: 100, y: 100 } }); });
+    await waitFor(() => expect(screen.getByRole('menu')).toBeInTheDocument());
+    await userEvent.click(screen.getByText('Alpine Meadow Camp'));
+    await waitFor(() => expect(screen.getByRole('dialog')).toBeInTheDocument());
+    expect(screen.queryByRole('menu')).not.toBeInTheDocument();
+  });
+
   it('detail panel renders campsite info from GeoJSON properties', async () => {
     render(<App />);
     selectCampsite(fakeCampsite);
