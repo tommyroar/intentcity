@@ -214,29 +214,7 @@ export default function App() {
       const avgLat = coords.reduce((s, c) => s + c[1], 0) / coords.length;
       const centroid = map.project([avgLng, avgLat]);
 
-      // Capture a ZOOM_FACTOR× zoomed crop of the map centred on the cluster.
-      // map.project() returns CSS pixels, but the Mapbox canvas is rendered at
-      // devicePixelRatio× that size on HiDPI screens, so all drawImage source
-      // coordinates and dimensions must be scaled by dpr.
-      const dpr = window.devicePixelRatio || 1;
-      const DIAM = ZOOM_R * 2;
-      const srcW = DIAM / ZOOM_FACTOR;
-      const srcH = DIAM / ZOOM_FACTOR;
-      const offscreen = document.createElement('canvas');
-      offscreen.width = DIAM * dpr;
-      offscreen.height = DIAM * dpr;
-      const ctx = offscreen.getContext('2d');
-      try {
-        ctx.drawImage(
-          map.getCanvas(),
-          (centroid.x - srcW / 2) * dpr, (centroid.y - srcH / 2) * dpr,
-          srcW * dpr, srcH * dpr,
-          0, 0, DIAM * dpr, DIAM * dpr,
-        );
-      } catch (_) { /* canvas unreadable in some environments */ }
-      const mapSnapshot = offscreen.toDataURL();
-
-      // Compute each dot's position within the zoomcluster SVG.
+      // Compute each dot's SVG position before the async snapshot.
       const svgItems = items.map((item) => {
         if (!item._coordinates) return { ...item, svgX: ZOOM_R, svgY: ZOOM_R };
         const px = map.project(item._coordinates);
@@ -248,7 +226,34 @@ export default function App() {
       });
 
       setSelectedCampsite(null);
-      setZoomcluster({ screenX: centroid.x, screenY: centroid.y, mapSnapshot, items: svgItems });
+
+      // Capture a basemap-only snapshot: hide the campsite layer, wait one render
+      // frame for WebGL to redraw without dots, then restore. Also corrects for
+      // devicePixelRatio so the snapshot location and resolution are accurate on
+      // HiDPI screens (map.project() returns CSS pixels; the canvas is dpr× larger).
+      map.setLayoutProperty(CIRCLES_LAYER, 'visibility', 'none');
+      map.once('render', () => {
+        const dpr = window.devicePixelRatio || 1;
+        const DIAM = ZOOM_R * 2;
+        const srcW = DIAM / ZOOM_FACTOR;
+        const srcH = DIAM / ZOOM_FACTOR;
+        const offscreen = document.createElement('canvas');
+        offscreen.width = DIAM * dpr;
+        offscreen.height = DIAM * dpr;
+        const ctx = offscreen.getContext('2d');
+        try {
+          ctx.drawImage(
+            map.getCanvas(),
+            (centroid.x - srcW / 2) * dpr, (centroid.y - srcH / 2) * dpr,
+            srcW * dpr, srcH * dpr,
+            0, 0, DIAM * dpr, DIAM * dpr,
+          );
+        } catch (_) { /* canvas unreadable in some environments */ }
+        const mapSnapshot = offscreen.toDataURL();
+        map.setLayoutProperty(CIRCLES_LAYER, 'visibility', 'visible');
+        setZoomcluster({ screenX: centroid.x, screenY: centroid.y, mapSnapshot, items: svgItems });
+      });
+      map.triggerRepaint();
     });
 
     return () => {
