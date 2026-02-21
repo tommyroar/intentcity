@@ -215,18 +215,23 @@ export default function App() {
       const centroid = map.project([avgLng, avgLat]);
 
       // Capture a ZOOM_FACTOR× zoomed crop of the map centred on the cluster.
+      // map.project() returns CSS pixels, but the Mapbox canvas is rendered at
+      // devicePixelRatio× that size on HiDPI screens, so all drawImage source
+      // coordinates and dimensions must be scaled by dpr.
+      const dpr = window.devicePixelRatio || 1;
       const DIAM = ZOOM_R * 2;
       const srcW = DIAM / ZOOM_FACTOR;
       const srcH = DIAM / ZOOM_FACTOR;
       const offscreen = document.createElement('canvas');
-      offscreen.width = DIAM;
-      offscreen.height = DIAM;
+      offscreen.width = DIAM * dpr;
+      offscreen.height = DIAM * dpr;
       const ctx = offscreen.getContext('2d');
       try {
         ctx.drawImage(
           map.getCanvas(),
-          centroid.x - srcW / 2, centroid.y - srcH / 2, srcW, srcH,
-          0, 0, DIAM, DIAM,
+          (centroid.x - srcW / 2) * dpr, (centroid.y - srcH / 2) * dpr,
+          srcW * dpr, srcH * dpr,
+          0, 0, DIAM * dpr, DIAM * dpr,
         );
       } catch (_) { /* canvas unreadable in some environments */ }
       const mapSnapshot = offscreen.toDataURL();
@@ -397,6 +402,7 @@ export default function App() {
                 }}
               >
                 <circle cx={item.svgX} cy={item.svgY} r={24} fill="transparent" />
+                <circle cx={item.svgX} cy={item.svgY} r={8} fill={AGENCY_COLORS[item.agency_short] || '#CCCCCC'} stroke="white" strokeWidth={1.5} />
                 <circle cx={item.svgX} cy={item.svgY} r={20} fill="transparent" stroke="white" strokeWidth={2} className="zoomcluster-ring" />
               </g>
             ))}
