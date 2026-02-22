@@ -82,6 +82,15 @@ function AppContent() {
     return ['in', ['get', 'agency_short'], ['literal', activeAgencies]];
   }, [activeAgencies]);
 
+  const circleLayer = {
+    id: CIRCLES_LAYER_ID,
+    type: 'circle',
+    paint: circleLayerPaint,
+  };
+  if (agencyFilter) {
+    circleLayer.filter = agencyFilter;
+  }
+
   const handleMapClick = useCallback((event) => {
     if (!map) return;
 
@@ -171,15 +180,6 @@ function AppContent() {
         : [...prev, agency]
     );
   };
-  
-  const circleLayer = {
-    id: CIRCLES_LAYER_ID,
-    type: 'circle',
-    paint: circleLayerPaint,
-  };
-  if (agencyFilter) {
-    circleLayer.filter = agencyFilter;
-  }
 
   return (
     <div className="app">
@@ -357,8 +357,10 @@ function AppContent() {
   );
 }
 
-
 export default function App() {
+  const handleMapClick = useCallback(() => {}, []);
+  const onHover = useCallback(() => {}, []);
+  
   if (!MAPBOX_TOKEN) {
     return (
       <div className="map-error" role="alert">
@@ -375,8 +377,8 @@ export default function App() {
         }}
         mapboxAccessToken={MAPBOX_TOKEN}
         mapStyle={MAP_STYLE}
-        onClick={useCallback(e => handleMapClick(e), [])}
-        onMouseMove={useCallback(e => onHover(e), [])}
+        onClick={handleMapClick}
+        onMouseMove={onHover}
         interactiveLayerIds={[CIRCLES_LAYER_ID]}
         preserveDrawingBuffer={true}
     >
