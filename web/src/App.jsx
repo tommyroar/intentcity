@@ -1,6 +1,9 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
-import mapboxgl from 'mapbox-gl';
+import { useState, useCallback, useMemo } from 'react';
+import Map, { Source, Layer, NavigationControl, useMap } from 'react-map-gl/mapbox';
 import campsiteData from '../../data/campsites.json';
+import 'mapbox-gl/dist/mapbox-gl.css';
+
+const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
 const AGENCY_COLORS = {
   'wa-state-parks': '#A6E22E',
@@ -22,17 +25,45 @@ const MONTH_NAMES = [
 ];
 
 const SOURCE_ID = 'campsites';
-const CIRCLES_LAYER = 'campsite-circles';
+const CIRCLES_LAYER_ID = 'campsite-circles';
 const MAP_STYLE = 'mapbox://styles/mapbox/outdoors-v12';
-const WA_BOUNDS = [[-124.83, 45.54], [-116.92, 49.00]];
 const ZOOM_FACTOR = 4;   // how much the zoomcluster magnifies the map
 const ZOOM_R = 100;      // radius of the zoomcluster circle in px
 
-export default function App() {
-  const mapContainerRef = useRef(null);
-  const mapRef = useRef(null);
-  const hoveredIdRef = useRef(null);
+const circleLayerPaint = {
+  'circle-radius': [
+    'interpolate',
+    ['linear'],
+    ['zoom'],
+    5, 5,
+    10, 9,
+  ],
+  'circle-color': [
+    'match',
+    ['get', 'agency_short'],
+    'wa-state-parks', AGENCY_COLORS['wa-state-parks'],
+    'nps', AGENCY_COLORS.nps,
+    'usfs', AGENCY_COLORS.usfs,
+    'blm', AGENCY_COLORS.blm,
+    '#CCCCCC',
+  ],
+  'circle-stroke-width': [
+    'case',
+    ['boolean', ['feature-state', 'hover'], false],
+    3,
+    1,
+  ],
+  'circle-stroke-color': '#FFFFFF',
+  'circle-opacity': [
+    'case',
+    ['boolean', ['feature-state', 'hover'], false],
+    1,
+    0.85,
+  ],
+};
 
+function AppContent() {
+  const { current: map } = useMap();
   const [selectedCampsite, setSelectedCampsite] = useState(null);
   const [zoomcluster, setZoomcluster] = useState(null);
   const [campsiteDetails, setCampsiteDetails] = useState(null);
@@ -41,147 +72,26 @@ export default function App() {
     Object.keys(AGENCY_COLORS)
   );
   const [mapError, setMapError] = useState(null);
-  const [mapLoaded, setMapLoaded] = useState(false);
   const isDebug = new URLSearchParams(window.location.search).has('debug');
-  const [debugInfo, setDebugInfo] = useState({ zoom: '—', lng: '—', lat: '—' });
   const [debugCopied, setDebugCopied] = useState(false);
+  const [hoveredInfo, setHoveredInfo] = useState(null);
 
-  // Build Mapbox filter expression for active agencies
-  const buildFilter = useCallback((agencies) => {
-    if (agencies.length === 0) return ['==', ['get', 'agency_short'], ''];
-    if (agencies.length === Object.keys(AGENCY_COLORS).length) return null;
-    return ['in', ['get', 'agency_short'], ['literal', agencies]];
-  }, []);
+  const agencyFilter = useMemo(() => {
+    if (activeAgencies.length === 0) return ['==', ['get', 'agency_short'], ''];
+    if (activeAgencies.length === Object.keys(AGENCY_COLORS).length) return null;
+    return ['in', ['get', 'agency_short'], ['literal', activeAgencies]];
+  }, [activeAgencies]);
 
-  // Initialize map
-  useEffect(() => {
-    const token = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
-    if (!token) {
-      setMapError(
-        'No Mapbox token found. Set VITE_MAPBOX_ACCESS_TOKEN in your .env file.'
-      );
-      return;
-    }
+  const handleMapClick = useCallback((event) => {
+    if (!map) return;
 
-    mapboxgl.accessToken = token;
-
-    let map;
-    try {
-      map = new mapboxgl.Map({
-        container: mapContainerRef.current,
-        style: MAP_STYLE,
-        bounds: WA_BOUNDS,
-        fitBoundsOptions: { padding: 40 },
-        failIfMajorPerformanceCaveat: false,
-        preserveDrawingBuffer: true,
-      });
-    } catch (e) {
-      setMapError(`Map failed to load: ${e.message}`);
-      return;
-    }
-
-    mapRef.current = map;
-
-    map.addControl(new mapboxgl.NavigationControl(), 'top-right');
-
-    if (isDebug) {
-      const updateDebug = () => {
-        const c = map.getCenter();
-        setDebugInfo({
-          zoom: map.getZoom().toFixed(2),
-          lng: c.lng.toFixed(4),
-          lat: c.lat.toFixed(4),
-        });
-      };
-      map.on('idle', updateDebug);
-      map.on('move', updateDebug);
-    }
-
-    map.on('error', (e) => {
-      console.error('Mapbox error:', e);
-      const msg = e?.error?.message || e?.message || String(e);
-      setMapError(`Map failed to load: ${msg}`);
-    });
-
-    map.on('load', () => {
-      // Add campsite GeoJSON source
-      map.addSource(SOURCE_ID, {
-        type: 'geojson',
-        data: campsiteData,
-        generateId: true,
-      });
-
-      // Base circle layer
-      map.addLayer({
-        id: CIRCLES_LAYER,
-        type: 'circle',
-        source: SOURCE_ID,
-        paint: {
-          'circle-radius': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            5, 5,
-            10, 9,
-          ],
-          'circle-color': [
-            'match',
-            ['get', 'agency_short'],
-            'wa-state-parks', AGENCY_COLORS['wa-state-parks'],
-            'nps', AGENCY_COLORS.nps,
-            'usfs', AGENCY_COLORS.usfs,
-            'blm', AGENCY_COLORS.blm,
-            '#CCCCCC',
-          ],
-          'circle-stroke-width': [
-            'case',
-            ['boolean', ['feature-state', 'hover'], false],
-            3,
-            1,
-          ],
-          'circle-stroke-color': '#FFFFFF',
-          'circle-opacity': [
-            'case',
-            ['boolean', ['feature-state', 'hover'], false],
-            1,
-            0.85,
-          ],
-        },
-      });
-
-      setMapLoaded(true);
-    });
-
-    // Hover interaction
-    map.on('mousemove', CIRCLES_LAYER, (e) => {
-      map.getCanvas().style.cursor = 'pointer';
-      const id = e.features[0]?.id;
-      if (id === undefined) return;
-      if (hoveredIdRef.current !== null && hoveredIdRef.current !== id) {
-        map.setFeatureState(
-          { source: SOURCE_ID, id: hoveredIdRef.current },
-          { hover: false }
-        );
-      }
-      hoveredIdRef.current = id;
-      map.setFeatureState({ source: SOURCE_ID, id }, { hover: true });
-    });
-
-    map.on('mouseleave', CIRCLES_LAYER, () => {
-      map.getCanvas().style.cursor = '';
-      if (hoveredIdRef.current !== null) {
-        map.setFeatureState(
-          { source: SOURCE_ID, id: hoveredIdRef.current },
-          { hover: false }
-        );
-        hoveredIdRef.current = null;
-      }
-    });
-
-    // Click to select campsite, with a pixel buffer for easier tapping.
-    // When multiple campsites fall within the buffer, show a picker instead
-    // of silently selecting an arbitrary one.
     const CLICK_BUFFER = 10;
+    const { x, y } = event.point;
+    const features = map.queryRenderedFeatures(
+      [[x - CLICK_BUFFER, y - CLICK_BUFFER], [x + CLICK_BUFFER, y + CLICK_BUFFER]],
+      { layers: [CIRCLES_LAYER_ID] }
+    );
+
     const parseFeature = (f) => {
       const p = f.properties;
       return {
@@ -190,125 +100,69 @@ export default function App() {
         _coordinates: f.geometry?.coordinates,
       };
     };
-    map.on('click', (e) => {
-      const { x, y } = e.point;
-      const features = map.queryRenderedFeatures(
-        [[x - CLICK_BUFFER, y - CLICK_BUFFER], [x + CLICK_BUFFER, y + CLICK_BUFFER]],
-        { layers: [CIRCLES_LAYER] }
-      );
-      if (features.length === 0) {
-        setSelectedCampsite(null);
-        setZoomcluster(null);
-        return;
-      }
-      if (features.length === 1) {
-        setSelectedCampsite(parseFeature(features[0]));
-        setZoomcluster(null);
-        return;
-      }
-      // Multiple nearby campsites — show the zoomcluster.
-      // Centre it on the geographic centroid so it is equidistant from all points.
-      const items = features.map(parseFeature);
-      const coords = items.filter((i) => i._coordinates).map((i) => i._coordinates);
-      const avgLng = coords.reduce((s, c) => s + c[0], 0) / coords.length;
-      const avgLat = coords.reduce((s, c) => s + c[1], 0) / coords.length;
-      const centroid = map.project([avgLng, avgLat]);
 
-      // Compute each dot's SVG position before the async snapshot.
-      const svgItems = items.map((item) => {
-        if (!item._coordinates) return { ...item, svgX: ZOOM_R, svgY: ZOOM_R };
-        const px = map.project(item._coordinates);
-        return {
-          ...item,
-          svgX: ZOOM_R + (px.x - centroid.x) * ZOOM_FACTOR,
-          svgY: ZOOM_R + (px.y - centroid.y) * ZOOM_FACTOR,
-        };
-      });
-
+    if (features.length === 0) {
       setSelectedCampsite(null);
+      setZoomcluster(null);
+      return;
+    }
+    if (features.length === 1) {
+      setSelectedCampsite(parseFeature(features[0]));
+      setZoomcluster(null);
+      return;
+    }
 
-      // Capture a basemap-only snapshot: hide the campsite layer, wait one render
-      // frame for WebGL to redraw without dots, then restore. Also corrects for
-      // devicePixelRatio so the snapshot location and resolution are accurate on
-      // HiDPI screens (map.project() returns CSS pixels; the canvas is dpr× larger).
-      map.setLayoutProperty(CIRCLES_LAYER, 'visibility', 'none');
-      map.once('render', () => {
-        const dpr = window.devicePixelRatio || 1;
-        const DIAM = ZOOM_R * 2;
-        const srcW = DIAM / ZOOM_FACTOR;
-        const srcH = DIAM / ZOOM_FACTOR;
-        const offscreen = document.createElement('canvas');
-        offscreen.width = DIAM * dpr;
-        offscreen.height = DIAM * dpr;
-        const ctx = offscreen.getContext('2d');
-        try {
-          ctx.drawImage(
-            map.getCanvas(),
-            (centroid.x - srcW / 2) * dpr, (centroid.y - srcH / 2) * dpr,
-            srcW * dpr, srcH * dpr,
-            0, 0, DIAM * dpr, DIAM * dpr,
-          );
-        } catch (_) { /* canvas unreadable in some environments */ }
-        const mapSnapshot = offscreen.toDataURL();
-        map.setLayoutProperty(CIRCLES_LAYER, 'visibility', 'visible');
-        setZoomcluster({ screenX: centroid.x, screenY: centroid.y, mapSnapshot, items: svgItems });
-      });
-      map.triggerRepaint();
+    const items = features.map(parseFeature);
+    const coords = items.filter((i) => i._coordinates).map((i) => i._coordinates);
+    const avgLng = coords.reduce((s, c) => s + c[0], 0) / coords.length;
+    const avgLat = coords.reduce((s, c) => s + c[1], 0) / coords.length;
+    const centroid = map.project([avgLng, avgLat]);
+
+    const svgItems = items.map((item) => {
+      if (!item._coordinates) return { ...item, svgX: ZOOM_R, svgY: ZOOM_R };
+      const px = map.project(item._coordinates);
+      return {
+        ...item,
+        svgX: ZOOM_R + (px.x - centroid.x) * ZOOM_FACTOR,
+        svgY: ZOOM_R + (px.y - centroid.y) * ZOOM_FACTOR,
+      };
     });
 
-    return () => {
-      map.remove();
-      mapRef.current = null;
-    };
-  }, [isDebug]);
+    setSelectedCampsite(null);
 
-  // Apply agency filters when activeAgencies or map load state changes
-  useEffect(() => {
-    const map = mapRef.current;
-    if (!map || !mapLoaded) return;
-    const filter = buildFilter(activeAgencies);
-    map.setFilter(CIRCLES_LAYER, filter);
-  }, [activeAgencies, mapLoaded, buildFilter]);
+    map.setLayoutProperty(CIRCLES_LAYER_ID, 'visibility', 'none');
+    map.once('render', () => {
+      const dpr = window.devicePixelRatio || 1;
+      const DIAM = ZOOM_R * 2;
+      const srcW = DIAM / ZOOM_FACTOR;
+      const srcH = DIAM / ZOOM_FACTOR;
+      const offscreen = document.createElement('canvas');
+      offscreen.width = DIAM * dpr;
+      offscreen.height = DIAM * dpr;
+      const ctx = offscreen.getContext('2d');
+      try {
+        ctx.drawImage(
+          map.getCanvas(),
+          (centroid.x - srcW / 2) * dpr, (centroid.y - srcH / 2) * dpr,
+          srcW * dpr, srcH * dpr,
+          0, 0, DIAM * dpr, DIAM * dpr,
+        );
+      } catch (_) { /* canvas unreadable */ }
+      const mapSnapshot = offscreen.toDataURL();
+      map.setLayoutProperty(CIRCLES_LAYER_ID, 'visibility', 'visible');
+      setZoomcluster({ screenX: centroid.x, screenY: centroid.y, mapSnapshot, items: svgItems });
+    });
+    map.triggerRepaint();
+  }, [map]);
 
-  // Fetch campsite details from API when one is selected
-  useEffect(() => {
-    if (!selectedCampsite) {
-      setCampsiteDetails(null);
-      return;
-    }
-
-    // Standalone mode: all data is embedded in GeoJSON, no backend needed
-    if (import.meta.env.VITE_STANDALONE === 'true') {
-      return;
-    }
-
-    setLoadingDetails(true);
-    // Use the ID from the selected campsite feature properties
-    const id = selectedCampsite.id;
-    if (!id) {
-        console.warn('No ID found for selected campsite');
-        setLoadingDetails(false);
-        return;
-    }
-
-    const backendUrl = window.location.hostname === 'localhost' 
-      ? 'http://localhost:8787' 
-      : `http://${window.location.hostname}:8787`;
-
-    fetch(`${backendUrl}/campsite/${id}`)
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to fetch details');
-        return res.json();
-      })
-      .then((data) => {
-        setCampsiteDetails(data);
-        setLoadingDetails(false);
-      })
-      .catch((err) => {
-        console.error('Error fetching campsite details:', err);
-        setLoadingDetails(false);
-      });
-  }, [selectedCampsite]);
+  const onHover = useCallback(event => {
+    const {
+      features,
+      point: {x, y}
+    } = event;
+    const hoveredFeature = features && features[0];
+    setHoveredInfo(hoveredFeature && {feature: hoveredFeature, x, y});
+  }, []);
 
   const toggleAgency = (agency) => {
     setActiveAgencies((prev) =>
@@ -317,6 +171,15 @@ export default function App() {
         : [...prev, agency]
     );
   };
+  
+  const circleLayer = {
+    id: CIRCLES_LAYER_ID,
+    type: 'circle',
+    paint: circleLayerPaint,
+  };
+  if (agencyFilter) {
+    circleLayer.filter = agencyFilter;
+  }
 
   return (
     <div className="app">
@@ -352,32 +215,32 @@ export default function App() {
             <strong>Map Error:</strong> {mapError}
           </div>
         )}
-        <div ref={mapContainerRef} className="map-container" />
+        <Source id={SOURCE_ID} type="geojson" data={campsiteData}>
+            <Layer {...circleLayer} />
+        </Source>
+        <NavigationControl position="top-right" />
+        {hoveredInfo && (
+          <div className="tooltip" style={{left: hoveredInfo.x, top: hoveredInfo.y}}>
+            <div>{hoveredInfo.feature.properties.name}</div>
+          </div>
+        )}
+
 
         {isDebug && (
           <div
             className="debug-panel"
             onClick={() => {
-              const text = JSON.stringify(debugInfo);
-              if (navigator.clipboard) {
-                navigator.clipboard.writeText(text);
-              } else {
-                const el = document.createElement('textarea');
-                el.value = text;
-                el.style.cssText = 'position:fixed;opacity:0';
-                document.body.appendChild(el);
-                el.select();
-                document.execCommand('copy');
-                document.body.removeChild(el);
-              }
-              setDebugCopied(true);
-              setTimeout(() => setDebugCopied(false), 1500);
+              const text = JSON.stringify(viewState);
+              navigator.clipboard.writeText(text).then(() => {
+                setDebugCopied(true);
+                setTimeout(() => setDebugCopied(false), 1500);
+              });
             }}
             style={{ cursor: 'copy', pointerEvents: 'auto' }}
           >
             {debugCopied
               ? 'copied!'
-              : `zoom: ${debugInfo.zoom} | lng: ${debugInfo.lng} | lat: ${debugInfo.lat}`}
+              : `zoom: ${viewState.zoom.toFixed(2)} | lng: ${viewState.longitude.toFixed(4)} | lat: ${viewState.latitude.toFixed(4)}`}
           </div>
         )}
 
@@ -388,10 +251,7 @@ export default function App() {
           aria-label="Nearby campsites"
           onClick={() => setZoomcluster(null)}
         >
-          {/* Zoomed map snapshot — forms the glass background */}
           <img src={zoomcluster.mapSnapshot} className="zoomcluster-map" alt="" draggable={false} />
-
-          {/* Invisible hit targets + hover rings over each campsite dot */}
           <svg className="zoomcluster-overlay" width={ZOOM_R * 2} height={ZOOM_R * 2} style={{ pointerEvents: 'none' }}>
             {zoomcluster.items.map((item) => (
               <g
@@ -469,7 +329,7 @@ export default function App() {
               <ul className="res-list">
                 {campsiteDetails.reservation_dates.map((date) => (
                   <li key={date} className="res-item">
-                    ðŸ—“ï¸  {new Date(date).toLocaleDateString(undefined, {
+                    <span role="img" aria-label="calendar">🗓️</span> {new Date(date).toLocaleDateString(undefined, {
                       month: 'long',
                       day: 'numeric',
                       year: 'numeric',
@@ -494,5 +354,33 @@ export default function App() {
       )}
       </div>
     </div>
+  );
+}
+
+
+export default function App() {
+  if (!MAPBOX_TOKEN) {
+    return (
+      <div className="map-error" role="alert">
+        <strong>Map Error:</strong> No Mapbox token found. Set VITE_MAPBOX_ACCESS_TOKEN in your .env file.
+      </div>
+    );
+  }
+
+  return (
+    <Map
+        initialViewState={{
+            bounds: [[-124.83, 45.54], [-116.92, 49.00]],
+            fitBoundsOptions: { padding: 40 },
+        }}
+        mapboxAccessToken={MAPBOX_TOKEN}
+        mapStyle={MAP_STYLE}
+        onClick={useCallback(e => handleMapClick(e), [])}
+        onMouseMove={useCallback(e => onHover(e), [])}
+        interactiveLayerIds={[CIRCLES_LAYER_ID]}
+        preserveDrawingBuffer={true}
+    >
+        <AppContent />
+    </Map>
   );
 }

@@ -368,3 +368,18 @@ body {
   background: var(--border);
   border-radius: 3px;
 }
+
+.tooltip {
+  position: absolute;
+  background: rgba(30, 30, 30, 0.85);
+  border: 1px solid var(--border);
+  padding: 4px 8px;
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: 12px;
+  pointer-events: none;
+  transform: translate(-50%, -120%);
+  z-index: 20;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
