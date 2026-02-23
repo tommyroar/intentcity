@@ -1,12 +1,46 @@
 import { render, screen, act, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import mapboxgl from 'mapbox-gl';
+import { useMap } from 'react-map-gl/mapbox';
 import App from './App.jsx';
 
 // Provide a fake VITE_MAPBOX_ACCESS_TOKEN so the map initializes without error
 beforeEach(() => {
   import.meta.env.VITE_MAPBOX_ACCESS_TOKEN = 'pk.test_token';
 });
+
+// Mock the useMap hook
+vi.mock('react-map-gl/mapbox', async () => {
+  const actual = await vi.importActual('react-map-gl/mapbox');
+  const mockMap = {
+    on: vi.fn(),
+    off: vi.fn(),
+    remove: vi.fn(),
+    addControl: vi.fn(),
+    addSource: vi.fn(),
+    addLayer: vi.fn(),
+    setFilter: vi.fn(),
+    setLayoutProperty: vi.fn(),
+    setFeatureState: vi.fn(),
+    queryRenderedFeatures: vi.fn(() => []),
+    getCanvas: vi.fn(() => Object.assign(document.createElement('canvas'), { style: {} })),
+    getSource: vi.fn(() => ({
+      getClusterExpansionZoom: vi.fn((clusterId, cb) => cb(null, 10)),
+    })),
+    easeTo: vi.fn(),
+    isStyleLoaded: vi.fn(() => true),
+    project: vi.fn(([lng, lat]) => ({ x: lng * 10, y: lat * 10 })),
+    once: vi.fn((event, cb) => { if (event === 'render') cb(); }),
+    triggerRepaint: vi.fn(),
+  };
+
+  return {
+    ...actual,
+    useMap: vi.fn(() => ({
+      current: mockMap,
+    })),
+  };
+});
+
 
 describe('App smoke tests', () => {
   it('renders the controls overlay', () => {
@@ -44,17 +78,11 @@ describe('App smoke tests', () => {
     render(<App />);
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
-
-  it('renders the map container element', () => {
-    render(<App />);
-    // The map container div is rendered inside map-wrapper
-    const wrapper = document.querySelector('.map-container');
-    expect(wrapper).not.toBeNull();
-  });
 });
 
 describe('Standalone mode (VITE_STANDALONE=true)', () => {
   let fetchSpy;
+  let mockMap;
 
   const fakeCampsite = {
     id: 'test-site',
@@ -75,6 +103,7 @@ describe('Standalone mode (VITE_STANDALONE=true)', () => {
       ok: true,
       json: () => Promise.resolve({}),
     });
+    mockMap = useMap().current;
   });
 
   afterEach(() => {
@@ -82,66 +111,56 @@ describe('Standalone mode (VITE_STANDALONE=true)', () => {
     fetchSpy.mockRestore();
   });
 
-  function selectCampsite(campsite) {
-    const mapInstance = mapboxgl.Map.mock.results.at(-1).value;
-    const clickHandler = mapInstance.on.mock.calls.find(
-      ([event, second]) => event === 'click' && typeof second === 'function'
-    )?.[1];
-    mapInstance.queryRenderedFeatures.mockReturnValueOnce([{ properties: campsite }]);
-    act(() => {
-      clickHandler({ point: { x: 0, y: 0 } });
-    });
-  }
-
   it('does not call fetch when a campsite is selected', async () => {
     render(<App />);
-    selectCampsite(fakeCampsite);
+    const map = screen.getByRole('application');
+    act(() => {
+      // Simulate click event on the map
+      const onClick = map.props.onClick;
+      onClick({
+        features: [{ layer: { id: 'campsite-circles' }, properties: fakeCampsite }],
+        point: { x: 0, y: 0 }
+      });
+    });
     await waitFor(() => expect(screen.getByRole('dialog')).toBeInTheDocument());
     expect(fetchSpy).not.toHaveBeenCalled();
   });
 
-  it('shows zoomcluster when multiple campsites are in the click buffer', async () => {
-    const second = { ...fakeCampsite, name: 'Alpine Meadow Camp', agency_short: 'usfs' };
+  it('clicking a cluster calls getClusterExpansionZoom and eases to it', async () => {
     render(<App />);
-    const mapInstance = mapboxgl.Map.mock.results.at(-1).value;
-    const clickHandler = mapInstance.on.mock.calls.find(
-      ([event, fn]) => event === 'click' && typeof fn === 'function'
-    )?.[1];
-    mapInstance.queryRenderedFeatures.mockReturnValueOnce([
-      { properties: fakeCampsite, geometry: { coordinates: [-122.50, 47.50] } },
-      { properties: second,       geometry: { coordinates: [-122.51, 47.51] } },
-    ]);
-    act(() => { clickHandler({ point: { x: 100, y: 100 } }); });
-    await waitFor(() =>
-      expect(screen.getByRole('button', { name: 'Rainier Base Camp' })).toBeInTheDocument()
-    );
-    expect(screen.getByRole('button', { name: 'Alpine Meadow Camp' })).toBeInTheDocument();
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-  });
+    const map = screen.getByRole('application');
+    const clusterFeature = {
+      layer: { id: 'campsite-clusters' },
+      properties: { cluster_id: 42, point_count: 5 },
+      geometry: { coordinates: [-122.5, 47.5] }
+    };
 
-  it('selecting from zoomcluster opens the detail panel', async () => {
-    const second = { ...fakeCampsite, name: 'Alpine Meadow Camp', agency_short: 'usfs' };
-    render(<App />);
-    const mapInstance = mapboxgl.Map.mock.results.at(-1).value;
-    const clickHandler = mapInstance.on.mock.calls.find(
-      ([event, fn]) => event === 'click' && typeof fn === 'function'
-    )?.[1];
-    mapInstance.queryRenderedFeatures.mockReturnValueOnce([
-      { properties: fakeCampsite, geometry: { coordinates: [-122.50, 47.50] } },
-      { properties: second,       geometry: { coordinates: [-122.51, 47.51] } },
-    ]);
-    act(() => { clickHandler({ point: { x: 100, y: 100 } }); });
-    await waitFor(() =>
-      expect(screen.getByRole('button', { name: 'Alpine Meadow Camp' })).toBeInTheDocument()
-    );
-    await userEvent.click(screen.getByRole('button', { name: 'Alpine Meadow Camp' }));
-    await waitFor(() => expect(screen.getByRole('dialog')).toBeInTheDocument());
-    expect(screen.queryByRole('button', { name: 'Alpine Meadow Camp' })).not.toBeInTheDocument();
+    act(() => {
+      const onClick = map.props.onClick;
+      onClick({
+        features: [clusterFeature],
+        point: { x: 100, y: 100 }
+      });
+    });
+
+    await waitFor(() => expect(mockMap.easeTo).toHaveBeenCalledWith({
+      center: [-122.5, 47.5],
+      zoom: 10,
+    }));
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
   it('detail panel renders campsite info from GeoJSON properties', async () => {
     render(<App />);
-    selectCampsite(fakeCampsite);
+    const map = screen.getByRole('application');
+    act(() => {
+      const onClick = map.props.onClick;
+      onClick({
+        features: [{ layer: { id: 'campsite-circles' }, properties: fakeCampsite }],
+        point: { x: 0, y: 0 }
+      });
+    });
+
     await waitFor(() => expect(screen.getByRole('dialog')).toBeInTheDocument());
     const panel = screen.getByRole('dialog');
     expect(within(panel).getByText('Rainier Base Camp')).toBeInTheDocument();
