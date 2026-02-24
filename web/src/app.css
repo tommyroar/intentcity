@@ -140,14 +140,38 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 30vh;
-  background: var(--bg-surface);
-  border-top: 1px solid var(--border);
-  padding: 20px 20px 28px;
-  overflow-y: auto;
+  background: #228B22; /* Forest Green */
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
   z-index: 20;
   box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.5);
-  animation: slideUp 0.2s ease-out;
+  display: flex;
+  flex-direction: column;
+  transition: height 0.1s ease-out;
+  touch-action: none; /* Prevent browser scrolling while dragging the panel */
+}
+
+.panel-drag-handle {
+  width: 100%;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: ns-resize;
+  flex-shrink: 0;
+}
+
+.handle-bar {
+  width: 40px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 2px;
+}
+
+.panel-content {
+  flex: 1;
+  padding: 0 20px 28px;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
 }
 
 @keyframes slideUp {

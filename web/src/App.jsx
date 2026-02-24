@@ -104,12 +104,52 @@ function AppContent({ mapboxAccessToken }) {
   const isDebug = new URLSearchParams(window.location.search).has('debug');
   const [debugCopied, setDebugCopied] = useState(false);
   const [hoveredInfo, setHoveredInfo] = useState(null);
+  const [panelHeight, setPanelHeight] = useState(window.innerHeight * 0.3);
+  const isDragging = useRef(false);
+  const startY = useRef(0);
+  const startHeight = useRef(0);
+
   const [viewState, setViewState] = useState({
     longitude: -120.5,
     latitude: 47.3,
     zoom: 6.5,
     padding: { top: 0, bottom: 0, left: 0, right: 0 }
   });
+
+  const handleDragStart = useCallback((e) => {
+    isDragging.current = true;
+    startY.current = e.clientY || e.touches?.[0].clientY;
+    startHeight.current = panelHeight;
+    document.body.style.cursor = 'ns-resize';
+  }, [panelHeight]);
+
+  const handleDragMove = useCallback((e) => {
+    if (!isDragging.current) return;
+    const clientY = e.clientY || e.touches?.[0].clientY;
+    const deltaY = startY.current - clientY;
+    const newHeight = Math.max(100, Math.min(window.innerHeight * 0.8, startHeight.current + deltaY));
+    setPanelHeight(newHeight);
+  }, []);
+
+  const handleDragEnd = useCallback(() => {
+    isDragging.current = false;
+    document.body.style.cursor = 'default';
+  }, []);
+
+  useEffect(() => {
+    if (selectedCampsite) {
+      window.addEventListener('mousemove', handleDragMove);
+      window.addEventListener('mouseup', handleDragEnd);
+      window.addEventListener('touchmove', handleDragMove, { passive: false });
+      window.addEventListener('touchend', handleDragEnd);
+    }
+    return () => {
+      window.removeEventListener('mousemove', handleDragMove);
+      window.removeEventListener('mouseup', handleDragEnd);
+      window.removeEventListener('touchmove', handleDragMove);
+      window.removeEventListener('touchend', handleDragEnd);
+    };
+  }, [selectedCampsite, handleDragMove, handleDragEnd]);
 
   const filteredFeatures = useMemo(() => {
     return campsiteData.features.filter(f => {
@@ -371,7 +411,20 @@ function AppContent({ mapboxAccessToken }) {
         )}
 
         {selectedCampsite && (
-          <div className="detail-panel" role="dialog" aria-label="Campsite details">
+          <div 
+            className="detail-panel" 
+            role="dialog" 
+            aria-label="Campsite details"
+            style={{ height: `${panelHeight}px` }}
+          >
+            <div 
+              className="panel-drag-handle" 
+              onMouseDown={handleDragStart}
+              onTouchStart={handleDragStart}
+            >
+              <div className="handle-bar" />
+            </div>
+
             <button
               className="panel-close"
               onClick={() => {
@@ -386,83 +439,85 @@ function AppContent({ mapboxAccessToken }) {
               ✕
             </button>
 
-            <div className="panel-agency" style={{ color: AGENCY_COLORS[selectedCampsite.agency_short] }}>
-              {AGENCY_LABELS[selectedCampsite.agency_short] || selectedCampsite.agency}
-            </div>
+            <div className="panel-content">
+              <div className="panel-agency" style={{ color: AGENCY_COLORS[selectedCampsite.agency_short] }}>
+                {AGENCY_LABELS[selectedCampsite.agency_short] || selectedCampsite.agency}
+              </div>
 
-            <h2 className="panel-name">{selectedCampsite.name}</h2>
+              <h2 className="panel-name">{selectedCampsite.name}</h2>
 
-            <div className="panel-meta">
-              <span className="panel-sites">
-                <strong>{selectedCampsite.sites}</strong> sites
-              </span>
-              {selectedCampsite.availability_windows?.some(w => w.start === '01-01' && w.end === '12-31') ? (
-                <span className="panel-badge year-round">Year-round</span>
-              ) : selectedCampsite.availability_windows?.[0] ? (
-                <span className="panel-badge seasonal">
-                  Seasonal ({selectedCampsite.availability_windows[0].start} to {selectedCampsite.availability_windows[0].end})
+              <div className="panel-meta">
+                <span className="panel-sites">
+                  <strong>{selectedCampsite.sites}</strong> sites
                 </span>
-              ) : null}
-              {selectedCampsite.reservable ? (
-                <span className="panel-badge reservable">Reservable</span>
-              ) : (
-                <span className="panel-badge first-come">First-come</span>
+                {selectedCampsite.availability_windows?.some(w => w.start === '01-01' && w.end === '12-31') ? (
+                  <span className="panel-badge year-round">Year-round</span>
+                ) : selectedCampsite.availability_windows?.[0] ? (
+                  <span className="panel-badge seasonal">
+                    Seasonal ({selectedCampsite.availability_windows[0].start} to {selectedCampsite.availability_windows[0].end})
+                  </span>
+                ) : null}
+                {selectedCampsite.reservable ? (
+                  <span className="panel-badge reservable">Reservable</span>
+                ) : (
+                  <span className="panel-badge first-come">First-come</span>
+                )}
+              </div>
+
+              <div className="panel-types">
+                {selectedCampsite.types.map((t) => (
+                  <span key={t} className="type-badge">
+                    {t}
+                  </span>
+                ))}
+              </div>
+
+              {selectedCampsite.availability?.summary?.first_available && (
+                <div className="availability-summary">
+                  <span className="availability-label">First Available:</span>
+                  <span className="availability-date">
+                    {new Date(selectedCampsite.availability.summary.first_available).toLocaleDateString(undefined, {
+                      month: 'long',
+                      day: 'numeric',
+                      year: 'numeric',
+                    })}
+                  </span>
+                </div>
               )}
-            </div>
 
-            <div className="panel-types">
-              {selectedCampsite.types.map((t) => (
-                <span key={t} className="type-badge">
-                  {t}
-                </span>
-              ))}
-            </div>
+              {selectedCampsite.notes && (
+                <p className="panel-notes">{selectedCampsite.notes}</p>
+              )}
 
-            {selectedCampsite.availability?.summary?.first_available && (
-              <div className="availability-summary">
-                <span className="availability-label">First Available:</span>
-                <span className="availability-date">
-                  {new Date(selectedCampsite.availability.summary.first_available).toLocaleDateString(undefined, {
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric',
-                  })}
-                </span>
+              {loadingDetails ? (
+                <div className="loading-indicator">Loading additional details...</div>
+              ) : campsiteDetails?.reservation_dates?.length > 0 ? (
+                <div className="panel-reservations">
+                  <h3>Opening Reservation Dates</h3>
+                  <ul className="res-list">
+                    {campsiteDetails.reservation_dates.map((date) => (
+                      <li key={date} className="res-item">
+                        <span role="img" aria-label="calendar">🗓️</span> {new Date(date).toLocaleDateString(undefined, {
+                          month: 'long',
+                          day: 'numeric',
+                          year: 'numeric',
+                        })}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+
+              <div className="panel-actions">
+                <a
+                  href={selectedCampsite.reservation_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-reserve"
+                >
+                  Reserve / Info →
+                </a>
               </div>
-            )}
-
-            {selectedCampsite.notes && (
-              <p className="panel-notes">{selectedCampsite.notes}</p>
-            )}
-
-            {loadingDetails ? (
-              <div className="loading-indicator">Loading additional details...</div>
-            ) : campsiteDetails?.reservation_dates?.length > 0 ? (
-              <div className="panel-reservations">
-                <h3>Opening Reservation Dates</h3>
-                <ul className="res-list">
-                  {campsiteDetails.reservation_dates.map((date) => (
-                    <li key={date} className="res-item">
-                      <span role="img" aria-label="calendar">🗓️</span> {new Date(date).toLocaleDateString(undefined, {
-                        month: 'long',
-                        day: 'numeric',
-                        year: 'numeric',
-                      })}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
-
-            <div className="panel-actions">
-              <a
-                href={selectedCampsite.reservation_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-reserve"
-              >
-                Reserve / Info →
-              </a>
             </div>
           </div>
         )}
