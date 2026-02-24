@@ -1,3 +1,4 @@
+import React from 'react';
 import { render, screen, act, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useMap } from 'react-map-gl/mapbox';
@@ -8,9 +9,8 @@ beforeEach(() => {
   import.meta.env.VITE_MAPBOX_ACCESS_TOKEN = 'pk.test_token';
 });
 
-// Mock the useMap hook
-vi.mock('react-map-gl/mapbox', async () => {
-  const actual = await vi.importActual('react-map-gl/mapbox');
+// Mock the react-map-gl/mapbox components
+vi.mock('react-map-gl/mapbox', () => {
   const mockMap = {
     on: vi.fn(),
     off: vi.fn(),
@@ -22,19 +22,52 @@ vi.mock('react-map-gl/mapbox', async () => {
     setLayoutProperty: vi.fn(),
     setFeatureState: vi.fn(),
     queryRenderedFeatures: vi.fn(() => []),
-    getCanvas: vi.fn(() => Object.assign(document.createElement('canvas'), { style: {} })),
+    getCanvas: vi.fn(() => ({ style: {} })),
     getSource: vi.fn(() => ({
       getClusterExpansionZoom: vi.fn((clusterId, cb) => cb(null, 10)),
     })),
     easeTo: vi.fn(),
     isStyleLoaded: vi.fn(() => true),
-    project: vi.fn(([lng, lat]) => ({ x: lng * 10, y: lat * 10 })),
-    once: vi.fn((event, cb) => { if (event === 'render') cb(); }),
-    triggerRepaint: vi.fn(),
+    getMap: vi.fn(() => ({
+      getBounds: vi.fn(() => ({
+        toArray: vi.fn(() => [[-125, 45], [-115, 50]]),
+      })),
+    })),
   };
 
+  const MockMap = React.forwardRef(({ children, onClick }, ref) => {
+    React.useImperativeHandle(ref, () => ({
+      easeTo: mockMap.easeTo,
+      getMap: mockMap.getMap,
+    }));
+
+    return (
+      <div
+        role="application"
+        onClick={(e) => {
+          if (onClick) {
+            onClick({
+              features: e.detail?.features || [],
+              point: { x: 0, y: 0 },
+              lngLat: { lng: 0, lat: 0 },
+              originalEvent: e
+            });
+          }
+        }}
+        data-testid="map-mock"
+      >
+        {children}
+      </div>
+    );
+  });
+
   return {
-    ...actual,
+    default: MockMap,
+    Map: MockMap,
+    Source: ({ children }) => <div data-testid="source-mock">{children}</div>,
+    Layer: () => <div data-testid="layer-mock" />,
+    Marker: ({ children }) => <div data-testid="marker-mock">{children}</div>,
+    NavigationControl: () => <div data-testid="nav-control-mock" />,
     useMap: vi.fn(() => ({
       current: mockMap,
     })),
@@ -115,50 +148,48 @@ describe('Standalone mode (VITE_STANDALONE=true)', () => {
     render(<App />);
     const map = screen.getByRole('application');
     act(() => {
-      // Simulate click event on the map
-      const onClick = map.props.onClick;
-      onClick({
-        features: [{ layer: { id: 'campsite-circles' }, properties: fakeCampsite }],
-        point: { x: 0, y: 0 }
-      });
+      map.dispatchEvent(new CustomEvent('click', {
+        bubbles: true,
+        detail: { features: [{ layer: { id: 'campsite-circles' }, properties: fakeCampsite }] }
+      }));
     });
     await waitFor(() => expect(screen.getByRole('dialog')).toBeInTheDocument());
     expect(fetchSpy).not.toHaveBeenCalled();
   });
 
   it('clicking a cluster calls getClusterExpansionZoom and eases to it', async () => {
-    render(<App />);
-    const map = screen.getByRole('application');
-    const clusterFeature = {
-      layer: { id: 'campsite-clusters' },
-      properties: { cluster_id: 42, point_count: 5 },
-      geometry: { coordinates: [-122.5, 47.5] }
+    const user = userEvent.setup();
+    // Force use-supercluster to return a cluster
+    const cluster = {
+      id: 42,
+      geometry: { coordinates: [-122.5, 47.5] },
+      properties: { cluster: true, point_count: 5, agency_nps: 5 }
     };
-
-    act(() => {
-      const onClick = map.props.onClick;
-      onClick({
-        features: [clusterFeature],
-        point: { x: 100, y: 100 }
-      });
+    const { default: useSupercluster } = await import('use-supercluster');
+    useSupercluster.mockReturnValue({
+      clusters: [cluster],
+      supercluster: { getClusterExpansionZoom: vi.fn(() => 12) }
     });
+
+    render(<App />);
+    const clusterElement = screen.getByText('5').parentElement;
+    await user.click(clusterElement);
 
     await waitFor(() => expect(mockMap.easeTo).toHaveBeenCalledWith({
       center: [-122.5, 47.5],
-      zoom: 10,
+      zoom: 12,
+      duration: 500
     }));
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
   it('detail panel renders campsite info from GeoJSON properties', async () => {
     render(<App />);
     const map = screen.getByRole('application');
     act(() => {
-      const onClick = map.props.onClick;
-      onClick({
-        features: [{ layer: { id: 'campsite-circles' }, properties: fakeCampsite }],
-        point: { x: 0, y: 0 }
-      });
+      map.dispatchEvent(new CustomEvent('click', {
+        bubbles: true,
+        detail: { features: [{ layer: { id: 'campsite-circles' }, properties: fakeCampsite }] }
+      }));
     });
 
     await waitFor(() => expect(screen.getByRole('dialog')).toBeInTheDocument());

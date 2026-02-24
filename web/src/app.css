@@ -40,19 +40,25 @@ body {
   width: 100vw;
 }
 
-/* Agency filter controls — no container, pills float directly on map */
+/* Filter controls — pills float on map */
 .controls {
   position: absolute;
   top: 12px;
   left: 12px;
   z-index: 10;
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  flex-direction: column;
+  gap: 12px;
   max-width: calc(100vw - 80px); /* leave room for nav controls on right */
 }
 
-.agency-toggle {
+.filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.agency-toggle, .filter-toggle {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -66,15 +72,21 @@ body {
   font-family: inherit;
   font-size: 12px;
   cursor: pointer;
-  transition: border-color 0.15s, color 0.15s, opacity 0.15s;
+  transition: border-color 0.15s, color 0.15s, opacity 0.15s, background 0.15s;
 }
 
-.agency-toggle.active {
+.agency-toggle.active, .filter-toggle.active {
   background: rgba(20, 20, 20, 0.75);
+  color: var(--text);
 }
 
-.agency-toggle.inactive {
-  opacity: 0.5;
+.filter-toggle.active {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+.agency-toggle.inactive, .filter-toggle.inactive {
+  opacity: 0.6;
 }
 
 /* Ensure Mapbox nav controls sit above our overlay pills */

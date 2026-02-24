@@ -13,10 +13,13 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "lodash.debounce": "^4.0.8",
     "mapbox-gl": "^3.5.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "react-map-gl": "^8.1.0"
+    "react-map-gl": "^8.1.0",
+    "supercluster": "^8.0.1",
+    "use-supercluster": "^1.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",

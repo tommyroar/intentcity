@@ -19,6 +19,14 @@ npm run lint       # ESLint
 npm run preview    # Preview production build locally
 ```
 
+## Verification Workflow
+
+Standard steps for all feature development:
+1. **Lint**: `npm run lint`
+2. **Unit Test**: `npm run test`
+3. **Build**: `npm run build`
+4. **Local Deploy**: `npm run preview` (verify at http://localhost:4173)
+
 ## Architecture
 
 ### Dual-Mode Design
