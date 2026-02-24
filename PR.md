@@ -19,9 +19,10 @@ Before proposing changes, understand the codebase:
 
 1. **Develop** on a descriptive feature branch (never commit directly to `main`).
 2. **Verify** locally:
-   - Run unit tests.
-   - Run linting.
-   - Perform basic smoke tests on the affected area.
+   - Run unit tests (`npm test`).
+   - Run linting (`npm run lint`).
+   - Run production build (`npm run build`).
+   - **Deploy on a local npm server** (`npm run preview`) and perform smoke tests.
 3. **Iterate** until all checks pass.
 
 ## Phase 3: Pull Request & Staging

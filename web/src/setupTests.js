@@ -1,5 +1,18 @@
 import '@testing-library/jest-dom';
 
+// Provide a dummy token for tests
+vi.stubEnv('VITE_MAPBOX_ACCESS_TOKEN', 'pk.test-token');
+
+// Mock use-supercluster
+vi.mock('use-supercluster', () => ({
+  default: vi.fn(({ points }) => ({
+    clusters: points || [],
+    supercluster: {
+      getClusterExpansionZoom: vi.fn(() => 10),
+    },
+  })),
+}));
+
 // Mock mapbox-gl for tests (it requires a browser canvas)
 vi.mock('mapbox-gl', () => {
   const mockMap = {

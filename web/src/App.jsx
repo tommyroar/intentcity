@@ -1,9 +1,9 @@
-import { useState, useMemo, useCallback } from 'react';
-import Map, { Source, Layer, NavigationControl, useMap } from 'react-map-gl/mapbox';
+import { useState, useMemo, useCallback, useRef, useEffect, memo } from 'react';
+import Map, { Source, Layer, NavigationControl, Marker } from 'react-map-gl/mapbox';
+import useSupercluster from 'use-supercluster';
+import debounce from 'lodash.debounce';
 import campsiteData from '../../data/campsites.json';
 import 'mapbox-gl/dist/mapbox-gl.css';
-
-const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
 const AGENCY_COLORS = {
   'wa-state-parks': '#A6E22E',
@@ -25,37 +25,9 @@ const MONTH_NAMES = [
 ];
 
 const SOURCE_ID = 'campsites';
-const CLUSTERS_LAYER_ID = 'campsite-clusters';
-const CLUSTER_COUNT_LAYER_ID = 'campsite-cluster-count';
 const CIRCLES_LAYER_ID = 'campsite-circles';
 const MAP_STYLE = 'mapbox://styles/mapbox/outdoors-v12';
 const WA_BOUNDS = [[-124.83, 45.54], [-116.92, 49.00]];
-
-const clustersLayer = {
-  id: CLUSTERS_LAYER_ID,
-  type: 'circle',
-  source: SOURCE_ID,
-  filter: ['has', 'point_count'],
-  paint: {
-    'circle-color': 'rgba(39, 40, 34, 0.72)',
-    'circle-radius': ['step', ['get', 'point_count'], 16, 10, 20, 50, 26],
-    'circle-stroke-width': 1.5,
-    'circle-stroke-color': 'rgba(248, 248, 242, 0.35)',
-  },
-};
-
-const clusterCountLayer = {
-  id: CLUSTER_COUNT_LAYER_ID,
-  type: 'symbol',
-  source: SOURCE_ID,
-  filter: ['has', 'point_count'],
-  layout: {
-    'text-field': '{point_count_abbreviated}',
-    'text-size': 12,
-    'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-  },
-  paint: { 'text-color': '#f8f8f2' },
-};
 
 const circleLayerPaint = {
   'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, 5, 10, 9],
@@ -68,63 +40,140 @@ const circleLayerPaint = {
     'blm', AGENCY_COLORS.blm,
     '#CCCCCC',
   ],
-  'circle-stroke-width': ['case', ['boolean', ['feature-state', 'hover'], false], 3, 1],
+  'circle-stroke-width': 1.5,
   'circle-stroke-color': '#FFFFFF',
-  'circle-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, 0.85],
+  'circle-opacity': 0.85,
 };
 
+// Memoize the ClusterMarker to prevent heavy SVG re-renders
+const ClusterMarker = memo(({ count, agencyCounts, onClick }) => {
+  const total = count;
+  // Determine ring thickness based on count to keep it from exploding
+  const strokeWidth = total > 50 ? 0.8 : total > 20 ? 1.2 : 2;
+  const gap = 0.5;
+  const baseRadius = 8;
+  const rings = [];
 
-function AppContent() {
-  const { current: map } = useMap();
+  // Group by agency for the "bands" look
+  Object.entries(agencyCounts).forEach(([agency, c]) => {
+    for (let i = 0; i < c; i++) {
+      rings.push(AGENCY_COLORS[agency] || '#ccc');
+    }
+  });
+
+  const size = (baseRadius + total * (strokeWidth + gap)) * 2 + 4;
+
+  return (
+    <div onClick={onClick} style={{ cursor: 'pointer', transform: 'translate(-50%, -50%)' }}>
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+        <circle cx={size / 2} cy={size / 2} r={baseRadius - 2} fill="none" />
+        {rings.map((color, i) => (
+          <circle
+            key={i}
+            cx={size / 2}
+            cy={size / 2}
+            r={baseRadius + i * (strokeWidth + gap)}
+            fill="none"
+            stroke={color}
+            strokeWidth={strokeWidth}
+            opacity={0.8}
+          />
+        ))}
+        <text
+          x="50%"
+          y="50%"
+          textAnchor="middle"
+          dy=".3em"
+          fill="#f8f8f2"
+          fontSize="10px"
+          fontWeight="bold"
+          style={{ pointerEvents: 'none', fontFamily: 'monospace' }}
+        >
+          {total}
+        </text>
+      </svg>
+    </div>
+  );
+});
+
+ClusterMarker.displayName = 'ClusterMarker';
+
+function AppContent({ mapboxAccessToken }) {
   const [selectedCampsite, setSelectedCampsite] = useState(null);
-  const [campsiteDetails, setCampsiteDetails] = useState(null);
-  const [loadingDetails, setLoadingDetails] = useState(false);
+  const [campsiteDetails] = useState(null);
+  const [loadingDetails] = useState(false);
   const [activeAgencies, setActiveAgencies] = useState(Object.keys(AGENCY_COLORS));
+  const [reservableOnly, setReservableOnly] = useState(false);
+  const [yearRoundOnly, setYearRoundOnly] = useState(false);
   const [mapError, setMapError] = useState(null);
   const isDebug = new URLSearchParams(window.location.search).has('debug');
   const [debugCopied, setDebugCopied] = useState(false);
   const [hoveredInfo, setHoveredInfo] = useState(null);
   const [viewState, setViewState] = useState({
-    bounds: WA_BOUNDS,
-    fitBoundsOptions: { padding: 40 },
+    longitude: -120.5,
+    latitude: 47.3,
+    zoom: 6.5,
+    padding: { top: 0, bottom: 0, left: 0, right: 0 }
   });
 
-  const agencyFilter = useMemo(() => {
-    const notCluster = ['!', ['has', 'point_count']];
-    if (activeAgencies.length === 0) {
-      return ['all', notCluster, ['==', ['get', 'agency_short'], '']];
-    }
-    if (activeAgencies.length === Object.keys(AGENCY_COLORS).length) {
-      return notCluster;
-    }
-    return ['all', notCluster, ['in', ['get', 'agency_short'], ['literal', activeAgencies]]];
-  }, [activeAgencies]);
+  const filteredFeatures = useMemo(() => {
+    return campsiteData.features.filter(f => {
+      const p = f.properties;
+      if (!activeAgencies.includes(p.agency_short)) return false;
+      if (reservableOnly && !p.reservable) return false;
+      if (yearRoundOnly && !p.year_round) return false;
+      return true;
+    }).map(f => ({
+      ...f,
+      properties: {
+        ...f.properties,
+        cluster: false // required by supercluster
+      }
+    }));
+  }, [activeAgencies, reservableOnly, yearRoundOnly]);
 
-  const unclusteredPointLayer = {
-    id: CIRCLES_LAYER_ID,
-    type: 'circle',
-    source: SOURCE_ID,
-    filter: agencyFilter,
-    paint: circleLayerPaint,
-  };
+  const mapRef = useRef();
+  const [bounds, setBounds] = useState(WA_BOUNDS.flat());
+
+  // Debounce the bounds update so clustering only runs after movement stops/slows
+  const debouncedUpdateBounds = useMemo(
+    () => debounce(() => {
+      if (mapRef.current) {
+        const b = mapRef.current.getMap().getBounds().toArray().flat();
+        setBounds(b);
+      }
+    }, 100),
+    []
+  );
+
+  useEffect(() => {
+    return () => debouncedUpdateBounds.cancel();
+  }, [debouncedUpdateBounds]);
+
+  const { clusters, supercluster } = useSupercluster({
+    points: filteredFeatures,
+    bounds,
+    zoom: Math.round(viewState.zoom),
+    options: {
+      radius: 60,
+      maxZoom: 13,
+      map: (props) => ({
+        agency_wa_state_parks: props.agency_short === 'wa-state-parks' ? 1 : 0,
+        agency_nps: props.agency_short === 'nps' ? 1 : 0,
+        agency_usfs: props.agency_short === 'usfs' ? 1 : 0,
+        agency_blm: props.agency_short === 'blm' ? 1 : 0,
+      }),
+      reduce: (acc, props) => {
+        acc.agency_wa_state_parks += props.agency_wa_state_parks;
+        acc.agency_nps += props.agency_nps;
+        acc.agency_usfs += props.agency_usfs;
+        acc.agency_blm += props.agency_blm;
+      }
+    }
+  });
 
   const handleMapClick = useCallback((event) => {
-    if (!map) return;
     const { features } = event;
-    const clusterFeature = features?.find(f => f.layer.id === CLUSTERS_LAYER_ID);
-
-    if (clusterFeature) {
-      const clusterId = clusterFeature.properties.cluster_id;
-      map.getSource(SOURCE_ID).getClusterExpansionZoom(clusterId, (err, zoom) => {
-        if (err) return;
-        map.easeTo({
-          center: clusterFeature.geometry.coordinates,
-          zoom,
-        });
-      });
-      return;
-    }
-
     const campsiteFeature = features?.find(f => f.layer.id === CIRCLES_LAYER_ID);
     if (campsiteFeature) {
       const p = campsiteFeature.properties;
@@ -135,7 +184,7 @@ function AppContent() {
     } else {
       setSelectedCampsite(null);
     }
-  }, [map]);
+  }, []);
 
   const onHover = useCallback(event => {
     const { features, point: { x, y } } = event;
@@ -151,17 +200,27 @@ function AppContent() {
     );
   };
 
+  const unclusteredGeoJSON = useMemo(() => ({
+    type: 'FeatureCollection',
+    features: clusters.filter(c => !c.properties.cluster)
+  }), [clusters]);
+
   return (
     <div className="app">
       <div className="map-wrapper">
         <Map
           {...viewState}
-          onMove={evt => setViewState(evt.viewState)}
-          mapboxAccessToken={MAPBOX_TOKEN}
+          ref={mapRef}
+          onMove={evt => {
+            setViewState(evt.viewState);
+            debouncedUpdateBounds();
+          }}
+          onLoad={() => debouncedUpdateBounds()}
+          mapboxAccessToken={mapboxAccessToken}
           mapStyle={MAP_STYLE}
           onClick={handleMapClick}
           onMouseMove={onHover}
-          interactiveLayerIds={[CLUSTERS_LAYER_ID, CIRCLES_LAYER_ID]}
+          interactiveLayerIds={[CIRCLES_LAYER_ID]}
           onError={(e) => {
             console.error('Mapbox error:', e);
             const msg = e?.error?.message || e?.message || String(e);
@@ -169,29 +228,48 @@ function AppContent() {
           }}
         >
           <div className="controls">
-            {Object.entries(AGENCY_LABELS).map(([key, label]) => (
-              <button
-                key={key}
-                className={`agency-toggle ${activeAgencies.includes(key) ? 'active' : 'inactive'}`}
-                style={
-                  activeAgencies.includes(key)
-                    ? { borderColor: AGENCY_COLORS[key], color: AGENCY_COLORS[key] }
-                    : {}
-                }
-                onClick={() => toggleAgency(key)}
-                aria-pressed={activeAgencies.includes(key)}
-              >
-                <span
-                  className="agency-dot"
+            <div className="filter-group">
+              {Object.entries(AGENCY_LABELS).map(([key, label]) => (
+                <button
+                  key={key}
+                  className={`agency-toggle ${activeAgencies.includes(key) ? 'active' : 'inactive'}`}
                   style={
                     activeAgencies.includes(key)
-                      ? { backgroundColor: AGENCY_COLORS[key] }
+                      ? { borderColor: AGENCY_COLORS[key], color: AGENCY_COLORS[key] }
                       : {}
                   }
-                />
-                {label}
+                  onClick={() => toggleAgency(key)}
+                  aria-pressed={activeAgencies.includes(key)}
+                >
+                  <span
+                    className="agency-dot"
+                    style={
+                      activeAgencies.includes(key)
+                        ? { backgroundColor: AGENCY_COLORS[key] }
+                        : {}
+                    }
+                  />
+                  {label}
+                </button>
+              ))}
+            </div>
+
+            <div className="filter-group">
+              <button
+                className={`filter-toggle ${reservableOnly ? 'active' : 'inactive'}`}
+                onClick={() => setReservableOnly(!reservableOnly)}
+                aria-pressed={reservableOnly}
+              >
+                Reservable
               </button>
-            ))}
+              <button
+                className={`filter-toggle ${yearRoundOnly ? 'active' : 'inactive'}`}
+                onClick={() => setYearRoundOnly(!yearRoundOnly)}
+                aria-pressed={yearRoundOnly}
+              >
+                Year-round
+              </button>
+            </div>
           </div>
 
           {mapError && (
@@ -200,17 +278,52 @@ function AppContent() {
             </div>
           )}
 
-          <Source
-            id={SOURCE_ID}
-            type="geojson"
-            data={campsiteData}
-            cluster={true}
-            clusterMaxZoom={13}
-            clusterRadius={40}
-          >
-            <Layer {...clustersLayer} />
-            <Layer {...clusterCountLayer} />
-            <Layer {...unclusteredPointLayer} />
+          {clusters.map(cluster => {
+            const [longitude, latitude] = cluster.geometry.coordinates;
+            const { cluster: isCluster, point_count: pointCount } = cluster.properties;
+
+            if (isCluster) {
+              const agencyCounts = {
+                'wa-state-parks': cluster.properties.agency_wa_state_parks,
+                'nps': cluster.properties.agency_nps,
+                'usfs': cluster.properties.agency_usfs,
+                'blm': cluster.properties.agency_blm,
+              };
+
+              return (
+                <Marker
+                  key={`cluster-${cluster.id}`}
+                  longitude={longitude}
+                  latitude={latitude}
+                >
+                  <ClusterMarker
+                    count={pointCount}
+                    agencyCounts={agencyCounts}
+                    onClick={() => {
+                      const expansionZoom = Math.min(
+                        supercluster.getClusterExpansionZoom(cluster.id),
+                        20
+                      );
+                      mapRef.current.easeTo({
+                        center: [longitude, latitude],
+                        zoom: expansionZoom,
+                        duration: 500
+                      });
+                    }}
+                  />
+                </Marker>
+              );
+            }
+
+            return null;
+          })}
+
+          <Source id={SOURCE_ID} type="geojson" data={unclusteredGeoJSON}>
+            <Layer
+              id={CIRCLES_LAYER_ID}
+              type="circle"
+              paint={circleLayerPaint}
+            />
           </Source>
 
           <NavigationControl position="top-right" />
@@ -323,12 +436,13 @@ function AppContent() {
 }
 
 export default function App() {
-  if (!MAPBOX_TOKEN) {
+  const mapboxAccessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
+  if (!mapboxAccessToken) {
     return (
       <div className="map-error" role="alert">
         <strong>Map Error:</strong> No Mapbox token found. Set VITE_MAPBOX_ACCESS_TOKEN in your .env file.
       </div>
     );
   }
-  return <AppContent />;
+  return <AppContent mapboxAccessToken={mapboxAccessToken} />;
 }
