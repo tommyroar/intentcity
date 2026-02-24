@@ -445,11 +445,23 @@ function AppContent({ mapboxAccessToken }) {
             </button>
 
             <div className="panel-content">
-              <div className="panel-agency" style={{ color: AGENCY_COLORS[selectedCampsite.agency_short] }}>
+              <div 
+                className="panel-agency" 
+                style={{ color: AGENCY_COLORS[selectedCampsite.agency_short], cursor: 'ns-resize' }}
+                onMouseDown={handleDragStart}
+                onTouchStart={handleDragStart}
+              >
                 {AGENCY_LABELS[selectedCampsite.agency_short] || selectedCampsite.agency}
               </div>
 
-              <h2 className="panel-name">{selectedCampsite.name}</h2>
+              <h2 
+                className="panel-name" 
+                onMouseDown={handleDragStart}
+                onTouchStart={handleDragStart}
+                style={{ cursor: 'ns-resize' }}
+              >
+                {selectedCampsite.name}
+              </h2>
 
               <div className="panel-meta">
                 <span className="panel-sites">

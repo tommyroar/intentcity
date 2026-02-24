@@ -199,4 +199,19 @@ describe('Standalone mode (VITE_STANDALONE=true)', () => {
     expect(within(panel).getByText(/National Park Service/i)).toBeInTheDocument();
     expect(within(panel).queryByText(/Loading additional details/i)).not.toBeInTheDocument();
   });
+
+  it('campsite title has drag handle cursor style', async () => {
+    render(<App />);
+    const map = screen.getByRole('application');
+    act(() => {
+      map.dispatchEvent(new CustomEvent('click', {
+        bubbles: true,
+        detail: { features: [{ layer: { id: 'campsite-circles' }, properties: fakeCampsite }] }
+      }));
+    });
+
+    await waitFor(() => expect(screen.getByRole('dialog')).toBeInTheDocument());
+    const title = screen.getByText('Rainier Base Camp');
+    expect(title).toHaveStyle({ cursor: 'ns-resize' });
+  });
 });
