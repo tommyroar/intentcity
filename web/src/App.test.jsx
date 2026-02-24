@@ -123,8 +123,7 @@ describe('Standalone mode (VITE_STANDALONE=true)', () => {
     agency_short: 'nps',
     sites: 30,
     types: '["tent"]',
-    year_round: false,
-    open_month: 5,
+    availability_windows: '[{"start": "05-01", "end": "09-30", "booking_advance_days": 180}]',
     reservable: true,
   };
 
@@ -195,7 +194,7 @@ describe('Standalone mode (VITE_STANDALONE=true)', () => {
     await waitFor(() => expect(screen.getByRole('dialog')).toBeInTheDocument());
     const panel = screen.getByRole('dialog');
     expect(within(panel).getByText('Rainier Base Camp')).toBeInTheDocument();
-    expect(within(panel).getByText(/30/)).toBeInTheDocument();
+    expect(within(panel).getByText(/30/, { selector: 'strong' })).toBeInTheDocument();
     expect(within(panel).getByText(/National Park Service/i)).toBeInTheDocument();
     expect(within(panel).queryByText(/Loading additional details/i)).not.toBeInTheDocument();
   });

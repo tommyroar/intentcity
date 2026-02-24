@@ -8,10 +8,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-All commands run from the `web/` directory:
+All commands run from the `web/` directory (or use root shortcuts):
 
 ```bash
-npm run dev        # Start dev server at http://localhost:5173
+./dev.sh start     # (Root) Start dev server in background + output URLs
+./dev.sh stop      # (Root) Stop background dev server
+./dev.sh status    # (Root) Check if dev server is running
+npm run dev        # Start dev server (use -- --host for network access)
 npm run build      # Production build (also triggers e2e tests via postbuild)
 npm run test       # Run vitest unit tests
 npm run e2e        # Run Playwright e2e tests
@@ -37,7 +40,9 @@ The app runs in two modes controlled by `VITE_STANDALONE`:
 
 ### Data
 
-`data/campsites.json` is a GeoJSON FeatureCollection of campsite Points. It is managed externally and should not be edited in this repo.
+`data/campsites.json` is a GeoJSON FeatureCollection of campsite Points. It is managed externally.
+- **Availability Windows**: Replaces `year_round`/`open_month`. Array of windows with `start`, `end`, and `booking_advance_days`.
+- **Real-time Metadata**: Includes `rec_gov_id`, `wa_park_id`, and `availability` summaries (first available date, etc.).
 
 ### Frontend (`web/src/App.jsx`)
 
