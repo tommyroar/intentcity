@@ -125,10 +125,15 @@ function AppContent({ mapboxAccessToken }) {
 
   const handleDragMove = useCallback((e) => {
     if (!isDragging.current) return;
-    const clientY = e.clientY || e.touches?.[0].clientY;
-    const deltaY = startY.current - clientY;
-    const newHeight = Math.max(100, Math.min(window.innerHeight * 0.8, startHeight.current + deltaY));
-    setPanelHeight(newHeight);
+    
+    // Use requestAnimationFrame for smoother UI updates during drag
+    window.requestAnimationFrame(() => {
+      if (!isDragging.current) return;
+      const clientY = e.clientY || e.touches?.[0].clientY;
+      const deltaY = startY.current - clientY;
+      const newHeight = Math.max(100, Math.min(window.innerHeight * 0.9, startHeight.current + deltaY));
+      setPanelHeight(newHeight);
+    });
   }, []);
 
   const handleDragEnd = useCallback(() => {
