@@ -19,11 +19,6 @@ const AGENCY_LABELS = {
   blm: 'Bureau of Land Management',
 };
 
-const MONTH_NAMES = [
-  '', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
-];
-
 const SOURCE_ID = 'campsites';
 const CIRCLES_LAYER_ID = 'campsite-circles';
 const MAP_STYLE = 'mapbox://styles/mapbox/outdoors-v12';
@@ -178,7 +173,7 @@ function AppContent({ mapboxAccessToken }) {
   });
 
   const handleMapClick = useCallback((event) => {
-    const { features } = event;
+    const { features, lngLat } = event;
     const campsiteFeature = features?.find(f => f.layer.id === CIRCLES_LAYER_ID);
     if (campsiteFeature) {
       const p = campsiteFeature.properties;
@@ -188,8 +183,21 @@ function AppContent({ mapboxAccessToken }) {
         availability_windows: typeof p.availability_windows === 'string' ? JSON.parse(p.availability_windows) : p.availability_windows,
         availability: typeof p.availability === 'string' ? JSON.parse(p.availability) : p.availability,
       });
+
+      // Center the map on the clicked campsite and add padding for the info box
+      const bottomPadding = window.innerHeight * 0.3;
+      setViewState(prev => ({
+        ...prev,
+        longitude: lngLat.lng,
+        latitude: lngLat.lat,
+        padding: { ...prev.padding, bottom: bottomPadding }
+      }));
     } else {
       setSelectedCampsite(null);
+      setViewState(prev => ({
+        ...prev,
+        padding: { ...prev.padding, bottom: 0 }
+      }));
     }
   }, []);
 
@@ -366,7 +374,13 @@ function AppContent({ mapboxAccessToken }) {
           <div className="detail-panel" role="dialog" aria-label="Campsite details">
             <button
               className="panel-close"
-              onClick={() => setSelectedCampsite(null)}
+              onClick={() => {
+                setSelectedCampsite(null);
+                setViewState(prev => ({
+                  ...prev,
+                  padding: { ...prev.padding, bottom: 0 }
+                }));
+              }}
               aria-label="Close panel"
             >
               ✕

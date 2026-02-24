@@ -140,7 +140,7 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  max-height: 55vh;
+  height: 30vh;
   background: var(--bg-surface);
   border-top: 1px solid var(--border);
   padding: 20px 20px 28px;
@@ -150,28 +150,9 @@ body {
   animation: slideUp 0.2s ease-out;
 }
 
-@media (min-width: 600px) {
-  .detail-panel {
-    left: auto;
-    right: 16px;
-    bottom: 32px;
-    width: var(--panel-width);
-    max-height: 70vh;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-    animation: slideIn 0.2s ease-out;
-  }
-}
-
 @keyframes slideUp {
   from { transform: translateY(100%); opacity: 0; }
   to   { transform: translateY(0);    opacity: 1; }
-}
-
-@keyframes slideIn {
-  from { transform: translateX(32px); opacity: 0; }
-  to   { transform: translateX(0);    opacity: 1; }
 }
 
 .panel-close {
