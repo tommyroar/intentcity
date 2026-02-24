@@ -60,6 +60,7 @@ vi.mock('react-map-gl/mapbox', () => {
       </div>
     );
   });
+  MockMap.displayName = 'MockMap';
 
   return {
     default: MockMap,
