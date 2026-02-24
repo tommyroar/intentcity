@@ -121,7 +121,10 @@ function AppContent({ mapboxAccessToken }) {
       const p = f.properties;
       if (!activeAgencies.includes(p.agency_short)) return false;
       if (reservableOnly && !p.reservable) return false;
-      if (yearRoundOnly && !p.year_round) return false;
+      
+      const isYearRound = p.availability_windows?.some(w => w.start === '01-01' && w.end === '12-31');
+      if (yearRoundOnly && !isYearRound) return false;
+      
       return true;
     }).map(f => ({
       ...f,
@@ -150,26 +153,28 @@ function AppContent({ mapboxAccessToken }) {
     return () => debouncedUpdateBounds.cancel();
   }, [debouncedUpdateBounds]);
 
+  const superclusterOptions = useMemo(() => ({
+    radius: 60,
+    maxZoom: 13,
+    map: (props) => ({
+      agency_wa_state_parks: props.agency_short === 'wa-state-parks' ? 1 : 0,
+      agency_nps: props.agency_short === 'nps' ? 1 : 0,
+      agency_usfs: props.agency_short === 'usfs' ? 1 : 0,
+      agency_blm: props.agency_short === 'blm' ? 1 : 0,
+    }),
+    reduce: (acc, props) => {
+      acc.agency_wa_state_parks += props.agency_wa_state_parks;
+      acc.agency_nps += props.agency_nps;
+      acc.agency_usfs += props.agency_usfs;
+      acc.agency_blm += props.agency_blm;
+    }
+  }), []);
+
   const { clusters, supercluster } = useSupercluster({
     points: filteredFeatures,
     bounds,
     zoom: Math.round(viewState.zoom),
-    options: {
-      radius: 60,
-      maxZoom: 13,
-      map: (props) => ({
-        agency_wa_state_parks: props.agency_short === 'wa-state-parks' ? 1 : 0,
-        agency_nps: props.agency_short === 'nps' ? 1 : 0,
-        agency_usfs: props.agency_short === 'usfs' ? 1 : 0,
-        agency_blm: props.agency_short === 'blm' ? 1 : 0,
-      }),
-      reduce: (acc, props) => {
-        acc.agency_wa_state_parks += props.agency_wa_state_parks;
-        acc.agency_nps += props.agency_nps;
-        acc.agency_usfs += props.agency_usfs;
-        acc.agency_blm += props.agency_blm;
-      }
-    }
+    options: superclusterOptions
   });
 
   const handleMapClick = useCallback((event) => {
@@ -180,6 +185,8 @@ function AppContent({ mapboxAccessToken }) {
       setSelectedCampsite({
         ...p,
         types: typeof p.types === 'string' ? JSON.parse(p.types) : p.types,
+        availability_windows: typeof p.availability_windows === 'string' ? JSON.parse(p.availability_windows) : p.availability_windows,
+        availability: typeof p.availability === 'string' ? JSON.parse(p.availability) : p.availability,
       });
     } else {
       setSelectedCampsite(null);
@@ -208,150 +215,152 @@ function AppContent({ mapboxAccessToken }) {
   return (
     <div className="app">
       <div className="map-wrapper">
-        <Map
-          {...viewState}
-          ref={mapRef}
-          onMove={evt => {
-            setViewState(evt.viewState);
-            debouncedUpdateBounds();
-          }}
-          onLoad={() => debouncedUpdateBounds()}
-          mapboxAccessToken={mapboxAccessToken}
-          mapStyle={MAP_STYLE}
-          onClick={handleMapClick}
-          onMouseMove={onHover}
-          interactiveLayerIds={[CIRCLES_LAYER_ID]}
-          onError={(e) => {
-            console.error('Mapbox error:', e);
-            const msg = e?.error?.message || e?.message || String(e);
-            setMapError(`Map failed to load: ${msg}`);
-          }}
-        >
-          <div className="controls">
-            <div className="filter-group">
-              {Object.entries(AGENCY_LABELS).map(([key, label]) => (
-                <button
-                  key={key}
-                  className={`agency-toggle ${activeAgencies.includes(key) ? 'active' : 'inactive'}`}
+        <div className="map-container">
+          <Map
+            {...viewState}
+            ref={mapRef}
+            onMove={evt => {
+              setViewState(evt.viewState);
+              debouncedUpdateBounds();
+            }}
+            onLoad={() => debouncedUpdateBounds()}
+            mapboxAccessToken={mapboxAccessToken}
+            mapStyle={MAP_STYLE}
+            onClick={handleMapClick}
+            onMouseMove={onHover}
+            interactiveLayerIds={[CIRCLES_LAYER_ID]}
+            onError={(e) => {
+              console.error('Mapbox error:', e);
+              const msg = e?.error?.message || e?.message || String(e);
+              setMapError(`Map failed to load: ${msg}`);
+            }}
+          >
+            {clusters.map(cluster => {
+              const [longitude, latitude] = cluster.geometry.coordinates;
+              const { cluster: isCluster, point_count: pointCount } = cluster.properties;
+
+              if (isCluster) {
+                const agencyCounts = {
+                  'wa-state-parks': cluster.properties.agency_wa_state_parks,
+                  'nps': cluster.properties.agency_nps,
+                  'usfs': cluster.properties.agency_usfs,
+                  'blm': cluster.properties.agency_blm,
+                };
+
+                return (
+                  <Marker
+                    key={`cluster-${cluster.id}`}
+                    longitude={longitude}
+                    latitude={latitude}
+                  >
+                    <ClusterMarker
+                      count={pointCount}
+                      agencyCounts={agencyCounts}
+                      onClick={() => {
+                        const expansionZoom = Math.min(
+                          supercluster.getClusterExpansionZoom(cluster.id),
+                          20
+                        );
+                        mapRef.current.easeTo({
+                          center: [longitude, latitude],
+                          zoom: expansionZoom,
+                          duration: 500
+                        });
+                      }}
+                    />
+                  </Marker>
+                );
+              }
+
+              return null;
+            })}
+
+            <Source id={SOURCE_ID} type="geojson" data={unclusteredGeoJSON}>
+              <Layer
+                id={CIRCLES_LAYER_ID}
+                type="circle"
+                paint={circleLayerPaint}
+              />
+            </Source>
+
+            <NavigationControl position="top-right" />
+          </Map>
+        </div>
+
+        <div className="controls">
+          <div className="filter-group">
+            {Object.entries(AGENCY_LABELS).map(([key, label]) => (
+              <button
+                key={key}
+                className={`agency-toggle ${activeAgencies.includes(key) ? 'active' : 'inactive'}`}
+                style={
+                  activeAgencies.includes(key)
+                    ? { borderColor: AGENCY_COLORS[key], color: AGENCY_COLORS[key] }
+                    : {}
+                }
+                onClick={() => toggleAgency(key)}
+                aria-pressed={activeAgencies.includes(key)}
+              >
+                <span
+                  className="agency-dot"
                   style={
                     activeAgencies.includes(key)
-                      ? { borderColor: AGENCY_COLORS[key], color: AGENCY_COLORS[key] }
+                      ? { backgroundColor: AGENCY_COLORS[key] }
                       : {}
                   }
-                  onClick={() => toggleAgency(key)}
-                  aria-pressed={activeAgencies.includes(key)}
-                >
-                  <span
-                    className="agency-dot"
-                    style={
-                      activeAgencies.includes(key)
-                        ? { backgroundColor: AGENCY_COLORS[key] }
-                        : {}
-                    }
-                  />
-                  {label}
-                </button>
-              ))}
-            </div>
-
-            <div className="filter-group">
-              <button
-                className={`filter-toggle ${reservableOnly ? 'active' : 'inactive'}`}
-                onClick={() => setReservableOnly(!reservableOnly)}
-                aria-pressed={reservableOnly}
-              >
-                Reservable
+                />
+                {label}
               </button>
-              <button
-                className={`filter-toggle ${yearRoundOnly ? 'active' : 'inactive'}`}
-                onClick={() => setYearRoundOnly(!yearRoundOnly)}
-                aria-pressed={yearRoundOnly}
-              >
-                Year-round
-              </button>
-            </div>
+            ))}
           </div>
 
-          {mapError && (
-            <div className="map-error" role="alert">
-              <strong>Map Error:</strong> {mapError}
-            </div>
-          )}
-
-          {clusters.map(cluster => {
-            const [longitude, latitude] = cluster.geometry.coordinates;
-            const { cluster: isCluster, point_count: pointCount } = cluster.properties;
-
-            if (isCluster) {
-              const agencyCounts = {
-                'wa-state-parks': cluster.properties.agency_wa_state_parks,
-                'nps': cluster.properties.agency_nps,
-                'usfs': cluster.properties.agency_usfs,
-                'blm': cluster.properties.agency_blm,
-              };
-
-              return (
-                <Marker
-                  key={`cluster-${cluster.id}`}
-                  longitude={longitude}
-                  latitude={latitude}
-                >
-                  <ClusterMarker
-                    count={pointCount}
-                    agencyCounts={agencyCounts}
-                    onClick={() => {
-                      const expansionZoom = Math.min(
-                        supercluster.getClusterExpansionZoom(cluster.id),
-                        20
-                      );
-                      mapRef.current.easeTo({
-                        center: [longitude, latitude],
-                        zoom: expansionZoom,
-                        duration: 500
-                      });
-                    }}
-                  />
-                </Marker>
-              );
-            }
-
-            return null;
-          })}
-
-          <Source id={SOURCE_ID} type="geojson" data={unclusteredGeoJSON}>
-            <Layer
-              id={CIRCLES_LAYER_ID}
-              type="circle"
-              paint={circleLayerPaint}
-            />
-          </Source>
-
-          <NavigationControl position="top-right" />
-
-          {hoveredInfo && (
-            <div className="tooltip" style={{ left: hoveredInfo.x, top: hoveredInfo.y }}>
-              <div>{hoveredInfo.feature.properties.name}</div>
-            </div>
-          )}
-
-          {isDebug && (
-            <div
-              className="debug-panel"
-              onClick={() => {
-                const text = JSON.stringify(viewState);
-                navigator.clipboard.writeText(text).then(() => {
-                  setDebugCopied(true);
-                  setTimeout(() => setDebugCopied(false), 1500);
-                });
-              }}
-              style={{ cursor: 'copy', pointerEvents: 'auto' }}
+          <div className="filter-group">
+            <button
+              className={`filter-toggle ${reservableOnly ? 'active' : 'inactive'}`}
+              onClick={() => setReservableOnly(!reservableOnly)}
+              aria-pressed={reservableOnly}
             >
-              {debugCopied
-                ? 'copied!'
-                : `zoom: ${viewState.zoom.toFixed(2)} | lng: ${viewState.longitude.toFixed(4)} | lat: ${viewState.latitude.toFixed(4)}`}
-            </div>
-          )}
-        </Map>
+              Reservable
+            </button>
+            <button
+              className={`filter-toggle ${yearRoundOnly ? 'active' : 'inactive'}`}
+              onClick={() => setYearRoundOnly(!yearRoundOnly)}
+              aria-pressed={yearRoundOnly}
+            >
+              Year-round
+            </button>
+          </div>
+        </div>
+
+        {mapError && (
+          <div className="map-error" role="alert">
+            <strong>Map Error:</strong> {mapError}
+          </div>
+        )}
+
+        {hoveredInfo && (
+          <div className="tooltip" style={{ left: hoveredInfo.x, top: hoveredInfo.y }}>
+            <div>{hoveredInfo.feature.properties.name}</div>
+          </div>
+        )}
+
+        {isDebug && (
+          <div
+            className="debug-panel"
+            onClick={() => {
+              const text = JSON.stringify(viewState);
+              navigator.clipboard.writeText(text).then(() => {
+                setDebugCopied(true);
+                setTimeout(() => setDebugCopied(false), 1500);
+              });
+            }}
+            style={{ cursor: 'copy', pointerEvents: 'auto' }}
+          >
+            {debugCopied
+              ? 'copied!'
+              : `zoom: ${viewState.zoom.toFixed(2)} | lng: ${viewState.longitude.toFixed(4)} | lat: ${viewState.latitude.toFixed(4)}`}
+          </div>
+        )}
 
         {selectedCampsite && (
           <div className="detail-panel" role="dialog" aria-label="Campsite details">
@@ -373,11 +382,11 @@ function AppContent({ mapboxAccessToken }) {
               <span className="panel-sites">
                 <strong>{selectedCampsite.sites}</strong> sites
               </span>
-              {selectedCampsite.year_round ? (
+              {selectedCampsite.availability_windows?.some(w => w.start === '01-01' && w.end === '12-31') ? (
                 <span className="panel-badge year-round">Year-round</span>
-              ) : selectedCampsite.open_month ? (
+              ) : selectedCampsite.availability_windows?.[0] ? (
                 <span className="panel-badge seasonal">
-                  Opens {MONTH_NAMES[selectedCampsite.open_month]}
+                  Seasonal ({selectedCampsite.availability_windows[0].start} to {selectedCampsite.availability_windows[0].end})
                 </span>
               ) : null}
               {selectedCampsite.reservable ? (
@@ -394,6 +403,19 @@ function AppContent({ mapboxAccessToken }) {
                 </span>
               ))}
             </div>
+
+            {selectedCampsite.availability?.summary?.first_available && (
+              <div className="availability-summary">
+                <span className="availability-label">First Available:</span>
+                <span className="availability-date">
+                  {new Date(selectedCampsite.availability.summary.first_available).toLocaleDateString(undefined, {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric',
+                  })}
+                </span>
+              </div>
+            )}
 
             {selectedCampsite.notes && (
               <p className="panel-notes">{selectedCampsite.notes}</p>
