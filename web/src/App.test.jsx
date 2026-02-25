@@ -68,6 +68,11 @@ vi.mock('react-map-gl/mapbox', () => {
     Source: ({ children }) => <div data-testid="source-mock">{children}</div>,
     Layer: () => <div data-testid="layer-mock" />,
     Marker: ({ children }) => <div data-testid="marker-mock">{children}</div>,
+    Popup: ({ children, longitude, latitude }) => (
+      <div data-testid="popup-mock" data-lng={longitude} data-lat={latitude}>
+        {children}
+      </div>
+    ),
     NavigationControl: () => <div data-testid="nav-control-mock" />,
     useMap: vi.fn(() => ({
       current: mockMap,
@@ -150,7 +155,11 @@ describe('Standalone mode (VITE_STANDALONE=true)', () => {
     act(() => {
       map.dispatchEvent(new CustomEvent('click', {
         bubbles: true,
-        detail: { features: [{ layer: { id: 'campsite-circles' }, properties: fakeCampsite }] }
+        detail: { features: [{ 
+          layer: { id: 'campsite-circles' }, 
+          properties: fakeCampsite,
+          geometry: { coordinates: [-121.7, 46.8] }
+        }] }
       }));
     });
     await waitFor(() => expect(screen.getByRole('dialog')).toBeInTheDocument());
@@ -188,7 +197,11 @@ describe('Standalone mode (VITE_STANDALONE=true)', () => {
     act(() => {
       map.dispatchEvent(new CustomEvent('click', {
         bubbles: true,
-        detail: { features: [{ layer: { id: 'campsite-circles' }, properties: fakeCampsite }] }
+        detail: { features: [{ 
+          layer: { id: 'campsite-circles' }, 
+          properties: fakeCampsite,
+          geometry: { coordinates: [-121.7, 46.8] }
+        }] }
       }));
     });
 
@@ -206,12 +219,17 @@ describe('Standalone mode (VITE_STANDALONE=true)', () => {
     act(() => {
       map.dispatchEvent(new CustomEvent('click', {
         bubbles: true,
-        detail: { features: [{ layer: { id: 'campsite-circles' }, properties: fakeCampsite }] }
+        detail: { features: [{ 
+          layer: { id: 'campsite-circles' }, 
+          properties: fakeCampsite,
+          geometry: { coordinates: [-121.7, 46.8] }
+        }] }
       }));
     });
 
     await waitFor(() => expect(screen.getByRole('dialog')).toBeInTheDocument());
-    const title = screen.getByText('Rainier Base Camp');
+    const panel = screen.getByRole('dialog');
+    const title = within(panel).getByText('Rainier Base Camp');
     expect(title).toHaveStyle({ cursor: 'ns-resize' });
   });
 });

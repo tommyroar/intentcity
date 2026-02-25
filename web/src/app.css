@@ -412,16 +412,40 @@ body {
 }
 
 .tooltip {
-  position: absolute;
-  background: rgba(30, 30, 30, 0.85);
-  border: 1px solid var(--border);
+  display: none; /* Removed in favor of Popup */
+}
+
+.campsite-popup {
   padding: 4px 8px;
-  border-radius: var(--radius);
-  color: var(--text);
-  font-size: 12px;
-  pointer-events: none;
-  transform: translate(-50%, -120%);
-  z-index: 20;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  font-size: 13px;
+  font-weight: 600;
+  color: #f8f8f2;
+  background: #272822;
+  border-radius: 4px;
+}
+
+/* Customizing Mapbox Popup defaults */
+.mapboxgl-popup-content {
+  background: #272822 !important;
+  color: #f8f8f2 !important;
+  padding: 0 !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid #3e3e3e !important;
+}
+
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+  border-top-color: #272822 !important;
+}
+
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+  border-bottom-color: #272822 !important;
+}
+
+.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+  border-right-color: #272822 !important;
+}
+
+.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+  border-left-color: #272822 !important;
 }

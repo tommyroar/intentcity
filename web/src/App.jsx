@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback, useRef, useEffect, memo } from 'react';
-import Map, { Source, Layer, NavigationControl, Marker } from 'react-map-gl/mapbox';
+import Map, { Source, Layer, NavigationControl, Marker, Popup } from 'react-map-gl/mapbox';
 import useSupercluster from 'use-supercluster';
 import debounce from 'lodash.debounce';
 import campsiteData from '../../data/campsites.json';
@@ -222,8 +222,11 @@ function AppContent({ mapboxAccessToken }) {
     const campsiteFeature = features?.find(f => f.layer.id === CIRCLES_LAYER_ID);
     if (campsiteFeature) {
       const p = campsiteFeature.properties;
+      const [lng, lat] = campsiteFeature.geometry.coordinates;
       setSelectedCampsite({
         ...p,
+        longitude: lng,
+        latitude: lat,
         types: typeof p.types === 'string' ? JSON.parse(p.types) : p.types,
         availability_windows: typeof p.availability_windows === 'string' ? JSON.parse(p.availability_windows) : p.availability_windows,
         availability: typeof p.availability === 'string' ? JSON.parse(p.availability) : p.availability,
@@ -247,9 +250,13 @@ function AppContent({ mapboxAccessToken }) {
   }, []);
 
   const onHover = useCallback(event => {
-    const { features, point: { x, y } } = event;
+    const { features, lngLat } = event;
     const hoveredFeature = features?.find(f => f.layer.id === CIRCLES_LAYER_ID);
-    setHoveredInfo(hoveredFeature && { feature: hoveredFeature, x, y });
+    setHoveredInfo(hoveredFeature && { 
+      feature: hoveredFeature, 
+      longitude: lngLat.lng, 
+      latitude: lngLat.lat 
+    });
   }, []);
 
   const toggleAgency = (agency) => {
@@ -337,6 +344,27 @@ function AppContent({ mapboxAccessToken }) {
             </Source>
 
             <NavigationControl position="top-right" />
+
+            {((hoveredInfo && hoveredInfo.feature.properties.id !== selectedCampsite?.id) || selectedCampsite) && (
+              <Popup
+                longitude={hoveredInfo?.longitude || selectedCampsite?.longitude}
+                latitude={hoveredInfo?.latitude || selectedCampsite?.latitude}
+                closeButton={false}
+                closeOnClick={false}
+                anchor="bottom"
+                maxWidth="300px"
+                offset={10}
+              >
+                <div 
+                  className="campsite-popup"
+                  style={{ 
+                    borderTop: `3px solid ${AGENCY_COLORS[hoveredInfo?.feature.properties.agency_short || selectedCampsite?.agency_short] || '#ccc'}`
+                  }}
+                >
+                  {hoveredInfo?.feature.properties.name || selectedCampsite?.name}
+                </div>
+              </Popup>
+            )}
           </Map>
         </div>
 
@@ -388,12 +416,6 @@ function AppContent({ mapboxAccessToken }) {
         {mapError && (
           <div className="map-error" role="alert">
             <strong>Map Error:</strong> {mapError}
-          </div>
-        )}
-
-        {hoveredInfo && (
-          <div className="tooltip" style={{ left: hoveredInfo.x, top: hoveredInfo.y }}>
-            <div>{hoveredInfo.feature.properties.name}</div>
           </div>
         )}
 
