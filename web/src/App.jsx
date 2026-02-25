@@ -352,15 +352,16 @@ function AppContent({ mapboxAccessToken }) {
                 closeButton={false}
                 closeOnClick={false}
                 anchor="bottom"
-                maxWidth="300px"
-                offset={10}
+                offset={12}
               >
-                <div 
-                  className="campsite-popup"
-                  style={{ 
-                    borderTop: `3px solid ${AGENCY_COLORS[hoveredInfo?.feature.properties.agency_short || selectedCampsite?.agency_short] || '#ccc'}`
-                  }}
-                >
+                <div className="campsite-popup">
+                  <span 
+                    className="agency-dot" 
+                    style={{ 
+                      backgroundColor: AGENCY_COLORS[hoveredInfo?.feature.properties.agency_short || selectedCampsite?.agency_short],
+                      marginRight: '8px'
+                    }} 
+                  />
                   {hoveredInfo?.feature.properties.name || selectedCampsite?.name}
                 </div>
               </Popup>
