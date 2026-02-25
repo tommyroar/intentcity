@@ -411,86 +411,97 @@ body {
   border-radius: 3px;
 }
 
-/* Exact South Park Intro Sign Aesthetic */
+/* Exact South Park Wooden Sign Aesthetic */
 .campsite-popup {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 240px;
-  padding-bottom: 40px; /* Space for posts */
-  filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.3));
+  filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.4));
+  font-family: "Arial Black", "Gadget", sans-serif;
+  transform: rotate(-1deg);
 }
 
 .sign-face {
-  background-color: #ffffff;
-  border: 4px solid #5d4037; /* Brown wooden frame */
-  padding: 15px 10px;
+  /* Wood Grain Background */
+  background: #b38b6d;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 0px,
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 1px,
+    transparent 10px
+  ), linear-gradient(to bottom, #b38b6d, #9c6c56);
+  
+  border: 3px solid #5d4037; /* Darker brown border */
+  padding: 12px 15px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transform: rotate(-1.5deg); /* Wonky placement */
-  box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
-  position: relative;
-  z-index: 2;
+  
+  /* Notched "Wooden Board" Corners */
+  clip-path: polygon(
+    0% 10%, 2% 0%, 98% 0%, 100% 10%, 
+    100% 90%, 98% 100%, 2% 100%, 0% 90%
+  );
+  
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
 }
 
 .welcome-text {
-  color: #d32f2f; /* Red */
+  color: #000000;
   font-family: "Brush Script MT", cursive;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1;
-  margin-bottom: 5px;
-  text-align: center;
-  width: 100%;
-  /* Slight arch effect */
-  transform: scaleY(1.2);
+  margin-bottom: 2px;
+  transform: scaleY(1.1);
 }
 
 .location-name {
   color: #000000;
-  font-family: "Arial Black", "Gadget", sans-serif;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 900;
   text-transform: uppercase;
   line-height: 0.9;
   text-align: center;
-  margin: 5px 0;
-  letter-spacing: -0.02em;
+  margin: 4px 0;
+  letter-spacing: -0.05em;
+  /* Thick black text for cutout look */
+  -webkit-text-stroke: 0.5px #000;
 }
 
 .agency-subtext {
-  color: #2e7d32; /* Green */
-  font-family: "Comic Sans MS", "Chalkboard SE", sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  margin-top: 5px;
+  color: #000000;
+  font-size: 10px;
+  font-weight: 800;
+  margin-top: 2px;
+  opacity: 0.9;
+  letter-spacing: 0.02em;
 }
 
-/* Wooden Posts */
+/* Thick Wooden Posts */
 .sign-posts {
   position: absolute;
-  bottom: 0;
+  bottom: -45px;
   left: 0;
   right: 0;
-  height: 60px;
+  height: 50px;
   pointer-events: none;
-  z-index: 1;
+  display: flex;
+  justify-content: space-around;
+  padding: 0 40px;
 }
 
 .sign-post {
-  position: absolute;
-  bottom: 0;
-  width: 10px;
+  width: 14px;
   height: 100%;
-  background-color: #5d4037;
-  border: 2px solid #3e2723;
+  background: #5d4037;
+  background-image: linear-gradient(to right, #3e2723, #5d4037, #3e2723);
+  border: 2px solid #2d1e18;
 }
-
-.sign-post.left { left: 40px; }
-.sign-post.right { right: 40px; }
 
 /* Customizing Mapbox Popup defaults */
 .mapboxgl-popup-content {
@@ -501,5 +512,5 @@ body {
 }
 
 .mapboxgl-popup-tip {
-  display: none; /* Posts act as the anchor visually */
+  display: none;
 }
