@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback, useRef, useEffect, memo } from 'react';
-import Map, { Source, Layer, NavigationControl, Marker } from 'react-map-gl/mapbox';
+import Map, { Source, Layer, NavigationControl, Marker, Popup } from 'react-map-gl/mapbox';
 import useSupercluster from 'use-supercluster';
 import debounce from 'lodash.debounce';
 import campsiteData from '../../data/campsites.json';
@@ -23,22 +23,6 @@ const SOURCE_ID = 'campsites';
 const CIRCLES_LAYER_ID = 'campsite-circles';
 const MAP_STYLE = 'mapbox://styles/mapbox/outdoors-v12';
 const WA_BOUNDS = [[-124.83, 45.54], [-116.92, 49.00]];
-
-const circleLayerPaint = {
-  'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, 5, 10, 9],
-  'circle-color': [
-    'match',
-    ['get', 'agency_short'],
-    'wa-state-parks', AGENCY_COLORS['wa-state-parks'],
-    'nps', AGENCY_COLORS.nps,
-    'usfs', AGENCY_COLORS.usfs,
-    'blm', AGENCY_COLORS.blm,
-    '#CCCCCC',
-  ],
-  'circle-stroke-width': 1.5,
-  'circle-stroke-color': '#FFFFFF',
-  'circle-opacity': 0.85,
-};
 
 // Memoize the ClusterMarker to prevent heavy SVG re-renders
 const ClusterMarker = memo(({ count, agencyCounts, onClick }) => {
@@ -104,10 +88,39 @@ function AppContent({ mapboxAccessToken }) {
   const isDebug = new URLSearchParams(window.location.search).has('debug');
   const [debugCopied, setDebugCopied] = useState(false);
   const [hoveredInfo, setHoveredInfo] = useState(null);
-  const [panelHeight, setPanelHeight] = useState(window.innerHeight * 0.3);
+  const [panelHeight, setPanelHeight] = useState(window.innerHeight * 0.4);
   const isDragging = useRef(false);
   const startY = useRef(0);
   const startHeight = useRef(0);
+
+  const circleLayerPaint = useMemo(() => ({
+    'circle-radius': [
+      'interpolate',
+      ['linear'],
+      ['zoom'],
+      5,
+      ['case', ['==', ['get', 'id'], selectedCampsite?.id || ''], 10, 5],
+      10,
+      ['case', ['==', ['get', 'id'], selectedCampsite?.id || ''], 18, 9],
+    ],
+    'circle-color': [
+      'match',
+      ['get', 'agency_short'],
+      'wa-state-parks', AGENCY_COLORS['wa-state-parks'],
+      'nps', AGENCY_COLORS.nps,
+      'usfs', AGENCY_COLORS.usfs,
+      'blm', AGENCY_COLORS.blm,
+      '#CCCCCC',
+    ],
+    'circle-stroke-width': [
+      'case',
+      ['==', ['get', 'id'], selectedCampsite?.id || ''],
+      3,
+      1.5
+    ],
+    'circle-stroke-color': '#FFFFFF',
+    'circle-opacity': 0.85,
+  }), [selectedCampsite?.id]);
 
   const [viewState, setViewState] = useState({
     longitude: -120.5,
@@ -222,15 +235,18 @@ function AppContent({ mapboxAccessToken }) {
     const campsiteFeature = features?.find(f => f.layer.id === CIRCLES_LAYER_ID);
     if (campsiteFeature) {
       const p = campsiteFeature.properties;
+      const [lng, lat] = campsiteFeature.geometry.coordinates;
       setSelectedCampsite({
         ...p,
+        longitude: lng,
+        latitude: lat,
         types: typeof p.types === 'string' ? JSON.parse(p.types) : p.types,
         availability_windows: typeof p.availability_windows === 'string' ? JSON.parse(p.availability_windows) : p.availability_windows,
         availability: typeof p.availability === 'string' ? JSON.parse(p.availability) : p.availability,
       });
 
       // Center the map on the clicked campsite and add padding for the info box
-      const bottomPadding = window.innerHeight * 0.3;
+      const bottomPadding = panelHeight;
       setViewState(prev => ({
         ...prev,
         longitude: lngLat.lng,
@@ -244,12 +260,16 @@ function AppContent({ mapboxAccessToken }) {
         padding: { ...prev.padding, bottom: 0 }
       }));
     }
-  }, []);
+  }, [panelHeight]);
 
   const onHover = useCallback(event => {
-    const { features, point: { x, y } } = event;
+    const { features, lngLat } = event;
     const hoveredFeature = features?.find(f => f.layer.id === CIRCLES_LAYER_ID);
-    setHoveredInfo(hoveredFeature && { feature: hoveredFeature, x, y });
+    setHoveredInfo(hoveredFeature && { 
+      feature: hoveredFeature, 
+      longitude: lngLat.lng, 
+      latitude: lngLat.lat 
+    });
   }, []);
 
   const toggleAgency = (agency) => {
@@ -337,6 +357,41 @@ function AppContent({ mapboxAccessToken }) {
             </Source>
 
             <NavigationControl position="top-right" />
+
+            {((hoveredInfo && hoveredInfo.feature.properties.id !== selectedCampsite?.id) || selectedCampsite) && (
+              <Popup
+                longitude={hoveredInfo?.longitude || selectedCampsite?.longitude}
+                latitude={hoveredInfo?.latitude || selectedCampsite?.latitude}
+                closeButton={false}
+                closeOnClick={false}
+                anchor="bottom"
+                offset={18}
+              >
+                <div className="campsite-popup">
+                  <div className="sign-face">
+                    <svg className="sign-shape-bg" viewBox="0 0 200 80" preserveAspectRatio="none">
+                      <path 
+                        d="M10,2 L190,2 C195,2 198,5 198,10 L185,70 C184,75 180,78 175,78 L25,78 C20,78 16,75 15,70 L2,10 C2,5 5,2 10,2 Z" 
+                        fill="#9c6c56" 
+                        stroke="#5d4037" 
+                        strokeWidth="3" 
+                      />
+                    </svg>
+                    <div className="location-name">
+                      {hoveredInfo?.feature.properties.name || selectedCampsite?.name}
+                    </div>
+                    <div className="agency-subtext">
+                      {hoveredInfo?.feature.properties.agency || selectedCampsite?.agency}
+                    </div>
+                  </div>
+                  <div className="sign-posts">
+                    <svg viewBox="0 0 20 24" preserveAspectRatio="none">
+                      <path d="M0,0 L20,0 L10,24 Z" fill="#5d4037" />
+                    </svg>
+                  </div>
+                </div>
+              </Popup>
+            )}
           </Map>
         </div>
 
@@ -388,12 +443,6 @@ function AppContent({ mapboxAccessToken }) {
         {mapError && (
           <div className="map-error" role="alert">
             <strong>Map Error:</strong> {mapError}
-          </div>
-        )}
-
-        {hoveredInfo && (
-          <div className="tooltip" style={{ left: hoveredInfo.x, top: hoveredInfo.y }}>
-            <div>{hoveredInfo.feature.properties.name}</div>
           </div>
         )}
 
