@@ -411,58 +411,59 @@ body {
   border-radius: 3px;
 }
 
-/* Iconic National Forest Trapezoidal Sign */
+/* South Park Style Wonky Sign */
 .campsite-popup {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 220px;
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  text-transform: uppercase;
+  width: 200px;
+  background-color: #4CAF50; /* South Park Sign Green */
+  border: 3px solid #000;
+  box-shadow: 
+    5px 5px 0px rgba(0,0,0,0.2), /* Paper cutout shadow */
+    inset 2px 2px 0px rgba(255,255,255,0.2);
+  font-family: "Comic Sans MS", "Chalkboard SE", "Marker Felt", cursive;
+  text-transform: none; /* South Park isn't all-caps */
+  transform: rotate(-1deg); /* Slightly wonky */
 }
 
-/* Top Section (Yellow) */
 .popup-top {
-  background-color: #f3ce49; /* USDA Forest Service Yellow */
-  color: #3C2A21;
-  padding: 8px 12px;
-  font-size: 10px;
-  font-weight: 900;
+  background-color: transparent;
+  color: #fff;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 700;
   text-align: center;
-  letter-spacing: 0.05em;
-  clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
-  border-bottom: 2px solid #3C2A21;
+  border-bottom: 2px solid #000;
+  text-shadow: 2px 2px 0px #000;
 }
 
-/* Bottom Section (Brown) */
 .popup-bottom {
-  background-color: #3C2A21; /* USDA Forest Service Brown */
-  color: #f4f1ea;
-  padding: 12px 10px;
-  min-height: 60px;
+  background-color: transparent;
+  color: #fff;
+  padding: 10px 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 10% 100%);
+  clip-path: none; /* Remove trapezoid for South Park look */
 }
 
 .popup-name {
-  font-size: 14px;
-  font-weight: 800;
-  line-height: 1.2;
-  margin-bottom: 4px;
-  /* Engraved look */
-  text-shadow: -1px -1px 0px rgba(0,0,0,0.5), 1px 1px 0px rgba(255,255,255,0.1);
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 6px;
+  color: #fff;
+  text-shadow: 3px 3px 0px #000;
 }
 
 .popup-agency-label {
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 700;
-  color: #f3ce49;
-  letter-spacing: 0.1em;
+  color: #FFEB3B; /* Cartman Yellow */
+  text-shadow: 1px 1px 0px #000;
 }
 
 /* Customizing Mapbox Popup defaults */
@@ -474,8 +475,8 @@ body {
 }
 
 .mapboxgl-popup-tip {
-  border-top-color: #3C2A21 !important;
-  border-bottom-color: #3C2A21 !important;
-  border-left-color: #3C2A21 !important;
-  border-right-color: #3C2A21 !important;
+  border-top-color: #000 !important;
+  border-bottom-color: #000 !important;
+  border-left-color: #000 !important;
+  border-right-color: #000 !important;
 }

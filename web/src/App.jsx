@@ -363,7 +363,7 @@ function AppContent({ mapboxAccessToken }) {
                       {hoveredInfo?.feature.properties.name || selectedCampsite?.name}
                     </div>
                     <div className="popup-agency-label">
-                      National Forest
+                      {hoveredInfo?.feature.properties.agency || selectedCampsite?.agency}
                     </div>
                   </div>
                 </div>
