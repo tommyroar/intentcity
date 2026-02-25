@@ -24,22 +24,6 @@ const CIRCLES_LAYER_ID = 'campsite-circles';
 const MAP_STYLE = 'mapbox://styles/mapbox/outdoors-v12';
 const WA_BOUNDS = [[-124.83, 45.54], [-116.92, 49.00]];
 
-const circleLayerPaint = {
-  'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, 5, 10, 9],
-  'circle-color': [
-    'match',
-    ['get', 'agency_short'],
-    'wa-state-parks', AGENCY_COLORS['wa-state-parks'],
-    'nps', AGENCY_COLORS.nps,
-    'usfs', AGENCY_COLORS.usfs,
-    'blm', AGENCY_COLORS.blm,
-    '#CCCCCC',
-  ],
-  'circle-stroke-width': 1.5,
-  'circle-stroke-color': '#FFFFFF',
-  'circle-opacity': 0.85,
-};
-
 // Memoize the ClusterMarker to prevent heavy SVG re-renders
 const ClusterMarker = memo(({ count, agencyCounts, onClick }) => {
   const total = count;
@@ -104,10 +88,39 @@ function AppContent({ mapboxAccessToken }) {
   const isDebug = new URLSearchParams(window.location.search).has('debug');
   const [debugCopied, setDebugCopied] = useState(false);
   const [hoveredInfo, setHoveredInfo] = useState(null);
-  const [panelHeight, setPanelHeight] = useState(window.innerHeight * 0.3);
+  const [panelHeight, setPanelHeight] = useState(window.innerHeight * 0.4);
   const isDragging = useRef(false);
   const startY = useRef(0);
   const startHeight = useRef(0);
+
+  const circleLayerPaint = useMemo(() => ({
+    'circle-radius': [
+      'interpolate',
+      ['linear'],
+      ['zoom'],
+      5,
+      ['case', ['==', ['get', 'id'], selectedCampsite?.id || ''], 10, 5],
+      10,
+      ['case', ['==', ['get', 'id'], selectedCampsite?.id || ''], 18, 9],
+    ],
+    'circle-color': [
+      'match',
+      ['get', 'agency_short'],
+      'wa-state-parks', AGENCY_COLORS['wa-state-parks'],
+      'nps', AGENCY_COLORS.nps,
+      'usfs', AGENCY_COLORS.usfs,
+      'blm', AGENCY_COLORS.blm,
+      '#CCCCCC',
+    ],
+    'circle-stroke-width': [
+      'case',
+      ['==', ['get', 'id'], selectedCampsite?.id || ''],
+      3,
+      1.5
+    ],
+    'circle-stroke-color': '#FFFFFF',
+    'circle-opacity': 0.85,
+  }), [selectedCampsite?.id]);
 
   const [viewState, setViewState] = useState({
     longitude: -120.5,
@@ -233,7 +246,7 @@ function AppContent({ mapboxAccessToken }) {
       });
 
       // Center the map on the clicked campsite and add padding for the info box
-      const bottomPadding = window.innerHeight * 0.3;
+      const bottomPadding = panelHeight;
       setViewState(prev => ({
         ...prev,
         longitude: lngLat.lng,
@@ -247,7 +260,7 @@ function AppContent({ mapboxAccessToken }) {
         padding: { ...prev.padding, bottom: 0 }
       }));
     }
-  }, []);
+  }, [panelHeight]);
 
   const onHover = useCallback(event => {
     const { features, lngLat } = event;
@@ -352,7 +365,7 @@ function AppContent({ mapboxAccessToken }) {
                 closeButton={false}
                 closeOnClick={false}
                 anchor="bottom"
-                offset={20}
+                offset={18}
               >
                 <div className="campsite-popup">
                   <div className="sign-face">
@@ -363,9 +376,7 @@ function AppContent({ mapboxAccessToken }) {
                       {hoveredInfo?.feature.properties.agency || selectedCampsite?.agency}
                     </div>
                   </div>
-                  <div className="sign-posts">
-                    <div className="sign-post" />
-                  </div>
+                  <div className="sign-posts" />
                 </div>
               </Popup>
             )}
