@@ -352,14 +352,9 @@ function AppContent({ mapboxAccessToken }) {
                 closeButton={false}
                 closeOnClick={false}
                 anchor="bottom"
-                offset={0}
+                offset={20}
               >
-                <div 
-                  className="campsite-popup"
-                  style={{ 
-                    '--agency-color': AGENCY_COLORS[hoveredInfo?.feature.properties.agency_short || selectedCampsite?.agency_short] 
-                  }}
-                >
+                <div className="campsite-popup">
                   <div className="sign-face">
                     <div className="location-name">
                       {hoveredInfo?.feature.properties.name || selectedCampsite?.name}

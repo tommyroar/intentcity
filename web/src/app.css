@@ -411,62 +411,87 @@ body {
   border-radius: 3px;
 }
 
-/* Simplified Agency-Colored Trapezoid Sign */
+/* Rounded South Park Brown Trapezoid Sign */
 .campsite-popup {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
+  /* Ensure the whole sign sits higher */
+  margin-bottom: 20px;
 }
 
 .sign-face {
-  background-color: var(--agency-color, #3C2A21);
+  background-color: #9c6c56; /* South Park Brown */
   color: #ffffff;
-  padding: 8px 16px;
-  min-width: 120px;
+  padding: 12px 20px;
+  min-width: 140px;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  /* Trapezoid: top wider than bottom */
-  clip-path: polygon(0% 0%, 100% 0%, 92% 100%, 8% 100%);
-  border: 1.5px solid rgba(0,0,0,0.2);
+  border: 2px solid #5d4037;
+  
+  /* Create trapezoid via perspective tilt (top wider) */
+  transform: perspective(500px) rotateX(15deg);
+  transform-origin: bottom;
+  
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
 }
 
 .location-name {
   font-family: 'Helvetica Neue', Arial, sans-serif;
-  font-size: 15px;
-  font-weight: 900;
+  font-size: 16px;
+  font-weight: 950; /* Extra bold */
   text-transform: uppercase;
-  letter-spacing: 0.02em;
-  line-height: 1.1;
+  letter-spacing: 0.01em;
+  line-height: 1;
   white-space: nowrap;
+  /* Fix distortion from parent tilt */
+  transform: rotateX(-5deg); 
 }
 
 .agency-subtext {
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 700;
-  opacity: 0.9;
-  margin-top: 2px;
+  opacity: 0.95;
+  margin-top: 4px;
   text-transform: uppercase;
+  transform: rotateX(-5deg);
 }
 
-/* Single centered signpost pointer */
+/* Tapered signpost pointer */
 .sign-posts {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
-  height: 12px;
-  margin-top: -1px; /* Overlap slightly with sign face */
+  margin-top: -5px; /* Tuck under the sign face */
 }
 
 .sign-post {
-  width: 6px;
-  height: 100%;
+  width: 8px;
+  height: 25px;
   background-color: #5d4037;
-  border: 1px solid #3e2723;
+  border-left: 1px solid #3e2723;
+  border-right: 1px solid #3e2723;
+  position: relative;
+}
+
+/* Triangle point at the bottom */
+.sign-post::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: -1px; /* Align with border */
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 12px solid #5d4037;
 }
 
 /* Customizing Mapbox Popup defaults */
