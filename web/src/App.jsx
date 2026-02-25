@@ -369,6 +369,14 @@ function AppContent({ mapboxAccessToken }) {
               >
                 <div className="campsite-popup">
                   <div className="sign-face">
+                    <svg className="sign-shape-bg" viewBox="0 0 200 80" preserveAspectRatio="none">
+                      <path 
+                        d="M10,2 L190,2 C195,2 198,5 198,10 L185,70 C184,75 180,78 175,78 L25,78 C20,78 16,75 15,70 L2,10 C2,5 5,2 10,2 Z" 
+                        fill="#9c6c56" 
+                        stroke="#5d4037" 
+                        strokeWidth="3" 
+                      />
+                    </svg>
                     <div className="location-name">
                       {hoveredInfo?.feature.properties.name || selectedCampsite?.name}
                     </div>
@@ -376,7 +384,11 @@ function AppContent({ mapboxAccessToken }) {
                       {hoveredInfo?.feature.properties.agency || selectedCampsite?.agency}
                     </div>
                   </div>
-                  <div className="sign-posts" />
+                  <div className="sign-posts">
+                    <svg viewBox="0 0 20 24" preserveAspectRatio="none">
+                      <path d="M0,0 L20,0 L10,24 Z" fill="#5d4037" />
+                    </svg>
+                  </div>
                 </div>
               </Popup>
             )}

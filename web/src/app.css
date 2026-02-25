@@ -411,64 +411,71 @@ body {
   border-radius: 3px;
 }
 
-/* Rounded South Park Brown Trapezoid Sign */
+/* Precision-Aligned South Park Sign */
 .campsite-popup {
+  width: 240px; /* Fixed width ensures perfect Mapbox centering */
   display: flex;
   flex-direction: column;
   align-items: center;
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));
-  /* We'll use Mapbox offset to lift it 2x point width */
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+  pointer-events: none;
 }
 
 .sign-face {
-  background-color: #9c6c56; /* South Park Brown */
-  color: #ffffff;
-  padding: 12px 24px;
-  min-width: 160px;
+  position: relative;
+  width: 200px;
+  min-height: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  border: 3px solid #5d4037;
-  border-radius: 12px;
-  
-  /* Trapezoid shape: top is wider than bottom */
-  /* We use clip-path on a wrapper or just accept the clipped border look */
-  clip-path: polygon(0% 0%, 100% 0%, 92% 100%, 8% 100%);
-  
-  box-shadow: inset 0 0 12px rgba(0,0,0,0.25);
+  padding: 12px 10px;
   z-index: 2;
-  position: relative;
+}
+
+/* SVG Shape Background to prevent border clipping */
+.sign-shape-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
 
 .location-name {
+  color: #ffffff;
   font-family: 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
-  font-weight: 900;
+  font-weight: 950;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   line-height: 1.1;
-  white-space: nowrap;
+  /* Prevent text from overflowing the trapezoid bottom */
+  max-width: 80%; 
+  margin-bottom: 2px;
 }
 
 .agency-subtext {
+  color: #ffffff;
   font-size: 10px;
   font-weight: 700;
   opacity: 0.95;
-  margin-top: 4px;
   text-transform: uppercase;
 }
 
-/* Single Triangle Signpost */
+/* Precise Triangle Signpost */
 .sign-posts {
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 30px solid #5d4037; /* Pointy triangle */
-  margin-top: -2px; /* Slight overlap */
+  width: 20px;
+  height: 24px;
+  margin-top: -2px; /* Overlap with sign face */
   z-index: 1;
+}
+
+.sign-posts svg {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 /* Customizing Mapbox Popup defaults */
@@ -477,6 +484,7 @@ body {
   padding: 0 !important;
   box-shadow: none !important;
   border: none !important;
+  max-width: none !important;
 }
 
 .mapboxgl-popup-tip {
