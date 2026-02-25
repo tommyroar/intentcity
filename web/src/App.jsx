@@ -355,14 +355,17 @@ function AppContent({ mapboxAccessToken }) {
                 offset={12}
               >
                 <div className="campsite-popup">
-                  <span 
-                    className="agency-dot" 
-                    style={{ 
-                      backgroundColor: AGENCY_COLORS[hoveredInfo?.feature.properties.agency_short || selectedCampsite?.agency_short],
-                      marginRight: '8px'
-                    }} 
-                  />
-                  {hoveredInfo?.feature.properties.name || selectedCampsite?.name}
+                  <div className="popup-top">
+                    {AGENCY_LABELS[hoveredInfo?.feature.properties.agency_short || selectedCampsite?.agency_short]}
+                  </div>
+                  <div className="popup-bottom">
+                    <div className="popup-name">
+                      {hoveredInfo?.feature.properties.name || selectedCampsite?.name}
+                    </div>
+                    <div className="popup-agency-label">
+                      National Forest
+                    </div>
+                  </div>
                 </div>
               </Popup>
             )}

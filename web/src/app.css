@@ -411,39 +411,71 @@ body {
   border-radius: 3px;
 }
 
+/* Iconic National Forest Trapezoidal Sign */
 .campsite-popup {
-  padding: 6px 12px;
-  font-size: 14px;
-  font-weight: 800;
-  color: #f4f1ea; /* Off-white for aged paint look */
-  background: #3c2a21; /* Dark wood brown */
-  border-radius: 3px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  /* Embossed/Carved effect */
-  text-shadow: 
-    -1px -1px 0px rgba(0, 0, 0, 0.8), 
-    1px 1px 0px rgba(255, 255, 255, 0.1);
-  box-shadow: inset 0 0 4px rgba(0,0,0,0.4);
-  font-family: 'Helvetica Neue', 'Arial Black', sans-serif;
-  border: 2px solid #2d1e18;
-  white-space: nowrap;
+  position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  width: 220px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  text-transform: uppercase;
 }
 
-/* Customizing Mapbox Popup defaults to fix alignment and match theme */
+/* Top Section (Yellow) */
+.popup-top {
+  background-color: #f3ce49; /* USDA Forest Service Yellow */
+  color: #3C2A21;
+  padding: 8px 12px;
+  font-size: 10px;
+  font-weight: 900;
+  text-align: center;
+  letter-spacing: 0.05em;
+  clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
+  border-bottom: 2px solid #3C2A21;
+}
+
+/* Bottom Section (Brown) */
+.popup-bottom {
+  background-color: #3C2A21; /* USDA Forest Service Brown */
+  color: #f4f1ea;
+  padding: 12px 10px;
+  min-height: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 10% 100%);
+}
+
+.popup-name {
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 4px;
+  /* Engraved look */
+  text-shadow: -1px -1px 0px rgba(0,0,0,0.5), 1px 1px 0px rgba(255,255,255,0.1);
+}
+
+.popup-agency-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: #f3ce49;
+  letter-spacing: 0.1em;
+}
+
+/* Customizing Mapbox Popup defaults */
 .mapboxgl-popup-content {
-  background: transparent !important; /* Let our inner div handle it */
+  background: transparent !important;
   padding: 0 !important;
   box-shadow: none !important;
   border: none !important;
 }
 
 .mapboxgl-popup-tip {
-  border-top-color: #3c2a21 !important;
-  border-bottom-color: #3c2a21 !important;
-  border-left-color: #3c2a21 !important;
-  border-right-color: #3c2a21 !important;
+  border-top-color: #3C2A21 !important;
+  border-bottom-color: #3C2A21 !important;
+  border-left-color: #3C2A21 !important;
+  border-right-color: #3C2A21 !important;
 }
