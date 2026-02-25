@@ -352,19 +352,21 @@ function AppContent({ mapboxAccessToken }) {
                 closeButton={false}
                 closeOnClick={false}
                 anchor="bottom"
-                offset={12}
+                offset={15}
               >
                 <div className="campsite-popup">
-                  <div className="popup-top">
-                    {AGENCY_LABELS[hoveredInfo?.feature.properties.agency_short || selectedCampsite?.agency_short]}
-                  </div>
-                  <div className="popup-bottom">
-                    <div className="popup-name">
+                  <div className="sign-face">
+                    <div className="welcome-text">Welcome to</div>
+                    <div className="location-name">
                       {hoveredInfo?.feature.properties.name || selectedCampsite?.name}
                     </div>
-                    <div className="popup-agency-label">
+                    <div className="agency-subtext">
                       {hoveredInfo?.feature.properties.agency || selectedCampsite?.agency}
                     </div>
+                  </div>
+                  <div className="sign-posts">
+                    <div className="sign-post left" />
+                    <div className="sign-post right" />
                   </div>
                 </div>
               </Popup>

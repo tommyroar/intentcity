@@ -411,60 +411,86 @@ body {
   border-radius: 3px;
 }
 
-/* South Park Style Wonky Sign */
+/* Exact South Park Intro Sign Aesthetic */
 .campsite-popup {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 200px;
-  background-color: #4CAF50; /* South Park Sign Green */
-  border: 3px solid #000;
-  box-shadow: 
-    5px 5px 0px rgba(0,0,0,0.2), /* Paper cutout shadow */
-    inset 2px 2px 0px rgba(255,255,255,0.2);
-  font-family: "Comic Sans MS", "Chalkboard SE", "Marker Felt", cursive;
-  text-transform: none; /* South Park isn't all-caps */
-  transform: rotate(-1deg); /* Slightly wonky */
+  align-items: center;
+  width: 240px;
+  padding-bottom: 40px; /* Space for posts */
+  filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.3));
 }
 
-.popup-top {
-  background-color: transparent;
-  color: #fff;
-  padding: 4px 8px;
-  font-size: 11px;
-  font-weight: 700;
-  text-align: center;
-  border-bottom: 2px solid #000;
-  text-shadow: 2px 2px 0px #000;
-}
-
-.popup-bottom {
-  background-color: transparent;
-  color: #fff;
-  padding: 10px 8px;
+.sign-face {
+  background-color: #ffffff;
+  border: 4px solid #5d4037; /* Brown wooden frame */
+  padding: 15px 10px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  clip-path: none; /* Remove trapezoid for South Park look */
+  transform: rotate(-1.5deg); /* Wonky placement */
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+  position: relative;
+  z-index: 2;
 }
 
-.popup-name {
+.welcome-text {
+  color: #d32f2f; /* Red */
+  font-family: "Brush Script MT", cursive;
   font-size: 18px;
-  font-weight: 900;
   line-height: 1;
-  margin-bottom: 6px;
-  color: #fff;
-  text-shadow: 3px 3px 0px #000;
+  margin-bottom: 5px;
+  text-align: center;
+  width: 100%;
+  /* Slight arch effect */
+  transform: scaleY(1.2);
 }
 
-.popup-agency-label {
-  font-size: 10px;
-  font-weight: 700;
-  color: #FFEB3B; /* Cartman Yellow */
-  text-shadow: 1px 1px 0px #000;
+.location-name {
+  color: #000000;
+  font-family: "Arial Black", "Gadget", sans-serif;
+  font-size: 22px;
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 0.9;
+  text-align: center;
+  margin: 5px 0;
+  letter-spacing: -0.02em;
 }
+
+.agency-subtext {
+  color: #2e7d32; /* Green */
+  font-family: "Comic Sans MS", "Chalkboard SE", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 5px;
+}
+
+/* Wooden Posts */
+.sign-posts {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.sign-post {
+  position: absolute;
+  bottom: 0;
+  width: 10px;
+  height: 100%;
+  background-color: #5d4037;
+  border: 2px solid #3e2723;
+}
+
+.sign-post.left { left: 40px; }
+.sign-post.right { right: 40px; }
 
 /* Customizing Mapbox Popup defaults */
 .mapboxgl-popup-content {
@@ -475,8 +501,5 @@ body {
 }
 
 .mapboxgl-popup-tip {
-  border-top-color: #000 !important;
-  border-bottom-color: #000 !important;
-  border-left-color: #000 !important;
-  border-right-color: #000 !important;
+  display: none; /* Posts act as the anchor visually */
 }
