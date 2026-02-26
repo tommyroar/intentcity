@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const BASE_URL = 'http://127.0.0.1:5173';
+const BASE_URL = 'http://localhost:4173';
 
 test.describe('intentcity - Smoke Test', () => {
   test('frontend should be reachable and show campsites', async ({ page }) => {
