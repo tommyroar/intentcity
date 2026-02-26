@@ -24,10 +24,13 @@
           {
             "start": "01-01",
             "end": "12-31",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 20,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.blm.gov/",
+        "reservation_url": "https://www.blm.gov/visit/fishtrap-recreation-area",
+        "official_url": "https://www.blm.gov/visit/fishtrap-recreation-area",
         "rec_gov_id": null,
         "wa_park_id": null,
         "availability": null,
@@ -56,10 +59,13 @@
           {
             "start": "01-01",
             "end": "12-31",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 10,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.blm.gov/",
+        "reservation_url": "https://www.blm.gov/visit/juniper-dunes-wilderness",
+        "official_url": "https://www.blm.gov/visit/juniper-dunes-wilderness",
         "rec_gov_id": null,
         "wa_park_id": null,
         "availability": null,
@@ -89,10 +95,13 @@
           {
             "start": "01-01",
             "end": "12-31",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 18,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.blm.gov/",
+        "reservation_url": "https://www.blm.gov/visit/liberty-recreation-site",
+        "official_url": "https://www.blm.gov/visit/liberty-recreation-site",
         "rec_gov_id": null,
         "wa_park_id": null,
         "availability": null,
@@ -122,10 +131,13 @@
           {
             "start": "01-01",
             "end": "12-31",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 15,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.blm.gov/",
+        "reservation_url": "https://www.blm.gov/visit/taunton-recreation-site",
+        "official_url": "https://www.blm.gov/visit/taunton-recreation-site",
         "rec_gov_id": null,
         "wa_park_id": null,
         "availability": null,
@@ -155,10 +167,13 @@
           {
             "start": "01-01",
             "end": "12-31",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 25,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.blm.gov/",
+        "reservation_url": "https://www.blm.gov/visit/yakima-river-canyon",
+        "official_url": "https://www.blm.gov/visit/yakima-river-canyon",
         "rec_gov_id": null,
         "wa_park_id": null,
         "availability": null,
@@ -188,14 +203,17 @@
           {
             "start": "05-18",
             "end": "09-06",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 60,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/246855",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/246855",
         "rec_gov_id": "246855",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:54:31.541047",
+          "last_updated": "2026-02-24T20:17:14.523553",
           "source": "RecGov",
           "summary": {
             "first_available": "2026-05-18",
@@ -229,14 +247,17 @@
           {
             "start": "05-18",
             "end": "09-06",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 32,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/255201",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/255201",
         "rec_gov_id": "255201",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:54:32.217218",
+          "last_updated": "2026-02-24T20:17:15.231814",
           "source": "RecGov",
           "summary": {
             "first_available": null,
@@ -270,14 +291,17 @@
           {
             "start": "05-22",
             "end": "10-12",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 173,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/232466",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/232466",
         "rec_gov_id": "232466",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:54:33.254748",
+          "last_updated": "2026-02-24T20:17:15.883956",
           "source": "RecGov",
           "summary": {
             "first_available": "2026-07-20",
@@ -310,10 +334,13 @@
           {
             "start": "07-01",
             "end": "09-30",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 14,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/poi/10300477",
+        "official_url": "https://www.recreation.gov/camping/poi/10300477",
         "rec_gov_id": null,
         "wa_park_id": null,
         "availability": null,
@@ -343,14 +370,17 @@
           {
             "start": "05-15",
             "end": "09-29",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 88,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/259084",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/259084",
         "rec_gov_id": "259084",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:54:53.649226",
+          "last_updated": "2026-02-24T20:17:40.798275",
           "source": "RecGov",
           "summary": {
             "first_available": "2026-05-15",
@@ -384,14 +414,17 @@
           {
             "start": "05-18",
             "end": "09-06",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 21,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/246852",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/246852",
         "rec_gov_id": "246852",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:54:54.065473",
+          "last_updated": "2026-02-24T20:17:41.623503",
           "source": "RecGov",
           "summary": {
             "first_available": "2026-05-18",
@@ -424,14 +457,17 @@
           {
             "start": "05-01",
             "end": "09-30",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 6,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/10004932",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/10004932",
         "rec_gov_id": "10004932",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:54:54.541116",
+          "last_updated": "2026-02-24T20:17:42.132772",
           "source": "RecGov",
           "summary": {
             "first_available": null,
@@ -465,10 +501,13 @@
           {
             "start": "05-01",
             "end": "09-30",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 30,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/poi/259085",
+        "official_url": "https://www.recreation.gov/camping/poi/259085",
         "rec_gov_id": null,
         "wa_park_id": null,
         "availability": null,
@@ -498,14 +537,17 @@
           {
             "start": "05-01",
             "end": "09-30",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 105,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/247585",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/247585",
         "rec_gov_id": "247585",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:54:55.022344",
+          "last_updated": "2026-02-24T20:17:42.617612",
           "source": "RecGov",
           "summary": {
             "first_available": null,
@@ -539,17 +581,20 @@
           {
             "start": "06-12",
             "end": "09-06",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 88,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/247592",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/247592",
         "rec_gov_id": "247592",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:54:55.906945",
+          "last_updated": "2026-02-24T20:17:43.113192",
           "source": "RecGov",
           "summary": {
-            "first_available": "2026-07-29",
+            "first_available": null,
             "season_open": "2026-06-12",
             "season_close": "2026-07-31"
           }
@@ -581,14 +626,17 @@
           {
             "start": "05-15",
             "end": "09-20",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 170,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/232464",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/232464",
         "rec_gov_id": "232464",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:54:57.014060",
+          "last_updated": "2026-02-24T20:17:43.795653",
           "source": "RecGov",
           "summary": {
             "first_available": "2026-05-15",
@@ -622,14 +670,17 @@
           {
             "start": "04-01",
             "end": "11-30",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 76,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/234061",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/234061",
         "rec_gov_id": "234061",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:54:57.992960",
+          "last_updated": "2026-02-24T20:17:44.515542",
           "source": "RecGov",
           "summary": {
             "first_available": "2026-02-24",
@@ -663,18 +714,21 @@
           {
             "start": "05-15",
             "end": "09-20",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 94,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/247591",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/247591",
         "rec_gov_id": "247591",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:54:58.873727",
+          "last_updated": "2026-02-24T20:17:45.079285",
           "source": "RecGov",
           "summary": {
-            "first_available": "2026-05-15",
-            "season_open": "2026-05-15",
+            "first_available": "2026-06-01",
+            "season_open": "2026-06-01",
             "season_close": "2026-07-31"
           }
         },
@@ -703,10 +757,13 @@
           {
             "start": "07-01",
             "end": "10-05",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 30,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.nps.gov/mora/planyourvisit/camping.htm",
+        "official_url": "https://www.nps.gov/mora/planyourvisit/camping.htm",
         "rec_gov_id": null,
         "wa_park_id": null,
         "availability": null,
@@ -736,14 +793,17 @@
           {
             "start": "05-18",
             "end": "09-06",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 111,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/234060",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/234060",
         "rec_gov_id": "234060",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:54:59.542701",
+          "last_updated": "2026-02-24T20:17:45.724797",
           "source": "RecGov",
           "summary": {
             "first_available": "2026-05-18",
@@ -776,10 +836,13 @@
           {
             "start": "05-01",
             "end": "09-30",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 9,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/poi/259086",
+        "official_url": "https://www.recreation.gov/camping/poi/259086",
         "rec_gov_id": null,
         "wa_park_id": null,
         "availability": null,
@@ -809,14 +872,17 @@
           {
             "start": "05-22",
             "end": "10-12",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 188,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/232465",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/232465",
         "rec_gov_id": "232465",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:55:00.029613",
+          "last_updated": "2026-02-24T20:17:46.273942",
           "source": "RecGov",
           "summary": {
             "first_available": null,
@@ -849,10 +915,13 @@
           {
             "start": "05-01",
             "end": "09-30",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 20,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/poi/259088",
+        "official_url": "https://www.recreation.gov/camping/poi/259088",
         "rec_gov_id": null,
         "wa_park_id": null,
         "availability": null,
@@ -881,14 +950,17 @@
           {
             "start": "04-01",
             "end": "11-30",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 9,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/275027",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/275027",
         "rec_gov_id": "275027",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:55:01.625226",
+          "last_updated": "2026-02-24T20:17:49.161941",
           "source": "RecGov",
           "summary": {
             "first_available": "2026-04-01",
@@ -922,14 +994,17 @@
           {
             "start": "03-20",
             "end": "11-01",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 82,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/251906",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/251906",
         "rec_gov_id": "251906",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:55:02.301354",
+          "last_updated": "2026-02-24T20:17:50.128222",
           "source": "RecGov",
           "summary": {
             "first_available": "2026-03-20",
@@ -963,10 +1038,13 @@
           {
             "start": "05-01",
             "end": "09-30",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 55,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/poi/259090",
+        "official_url": "https://www.recreation.gov/camping/poi/259090",
         "rec_gov_id": null,
         "wa_park_id": null,
         "availability": null,
@@ -996,14 +1074,17 @@
           {
             "start": "04-01",
             "end": "11-30",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 87,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/234064",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/234064",
         "rec_gov_id": "234064",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:55:03.028351",
+          "last_updated": "2026-02-24T20:17:50.865584",
           "source": "RecGov",
           "summary": {
             "first_available": "2026-02-24",
@@ -1037,14 +1118,17 @@
           {
             "start": "01-01",
             "end": "12-31",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 47,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/247586",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/247586",
         "rec_gov_id": "247586",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:55:03.699430",
+          "last_updated": "2026-02-24T20:17:51.348575",
           "source": "RecGov",
           "summary": {
             "first_available": null,
@@ -1078,14 +1162,17 @@
           {
             "start": "07-01",
             "end": "09-28",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 112,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/259031",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/259031",
         "rec_gov_id": "259031",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:55:07.554877",
+          "last_updated": "2026-02-24T20:17:53.633731",
           "source": "RecGov",
           "summary": {
             "first_available": null,
@@ -1119,10 +1206,13 @@
           {
             "start": "05-15",
             "end": "09-15",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 24,
+            "reserved_count": 0
           }
         ],
         "reservation_url": "https://www.recreation.gov/",
+        "official_url": "https://www.recreation.gov/",
         "rec_gov_id": null,
         "wa_park_id": null,
         "availability": null,
@@ -1152,14 +1242,17 @@
           {
             "start": "05-15",
             "end": "09-15",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 27,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/232018",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/232018",
         "rec_gov_id": "232018",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:54:27.757117",
+          "last_updated": "2026-02-24T20:17:08.607991",
           "source": "RecGov",
           "summary": {
             "first_available": "2026-05-15",
@@ -1192,11 +1285,14 @@
           {
             "start": "05-15",
             "end": "09-15",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 11,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
-        "rec_gov_id": null,
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/233713",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/233713",
+        "rec_gov_id": "233713",
         "wa_park_id": null,
         "availability": null,
         "notes": "Small creek-side campground near Trout Lake"
@@ -1225,14 +1321,17 @@
           {
             "start": "05-15",
             "end": "09-15",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 28,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/252036",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/252036",
         "rec_gov_id": "252036",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:54:28.768915",
+          "last_updated": "2026-02-24T20:17:09.759846",
           "source": "RecGov",
           "summary": {
             "first_available": "2026-05-14",
@@ -1266,14 +1365,17 @@
           {
             "start": "06-01",
             "end": "09-15",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 29,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/232135",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/232135",
         "rec_gov_id": "232135",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:54:29.281024",
+          "last_updated": "2026-02-24T20:17:10.415068",
           "source": "RecGov",
           "summary": {
             "first_available": null,
@@ -1307,14 +1409,17 @@
           {
             "start": "06-01",
             "end": "09-15",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 45,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/232230",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/232230",
         "rec_gov_id": "232230",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:54:29.832513",
+          "last_updated": "2026-02-24T20:17:11.434692",
           "source": "RecGov",
           "summary": {
             "first_available": "2026-05-31",
@@ -1348,14 +1453,17 @@
           {
             "start": "06-01",
             "end": "09-15",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 21,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/10250504",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/10250504",
         "rec_gov_id": "10250504",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:54:30.348701",
+          "last_updated": "2026-02-24T20:17:12.527049",
           "source": "RecGov",
           "summary": {
             "first_available": null,
@@ -1389,11 +1497,14 @@
           {
             "start": "05-15",
             "end": "09-15",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 12,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
-        "rec_gov_id": null,
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/233865",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/233865",
+        "rec_gov_id": "233865",
         "wa_park_id": null,
         "availability": null,
         "notes": "Small campground on the Sauk River near Darrington"
@@ -1422,14 +1533,17 @@
           {
             "start": "05-15",
             "end": "09-15",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 56,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
-        "rec_gov_id": "232325",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/233384",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/233384",
+        "rec_gov_id": "233384",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:54:31.093177",
+          "last_updated": "2026-02-24T20:17:13.808358",
           "source": "RecGov",
           "summary": {
             "first_available": "2026-04-23",
@@ -1463,11 +1577,14 @@
           {
             "start": "05-15",
             "end": "09-15",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 25,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
-        "rec_gov_id": null,
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/234016",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/234016",
+        "rec_gov_id": "234016",
         "wa_park_id": null,
         "availability": null,
         "notes": "On the Entiat River near Lake Chelan NRA; remote and uncrowded"
@@ -1496,14 +1613,17 @@
           {
             "start": "05-15",
             "end": "09-15",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 33,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/232320",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/232320",
         "rec_gov_id": "232320",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:54:52.606737",
+          "last_updated": "2026-02-24T20:17:38.759141",
           "source": "RecGov",
           "summary": {
             "first_available": "2026-04-12",
@@ -1537,14 +1657,17 @@
           {
             "start": "05-15",
             "end": "09-15",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 30,
+            "reserved_count": 0
           }
         ],
         "reservation_url": "https://www.recreation.gov/camping/campgrounds/232038",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/232038",
         "rec_gov_id": "232038",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:54:53.178168",
+          "last_updated": "2026-02-24T20:17:40.039846",
           "source": "RecGov",
           "summary": {
             "first_available": "2026-05-15",
@@ -1578,11 +1701,14 @@
           {
             "start": "05-15",
             "end": "09-15",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 31,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
-        "rec_gov_id": null,
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/251365",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/251365",
+        "rec_gov_id": "251365",
         "wa_park_id": null,
         "availability": null,
         "notes": "In the Quinault Valley; access to Lake Quinault and rainforest trails"
@@ -1610,10 +1736,13 @@
           {
             "start": "06-01",
             "end": "09-15",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 8,
+            "reserved_count": 0
           }
         ],
         "reservation_url": "https://www.recreation.gov/",
+        "official_url": "https://www.recreation.gov/",
         "rec_gov_id": null,
         "wa_park_id": null,
         "availability": null,
@@ -1643,14 +1772,17 @@
           {
             "start": "05-15",
             "end": "09-15",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 15,
+            "reserved_count": 0
           }
         ],
         "reservation_url": "https://www.recreation.gov/camping/campgrounds/232081",
+        "official_url": "https://www.fs.usda.gov/r06/mbs/recreation/panorama-point-campground",
         "rec_gov_id": "232081",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:55:00.511767",
+          "last_updated": "2026-02-24T20:17:46.844530",
           "source": "RecGov",
           "summary": {
             "first_available": "2026-05-15",
@@ -1684,14 +1816,17 @@
           {
             "start": "05-15",
             "end": "09-15",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 39,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/232204",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/232204",
         "rec_gov_id": "232204",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:55:01.094320",
+          "last_updated": "2026-02-24T20:17:48.365130",
           "source": "RecGov",
           "summary": {
             "first_available": "2026-05-22",
@@ -1725,11 +1860,14 @@
           {
             "start": "06-01",
             "end": "09-15",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 26,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
-        "rec_gov_id": null,
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/234024",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/234024",
+        "rec_gov_id": "234024",
         "wa_park_id": null,
         "availability": null,
         "notes": "Along Bumping River; natural carbonated spring nearby"
@@ -1758,14 +1896,17 @@
           {
             "start": "05-15",
             "end": "09-15",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 98,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/232328",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/232328",
         "rec_gov_id": "232328",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:55:04.386369",
+          "last_updated": "2026-02-24T20:17:51.880972",
           "source": "RecGov",
           "summary": {
             "first_available": null,
@@ -1799,14 +1940,17 @@
           {
             "start": "07-01",
             "end": "09-15",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 54,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/232252",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/232252",
         "rec_gov_id": "232252",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:55:05.126126",
+          "last_updated": "2026-02-24T20:17:52.482199",
           "source": "RecGov",
           "summary": {
             "first_available": "2026-05-22",
@@ -1840,11 +1984,14 @@
           {
             "start": "05-15",
             "end": "09-15",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 21,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
-        "rec_gov_id": null,
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/10352186",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/10352186",
+        "rec_gov_id": "10352186",
         "wa_park_id": null,
         "availability": null,
         "notes": "Near Trout Lake; gateway to Mt. Adams Wilderness trails"
@@ -1873,14 +2020,17 @@
           {
             "start": "07-01",
             "end": "09-15",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 44,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/232247",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/232247",
         "rec_gov_id": "232247",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:55:06.036972",
+          "last_updated": "2026-02-24T20:17:53.086122",
           "source": "RecGov",
           "summary": {
             "first_available": "2026-05-15",
@@ -1914,14 +2064,17 @@
           {
             "start": "05-15",
             "end": "09-15",
-            "booking_advance_days": 180
+            "booking_advance_days": 180,
+            "site_total_count": 40,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://www.recreation.gov/",
-        "rec_gov_id": "232325",
+        "reservation_url": "https://www.recreation.gov/camping/campgrounds/233384",
+        "official_url": "https://www.recreation.gov/camping/campgrounds/233384",
+        "rec_gov_id": "233384",
         "wa_park_id": null,
         "availability": {
-          "last_updated": "2026-02-24T13:55:08.172461",
+          "last_updated": "2026-02-24T20:17:54.217958",
           "source": "RecGov",
           "summary": {
             "first_available": "2026-04-23",
@@ -1955,12 +2108,15 @@
           {
             "start": "04-01",
             "end": "09-30",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 50,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://washington.goingtocamp.com/",
+        "reservation_url": "https://washington.goingtocamp.com/create-booking/results?resourceLocationId=-2147483646",
+        "official_url": "https://parks.wa.gov/find-parks/state-parks/battle-ground-lake-state-park",
         "rec_gov_id": null,
-        "wa_park_id": null,
+        "wa_park_id": -2147483646,
         "availability": null,
         "notes": "Volcanic lake in Clark County; swimming and fishing"
       }
@@ -1988,12 +2144,15 @@
           {
             "start": "04-01",
             "end": "09-30",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 35,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://washington.goingtocamp.com/",
+        "reservation_url": "https://washington.goingtocamp.com/create-booking/results?resourceLocationId=-2147483644",
+        "official_url": "https://parks.wa.gov/find-parks/state-parks/beacon-rock-state-park",
         "rec_gov_id": null,
-        "wa_park_id": null,
+        "wa_park_id": -2147483644,
         "availability": null,
         "notes": "Below the famous basalt monolith in the Columbia River Gorge"
       }
@@ -2021,12 +2180,15 @@
           {
             "start": "04-01",
             "end": "09-30",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 42,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://washington.goingtocamp.com/",
+        "reservation_url": "https://washington.goingtocamp.com/create-booking/results?resourceLocationId=-2147483639",
+        "official_url": "https://parks.wa.gov/find-parks/state-parks/bogachiel-state-park",
         "rec_gov_id": null,
-        "wa_park_id": null,
+        "wa_park_id": -2147483639,
         "availability": null,
         "notes": "Along the Bogachiel River near Forks; gateway to Olympic backcountry"
       }
@@ -2054,10 +2216,13 @@
           {
             "start": "05-01",
             "end": "09-30",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 30,
+            "reserved_count": 0
           }
         ],
         "reservation_url": "https://washington.goingtocamp.com/",
+        "official_url": "https://washington.goingtocamp.com/",
         "rec_gov_id": null,
         "wa_park_id": null,
         "availability": null,
@@ -2088,12 +2253,15 @@
           {
             "start": "01-01",
             "end": "12-31",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 250,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://washington.goingtocamp.com/",
+        "reservation_url": "https://washington.goingtocamp.com/create-booking/results?resourceLocationId=-2147483633",
+        "official_url": "https://parks.wa.gov/find-parks/state-parks/cape-disappointment-state-park",
         "rec_gov_id": null,
-        "wa_park_id": null,
+        "wa_park_id": -2147483633,
         "availability": null,
         "notes": "Where the Columbia River meets the Pacific; two historic lighthouses"
       }
@@ -2121,12 +2289,15 @@
           {
             "start": "04-01",
             "end": "09-30",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 82,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://washington.goingtocamp.com/",
+        "reservation_url": "https://washington.goingtocamp.com/create-booking/results?resourceLocationId=-2147483627",
+        "official_url": "https://parks.wa.gov/find-parks/state-parks/curlew-lake-state-park",
         "rec_gov_id": null,
-        "wa_park_id": null,
+        "wa_park_id": -2147483627,
         "availability": null,
         "notes": "Scenic lake in Ferry County near Republic"
       }
@@ -2155,14 +2326,17 @@
           {
             "start": "02-01",
             "end": "07-01",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 310,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://washington.goingtocamp.com/",
+        "reservation_url": "https://washington.goingtocamp.com/create-booking/results?resourceLocationId=-2147483624",
+        "official_url": "https://washington.goingtocamp.com/",
         "rec_gov_id": null,
         "wa_park_id": -2147483624,
         "availability": {
-          "last_updated": "2026-02-24T13:54:52.027668",
+          "last_updated": "2026-02-24T20:17:37.853464",
           "source": "WA Parks",
           "summary": {
             "first_available": "2026-02-01",
@@ -2196,12 +2370,15 @@
           {
             "start": "04-01",
             "end": "09-30",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 140,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://washington.goingtocamp.com/",
+        "reservation_url": "https://washington.goingtocamp.com/create-booking/results?resourceLocationId=-2147483622",
+        "official_url": "https://parks.wa.gov/find-parks/state-parks/dosewallips-state-park",
         "rec_gov_id": null,
-        "wa_park_id": null,
+        "wa_park_id": -2147483622,
         "availability": null,
         "notes": "At the confluence of the Dosewallips River and Hood Canal"
       }
@@ -2229,12 +2406,15 @@
           {
             "start": "04-01",
             "end": "09-30",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 116,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://washington.goingtocamp.com/",
+        "reservation_url": "https://washington.goingtocamp.com/create-booking/results?resourceLocationId=-2147483615",
+        "official_url": "https://parks.wa.gov/find-parks/state-parks/fort-flagler-historical-state-park",
         "rec_gov_id": null,
-        "wa_park_id": null,
+        "wa_park_id": -2147483615,
         "availability": null,
         "notes": "Former military fort on Marrowstone Island; panoramic views of Puget Sound"
       }
@@ -2262,12 +2442,15 @@
           {
             "start": "01-01",
             "end": "12-31",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 80,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://washington.goingtocamp.com/",
+        "reservation_url": "https://washington.goingtocamp.com/create-booking/results?resourceLocationId=-2147483612",
+        "official_url": "https://parks.wa.gov/find-parks/state-parks/fort-worden-historical-state-park",
         "rec_gov_id": null,
-        "wa_park_id": null,
+        "wa_park_id": -2147483612,
         "availability": null,
         "notes": "Historic fort on Port Townsend Bay; year-round camping available"
       }
@@ -2295,12 +2478,15 @@
           {
             "start": "04-01",
             "end": "09-30",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 100,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://washington.goingtocamp.com/",
+        "reservation_url": "https://washington.goingtocamp.com/create-booking/results?resourceLocationId=-2147483610",
+        "official_url": "https://parks.wa.gov/find-parks/state-parks/grayland-beach-state-park",
         "rec_gov_id": null,
-        "wa_park_id": null,
+        "wa_park_id": -2147483610,
         "availability": null,
         "notes": "Ocean beach camping near cranberry bogs"
       }
@@ -2328,12 +2514,15 @@
           {
             "start": "04-01",
             "end": "09-30",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 43,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://washington.goingtocamp.com/",
+        "reservation_url": "https://washington.goingtocamp.com/create-booking/results?resourceLocationId=-2147483600",
+        "official_url": "https://parks.wa.gov/find-parks/state-parks/kitsap-memorial-state-park",
         "rec_gov_id": null,
-        "wa_park_id": null,
+        "wa_park_id": -2147483600,
         "availability": null,
         "notes": "Wooded park on Hood Canal near Poulsbo"
       }
@@ -2361,12 +2550,15 @@
           {
             "start": "04-01",
             "end": "09-30",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 87,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://washington.goingtocamp.com/",
+        "reservation_url": "https://washington.goingtocamp.com/create-booking/results?resourceLocationId=-2147483593",
+        "official_url": "https://parks.wa.gov/find-parks/state-parks/larrabee-state-park",
         "rec_gov_id": null,
-        "wa_park_id": null,
+        "wa_park_id": -2147483593,
         "availability": null,
         "notes": "First state park in WA; saltwater access on Samish Bay"
       }
@@ -2395,12 +2587,15 @@
           {
             "start": "04-01",
             "end": "09-30",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 151,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://washington.goingtocamp.com/",
+        "reservation_url": "https://washington.goingtocamp.com/create-booking/results?resourceLocationId=-2147483585",
+        "official_url": "https://parks.wa.gov/find-parks/state-parks/moran-state-park",
         "rec_gov_id": null,
-        "wa_park_id": null,
+        "wa_park_id": -2147483585,
         "availability": null,
         "notes": "Four campgrounds near Summit Lake and Cascade Lake on Orcas Island"
       }
@@ -2428,12 +2623,15 @@
           {
             "start": "04-01",
             "end": "09-30",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 178,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://washington.goingtocamp.com/",
+        "reservation_url": "https://washington.goingtocamp.com/create-booking/results?resourceLocationId=-2147483582",
+        "official_url": "https://parks.wa.gov/find-parks/state-parks/ocean-city-state-park",
         "rec_gov_id": null,
-        "wa_park_id": null,
+        "wa_park_id": -2147483582,
         "availability": null,
         "notes": "On the Long Beach Peninsula; vast sandy beach access"
       }
@@ -2461,10 +2659,13 @@
           {
             "start": "04-01",
             "end": "09-30",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 86,
+            "reserved_count": 0
           }
         ],
         "reservation_url": "https://washington.goingtocamp.com/",
+        "official_url": "https://washington.goingtocamp.com/",
         "rec_gov_id": null,
         "wa_park_id": null,
         "availability": null,
@@ -2494,12 +2695,15 @@
           {
             "start": "04-01",
             "end": "09-30",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 138,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://washington.goingtocamp.com/",
+        "reservation_url": "https://washington.goingtocamp.com/create-booking/results?resourceLocationId=-2147483577",
+        "official_url": "https://parks.wa.gov/find-parks/state-parks/pacific-beach-state-park",
         "rec_gov_id": null,
-        "wa_park_id": null,
+        "wa_park_id": -2147483577,
         "availability": null,
         "notes": "Right on the Pacific Ocean; popular for razor clam season"
       }
@@ -2526,10 +2730,13 @@
           {
             "start": "04-01",
             "end": "09-30",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 10,
+            "reserved_count": 0
           }
         ],
         "reservation_url": "https://washington.goingtocamp.com/",
+        "official_url": "https://washington.goingtocamp.com/",
         "rec_gov_id": null,
         "wa_park_id": null,
         "availability": null,
@@ -2559,12 +2766,15 @@
           {
             "start": "04-01",
             "end": "09-30",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 70,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://washington.goingtocamp.com/",
+        "reservation_url": "https://washington.goingtocamp.com/create-booking/results?resourceLocationId=-2147483576",
+        "official_url": "https://parks.wa.gov/find-parks/state-parks/paradise-point-state-park",
         "rec_gov_id": null,
-        "wa_park_id": null,
+        "wa_park_id": -2147483576,
         "availability": null,
         "notes": "Along the East Fork Lewis River near Ridgefield"
       }
@@ -2592,12 +2802,15 @@
           {
             "start": "04-01",
             "end": "09-30",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 35,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://washington.goingtocamp.com/",
+        "reservation_url": "https://washington.goingtocamp.com/create-booking/results?resourceLocationId=-2147483569",
+        "official_url": "https://parks.wa.gov/find-parks/state-parks/potlatch-state-park",
         "rec_gov_id": null,
-        "wa_park_id": null,
+        "wa_park_id": -2147483569,
         "availability": null,
         "notes": "On Hood Canal; excellent oyster and shellfish harvesting"
       }
@@ -2625,12 +2838,15 @@
           {
             "start": "01-01",
             "end": "12-31",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 16,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://washington.goingtocamp.com/",
+        "reservation_url": "https://washington.goingtocamp.com/create-booking/results?resourceLocationId=-2147483565",
+        "official_url": "https://parks.wa.gov/find-parks/state-parks/riverside-state-park",
         "rec_gov_id": null,
-        "wa_park_id": null,
+        "wa_park_id": -2147483565,
         "availability": null,
         "notes": "Along the Spokane River near Spokane; Bowl and Pitcher area"
       }
@@ -2658,12 +2874,15 @@
           {
             "start": "04-01",
             "end": "09-30",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 92,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://washington.goingtocamp.com/",
+        "reservation_url": "https://washington.goingtocamp.com/create-booking/results?resourceLocationId=-2147483558",
+        "official_url": "https://parks.wa.gov/find-parks/state-parks/seaquest-state-park",
         "rec_gov_id": null,
-        "wa_park_id": null,
+        "wa_park_id": -2147483558,
         "availability": null,
         "notes": "Adjacent to Mount St. Helens National Volcanic Monument; views of the volcano"
       }
@@ -2691,12 +2910,15 @@
           {
             "start": "04-01",
             "end": "09-30",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 86,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://washington.goingtocamp.com/",
+        "reservation_url": "https://washington.goingtocamp.com/create-booking/results?resourceLocationId=-2147483557",
+        "official_url": "https://parks.wa.gov/find-parks/state-parks/sequim-bay-state-park",
         "rec_gov_id": null,
-        "wa_park_id": null,
+        "wa_park_id": -2147483557,
         "availability": null,
         "notes": "Protected bay in the Olympic rain shadow; calm waters for boating"
       }
@@ -2724,12 +2946,15 @@
           {
             "start": "04-01",
             "end": "09-30",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 213,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://washington.goingtocamp.com/",
+        "reservation_url": "https://washington.goingtocamp.com/create-booking/results?resourceLocationId=-2147483552",
+        "official_url": "https://parks.wa.gov/find-parks/state-parks/steamboat-rock-state-park",
         "rec_gov_id": null,
-        "wa_park_id": null,
+        "wa_park_id": -2147483552,
         "availability": null,
         "notes": "On Banks Lake in the Grand Coulee area; massive basalt butte"
       }
@@ -2757,12 +2982,15 @@
           {
             "start": "04-01",
             "end": "09-30",
-            "booking_advance_days": 270
+            "booking_advance_days": 270,
+            "site_total_count": 193,
+            "reserved_count": 0
           }
         ],
-        "reservation_url": "https://washington.goingtocamp.com/",
+        "reservation_url": "https://washington.goingtocamp.com/create-booking/results?resourceLocationId=-2147483551",
+        "official_url": "https://parks.wa.gov/find-parks/state-parks/sun-lakes-dry-falls-state-park",
         "rec_gov_id": null,
-        "wa_park_id": null,
+        "wa_park_id": -2147483551,
         "availability": null,
         "notes": "Near the world's largest prehistoric waterfall; coulees and lakes"
       }

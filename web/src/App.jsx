@@ -383,6 +383,17 @@ function AppContent({ mapboxAccessToken }) {
                     <div className="agency-subtext">
                       {hoveredInfo?.feature.properties.agency || selectedCampsite?.agency}
                     </div>
+                    {(hoveredInfo?.feature.properties.availability_windows || selectedCampsite?.availability_windows) && (
+                      <div className="site-count-subtext">
+                        {(() => {
+                          const windows = typeof (hoveredInfo?.feature.properties.availability_windows || selectedCampsite?.availability_windows) === 'string' 
+                            ? JSON.parse(hoveredInfo?.feature.properties.availability_windows || selectedCampsite?.availability_windows)
+                            : (hoveredInfo?.feature.properties.availability_windows || selectedCampsite?.availability_windows);
+                          const total = windows.reduce((acc, w) => acc + (w.site_total_count || 0), 0);
+                          return total > 0 ? `${total} sites` : '';
+                        })()}
+                      </div>
+                    )}
                   </div>
                   <div className="sign-posts">
                     <svg viewBox="0 0 20 24" preserveAspectRatio="none">
@@ -514,7 +525,7 @@ function AppContent({ mapboxAccessToken }) {
 
               <div className="panel-meta">
                 <span className="panel-sites">
-                  <strong>{selectedCampsite.sites}</strong> sites
+                  <strong>{selectedCampsite.availability_windows?.reduce((acc, w) => acc + (w.site_total_count || 0), 0) || selectedCampsite.sites}</strong> sites
                 </span>
                 {selectedCampsite.availability_windows?.some(w => w.start === '01-01' && w.end === '12-31') ? (
                   <span className="panel-badge year-round">Year-round</span>
@@ -575,13 +586,23 @@ function AppContent({ mapboxAccessToken }) {
               ) : null}
 
               <div className="panel-actions">
+                {selectedCampsite.official_url && (
+                  <a
+                    href={selectedCampsite.official_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-official"
+                  >
+                    Official Site
+                  </a>
+                )}
                 <a
                   href={selectedCampsite.reservation_url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-reserve"
                 >
-                  Reserve / Info →
+                  Reservations →
                 </a>
               </div>
             </div>
