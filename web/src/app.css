@@ -266,6 +266,84 @@ body {
   border-radius: 6px;
 }
 
+.availability-windows {
+  margin-bottom: 16px;
+}
+
+.availability-windows-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.availability-window-row {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.availability-window-row:last-child {
+  border-bottom: none;
+}
+
+.window-season {
+  font-size: 13px;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.window-booking-date {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 8px;
+}
+
+.window-calendar-options {
+  display: flex;
+  gap: 8px;
+}
+
+.calendar-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 12px;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  font-family: sans-serif;
+  white-space: nowrap;
+}
+
+.google-button {
+  background-color: #ffffff;
+  color: #3c4043;
+  border: 1px solid #dadce0;
+}
+
+.apple-button {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.calendar-button:hover {
+  opacity: 0.85;
+}
+
+.calendar-icon {
+  flex-shrink: 0;
+}
+
 .availability-summary {
   margin-bottom: 20px;
   padding: 12px;
