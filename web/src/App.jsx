@@ -4,6 +4,7 @@ import useSupercluster from 'use-supercluster';
 import debounce from 'lodash.debounce';
 import campsiteData from '../../data/campsites.json';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import { formatWindowDate, resolveBookingOpenDate, buildCalendarUrl, generateWindowICS } from './calendarUtils.js';
 
 const AGENCY_COLORS = {
   'wa-state-parks': '#A6E22E',
@@ -23,6 +24,7 @@ const SOURCE_ID = 'campsites';
 const CIRCLES_LAYER_ID = 'campsite-circles';
 const MAP_STYLE = 'mapbox://styles/mapbox/outdoors-v12';
 const WA_BOUNDS = [[-124.83, 45.54], [-116.92, 49.00]];
+
 
 // Memoize the ClusterMarker to prevent heavy SVG re-renders
 const ClusterMarker = memo(({ count, agencyCounts, onClick }) => {
@@ -548,6 +550,48 @@ function AppContent({ mapboxAccessToken }) {
                   </span>
                 ))}
               </div>
+
+              {selectedCampsite.availability_windows?.length > 0 && (
+                <div className="availability-windows">
+                  <div className="availability-windows-label">Availability Windows</div>
+                  {selectedCampsite.availability_windows.map((w, i) => {
+                    const bookingOpen = resolveBookingOpenDate(w);
+                    const hasAdvance = w.booking_advance_days > 0;
+                    return (
+                      <div key={i} className="availability-window-row">
+                        <div className="window-season">
+                          {w.start === '01-01' && w.end === '12-31'
+                            ? 'Year-round'
+                            : `${formatWindowDate(w.start)} – ${formatWindowDate(w.end)}`}
+                        </div>
+                        <div className="window-booking-date">
+                          {hasAdvance
+                            ? `Reservations open ${bookingOpen.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}`
+                            : 'First-come, first-served'}
+                        </div>
+                        <div className="window-calendar-options">
+                          <a
+                            href={buildCalendarUrl(selectedCampsite, w)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="calendar-button google-button"
+                          >
+                            <svg className="calendar-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.63-.06-1.25-.16-1.84H9v3.49h4.84c-.21 1.12-.82 2.07-1.74 2.7v2.24h2.81c1.65-1.52 2.6-3.76 2.6-6.3z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.84-2.2c-.79.53-1.8.85-3.12.85-2.39 0-4.41-1.61-5.14-3.77H1.03v2.32C2.51 16.03 5.52 18 9 18z"/><path fill="#FBBC05" d="M3.86 10.7c-.18-.53-.29-1.1-.29-1.7s.11-1.17.29-1.7V4.98H1.03C.37 6.19 0 7.56 0 9s.37 2.81 1.03 4.02l2.83-2.32z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.59C13.47.89 11.43 0 9 0 5.52 0 2.51 1.97 1.03 4.98l2.83 2.32C4.59 5.19 6.61 3.58 9 3.58z"/></svg>
+                            Google
+                          </a>
+                          <button
+                            onClick={() => generateWindowICS(selectedCampsite, w)}
+                            className="calendar-button apple-button"
+                          >
+                            <svg className="calendar-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 18 18"><path fill="currentColor" d="M14.1 9.5c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.7-1.8-3.3-1.8-1.4-.1-2.8.8-3.5.8s-1.9-.8-3-.8c-1.5 0-2.9.9-3.7 2.3-1.6 2.8-.4 6.9 1.1 8.6.8 1.1 1.7 2.3 2.9 2.3s1.6-.7 3.1-.7 1.9.7 3.1.7c1.2 0 2-.1 2.8-1.2.9-1.3 1.3-2.6 1.3-2.7 0 0-2.4-1-2.4-3.9zm-2.6-6.6c.6-.8 1.1-1.9.9-3-.9.1-2 1.1-2.6 1.9-.6.7-1.1 1.8-.9 2.9 1 .1 2-.8 2.6-1.8z"/></svg>
+                            Apple / iCal
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
 
               {selectedCampsite.availability?.summary?.first_available && (
                 <div className="availability-summary">
