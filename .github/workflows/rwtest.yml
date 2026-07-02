@@ -1,0 +1,8 @@
+name: rw-test
+on: [workflow_dispatch]
+jobs:
+  t:
+    uses: tommyroar/.github/.github/workflows/deploy-pages.yml@main
+    with:
+      slug: intentcity
+    secrets: inherit
