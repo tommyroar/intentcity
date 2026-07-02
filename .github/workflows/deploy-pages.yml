@@ -1,15 +1,10 @@
 name: Deploy Pages
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
-  workflow_dispatch:
 jobs:
   deploy:
     uses: tommyroar/.github/.github/workflows/deploy-pages.yml@main
     with:
       slug: intentcity
-      build_dir: web
-      build_cmd: npx vite build
     secrets: inherit
