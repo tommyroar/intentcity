@@ -1,0 +1,9 @@
+name: hello-call
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  h:
+    uses: tommyroar/.github/.github/workflows/hello.yml@main
+    with:
+      who: intentcity
