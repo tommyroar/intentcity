@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: staging
-      url: https://tommyroar.github.io/intentcity/staging/
+      url: https://robogeosociety.github.io/intentcity/staging/
     steps:
       - uses: actions/checkout@v4
 
@@ -57,5 +57,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '**Staging preview deployed:** https://tommyroar.github.io/intentcity/staging/'
+              body: '**Staging preview deployed:** https://robogeosociety.github.io/intentcity/staging/'
             })
